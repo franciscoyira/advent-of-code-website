@@ -5,7 +5,7 @@ subtitle: "Solutions and notes by Francisco Yirá"
 code-tools: false
 ---
 
-![](images/advent.webp){fig-align="center"}
+![](images/advent.webp "Make a wish: DALL-E got the text right."){fig-align="center" width="1200"}
 
 Hi there! Welcome to this mini-site where I'll be sharing my solutions to the Advent of Code puzzles. [Advent of Code](https://adventofcode.com) is a series of increasingly difficult programming challenges, released daily each year throughout December in the run-up to Christmas.
 
