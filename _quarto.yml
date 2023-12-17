@@ -3,7 +3,7 @@ project:
   resources:
     - fonts
   preview:
-    port: 4321
+    port: 4322
 
 execute:
   freeze: auto
@@ -19,13 +19,19 @@ website:
     right:
       - icon: github
         href: https://github.com/franciscoyira/advent-of-code-website
+      - icon: envelope
+        href: https://www.franciscoyira.com/subscribe
+      - icon: linkedin
+        href: https://www.linkedin.com/in/franciscoyira/
+      - icon: mastodon
+        href: https://techhub.social/home
   open-graph: true
 
 format:
   html:
     theme: 
-      light: [cosmo, custom-light.scss]
       dark: custom-dark.scss
+      light: [cosmo, custom-light.scss]
     css: styles.css
     code-block-border-left: true
     smooth-scroll: true

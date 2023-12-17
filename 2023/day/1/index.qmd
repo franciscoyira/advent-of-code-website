@@ -1,0 +1,480 @@
+---
+title: "2023: Day 1"
+date: 2023-12-1
+categories:
+  - R
+  - stringr
+draft: false
+---
+
+## Setup
+
+[The original challenge](https://adventofcode.com/2023/day/1)
+
+[My data](input){target="_blank"}
+
+Chosen language: `R`
+
+Notes:
+
+- Puzzle input is a "calibration document"
+- Has been "amended" by an Elf
+- Each line was a calibration value, that now needs to be recovered
+- Value can be obtained by combining the first digit with the last digit to form a single two-digit number
+
+Examples:
+
+- 1abc2 -> 12
+- pqr3stu8vwx -> 38
+- a1b2c3d4e5f -> 15
+- treb7uchet -> 77
+
+Adding these together produces 142.
+
+Do the same for the whole puzzle input
+
+## Part 1
+
+```{r}
+#| echo: false
+OK <- "2023" < 3000
+# Will only evaluate next code block if an actual year has been substituted for the placeholder
+```
+
+```{r}
+library(tidyverse)
+library(here)
+```
+
+
+Transforming the data to an appropriate data structure:
+
+```{r}
+amended <- read_lines(here('2023', 'day', '1', 'input'))
+amended[1:10]
+```
+
+### Solving for a particular case
+```{r}
+(first_case <- amended[1])
+```
+
+Extracting the numbers
+```{r}
+(matrix_str_numbers <-
+  str_extract_all(first_case, pattern = '\\d', simplify = TRUE))
+```
+
+Extracting all the rows from columns one and three (the first and last number of each row)
+```{r}
+numbers_i_want <- matrix_str_numbers[, c(1,3)]
+numbers_i_want
+```
+
+(This code will generalise ONLY IF all the other rows have 3 numbers too).
+
+The following code returns the first and last number "pasted" together and converts the result from string to numeric.
+```{r}
+stringr::str_flatten(numbers_i_want) %>%
+  as.numeric()
+```
+
+Now let's try to generalise to all input rows:
+
+```{r}
+amended %>%
+  str_extract_all(pattern = '\\d', simplify = TRUE) %>%
+  head(5)
+```
+
+Oh no. Rows have a different quantity of digits.
+
+Maybe using `simplify=TRUE` was a mistake here. Given that each element has a different quantity of digits, a list seems to be a more suitable data structure:
+
+```{r}
+list_digits_preview <- 
+  amended %>%
+  str_extract_all(pattern = '\\d') %>%
+  head(5)
+
+list_digits_preview
+```
+
+Now, how can I extract the first and last element from each element of the list? My gut feeling is that I'll need `purrr` for this:
+
+`pluck` and `keep_at` seem to be useful functions for this task
+
+```{r}
+list_digits_preview %>%
+  # This should extract the first and last digit from each element of the list 
+  map(~keep_at(., c(1, length(.))))
+```
+
+It is working!!
+
+Now I'll apply the action to the whole list:
+
+```{r}
+list_useful_digits <- 
+  amended %>%
+  str_extract_all(pattern = '\\d') %>%
+  map(~keep_at(., c(1, length(.))))
+
+list_useful_digits[1:10]
+```
+
+Hmmm... Why does element  7 have only 1 digit?
+
+```{r}
+amended[7]
+```
+
+It's got just one digit as a number, but there are other digits written out in words. Should we count those? The prompt isn't really clear about this. But since the example only talks about digits as numbers, I guess I'll just go with those for now. If I've got this wrong and my solution gets rejected, well, I can always give it another shot
+
+Now let's concatenate the digits row-wise, turn them into a number and add them up:
+
+```{r}
+solution <- 
+  list_useful_digits %>%
+  map(str_flatten) %>%
+  map(as.integer) %>%
+  as_vector() %>%
+  sum()
+
+solution
+```
+
+❌ Solution was rejected and the website sats it's too low 🤔 
+
+The most likely suspect here is the way `map(~keep_at(., c(1, length(.))))` is handling the rows with only one digit.
+
+Some alternatives I could try:
+
+1. If the input row has only one digit, then use it as first AND last digit when building the number (e.g. if the row only contains 7, the number I would obtain from that row should be 77).
+
+2. Take into account digits that are written as words (e.g. "three"). This is less likely to work and it would be weird for the exercise to expect people to do this and not mentioning it explicitely in the prompt or the examples.
+
+I'll go with alternative 1.
+
+### Handling rows with just one digit
+
+I'll take a slice from the first 10 rows, as the first case with one digit appears in row 7:
+```{r}
+list_digits_preview <- 
+  amended %>%
+  str_extract_all(pattern = '\\d') %>%
+  head(10)
+
+list_digits_preview
+```
+
+I have a feeling that [`purrr::pluck`](https://purrr.tidyverse.org/reference/pluck.html) may do the trick here:
+
+```{r}
+get_first_and_last <- function(x) {
+  c(pluck(x, 1), pluck(x, length(x)))
+}
+
+list_digits_preview %>%
+  map(get_first_and_last)
+```
+
+This function does what I want (and yes, using `pluck` is a bit unnecessary since I could just have used regular subsetting, e.g. `x[[1]]` and `x[[length(x)]]`, but I'm doing this with the [purrr cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf) in front of me, so `pluck` was what came to my mind).
+
+2nd attempt, this time using `get_first_and_last`.
+
+```{r}
+solution2 <- 
+  amended %>%
+  str_extract_all(pattern = '\\d') %>%
+  map(get_first_and_last) %>%
+  map(str_flatten) %>%
+  map(as.integer) %>%
+  as_vector() %>%
+  sum()
+
+solution2
+```
+
+This is the correct solution!! 🥳🥳🥳
+
+Onto the second part!
+
+## Part 2
+
+Saw this one coming: now I need to tackle the digits spelled out as words 😬. 
+
+### First (naive) attempt
+
+IMHO the simplest approach is to write a function that converts digits spelled out in a string into their numeric form. Then, I can incorporate this function into my pipeline using a `map` call, right before `str_extract_all`.
+```{r}
+case_with_spelled_digit <- amended[7]
+case_with_spelled_digit
+```
+
+
+```{r}
+case_with_spelled_digit %>%
+  str_replace_all(
+    c(
+      "nine" = "9",
+      "eight" = "8",
+      "three" = "3"
+    )
+  )
+```
+
+Working as expected.
+
+Now let's apply the function to the full data.
+
+I'll start by creating the replacement vector (although I'm pretty sure it's already a part of some R package that's slipping my mind right now).
+```{r}
+digits <- c(
+  "one" = "1",
+  "two" = "2",
+  "three" = "3",
+  "four" = "4",
+  "five" = "5",
+  "six" = "6",
+  "seven" = "7",
+  "eight" = "8",
+  "nine" = "9"
+)
+```
+
+```{r}
+solution3 <- 
+  amended %>%
+  str_replace_all(pattern = digits) %>%
+  str_extract_all(pattern = '\\d') %>%
+  map(get_first_and_last) %>%
+  map(str_flatten) %>%
+  map(as.integer) %>%
+  as_vector() %>%
+  sum()
+
+solution3
+```
+
+The solution wasn't right.
+
+### Second attempt: handling overlapping patterns
+
+Time to take a closer look at the pipeline using a `tibble`.
+
+```{r}
+tibble(
+  original = amended,
+  new = original %>%
+    str_replace_all(pattern = digits),
+  digits = amended %>%
+    str_replace_all(pattern = digits) %>%
+    str_extract_all(pattern = '\\d') %>%
+    map(get_first_and_last) %>%
+    map(str_flatten) %>%
+    as_vector()
+)
+```
+
+Hypothesis: The issue might arise in instances like `"zoneight234"`, where the spellings of two numbers are overlapping.
+
+```{r}
+str_replace_all("zoneight234", pattern = digits)
+```
+
+I'll try to handle these cases to make sure that every spelled-out digit in the text is returned, even if they overlap.
+
+Maybe I can get closer to that by using the `stringi` package?
+
+```{r}
+stringi::stri_replace_all_regex("zoneight234", pattern = names(digits), replacement = digits, vectorize_all = FALSE)
+```
+
+This is not working.
+
+Something else I could try:
+
+1. Using the `_first` and `_last` functions from stringi to identify digits, whether they are numerically written or spelled out.
+b. Then, replacing the spelled-out digits that appear at either the beginning or end of the string.
+
+```{r}
+problematic_string <- "zone2344oneight"
+
+all_digits_regex <- "[0123456789]|one|two|three|four|five|six|seven|eight|nine"
+
+all_digits_vector <- c(
+  names(digits),
+  0:9
+)
+
+stringi::stri_extract_last_regex(
+  str = problematic_string,
+  pattern = all_digits_vector
+)
+```
+
+Okay, this method DOES return all the digits that appear in the string, but  I end up losing details about where the digits are positioned, which is needed for identifying the first and last digits in each row.
+
+
+
+More ideas: 
+
+1. Using `str_localte_all`, a `stringr` function that allows matching each digit as an separate pattern (thus avoiding the overlap problem) and gives information about the POSITION of the pattern. Then use that info to find the first and the last match in each row.
+
+Example: 
+```{r}
+stringr::str_locate_all(
+  string = problematic_string,
+  pattern = all_digits_vector
+)[1:8]
+```
+
+2. CRAZY IDEA!!! What if I reverse the string, and then look for first match of the **reversed** names of the digits??
+
+After all, the only matches that matter for solving this puzzle are the first one and the last one. For the first match, overlapping is not a real problem because it causes the *second* digit not to match (example: "eight" in "oneight", here "one" is always matched or detected).
+
+Reversing the strings and their patterns could mirror this dynamic when matching the last digit.
+
+```{r}
+regex_reversed <- "enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"
+
+vector_reversed <- c(
+  "eno" = "1",
+  "owt" = "2",
+  "eerht" = "3",
+  "ruof" = "4",
+  "evif" = "5",
+  "xis" = "6",
+  "neves" = "7",
+  "thgie" = "8",
+  "enin" = "9",
+  "1" = "1",
+  "2" = "2",
+  "3" = "3",
+  "4" = "4",
+  "5" = "5",
+  "6" = "6",
+  "7" = "7",
+  "8" = "8",
+  "9" = "9",
+  "0" = "0"
+)
+```
+In this example, I should be able to match "eight" as the last string, despite it overlapping with "one".
+```{r}
+problematic_string
+```
+
+My strategy is to invert it and then look for "thgie" 😂💀
+```{r}
+reversed_problematic_string <- 
+  stringi::stri_reverse(
+  problematic_string
+)
+reversed_problematic_string
+```
+
+```{r}
+found_reversed_string <- str_extract(
+  reversed_problematic_string,
+  "enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"
+)
+
+found_reversed_string
+```
+
+After finding it, I can use the following code to get back the original number
+```{r}
+vector_reversed[found_reversed_string]
+```
+
+It's working. Now, let's wrap this pipeline in a function to apply it to whole dataset:
+
+```{r}
+regex_reversed <- "enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"
+
+all_digits_regex <- "[0123456789]|one|two|three|four|five|six|seven|eight|nine"
+
+digits_reversed <- c(
+  "eno" = "1",
+  "owt" = "2",
+  "eerht" = "3",
+  "ruof" = "4",
+  "evif" = "5",
+  "xis" = "6",
+  "neves" = "7",
+  "thgie" = "8",
+  "enin" = "9",
+  "1" = "1",
+  "2" = "2",
+  "3" = "3",
+  "4" = "4",
+  "5" = "5",
+  "6" = "6",
+  "7" = "7",
+  "8" = "8",
+  "9" = "9",
+  "0" = "0"
+)
+
+digits <- c(
+  "one" = "1",
+  "two" = "2",
+  "three" = "3",
+  "four" = "4",
+  "five" = "5",
+  "six" = "6",
+  "seven" = "7",
+  "eight" = "8",
+  "nine" = "9",
+  "1" = "1",
+  "2" = "2",
+  "3" = "3",
+  "4" = "4",
+  "5" = "5",
+  "6" = "6",
+  "7" = "7",
+  "8" = "8",
+  "9" = "9",
+  "0" = "0"
+)
+
+get_last_number <- function(x) {
+  found_reversed_string <-
+    stringi::stri_reverse(x) %>%
+    str_extract(regex_reversed)
+
+  digits_reversed[found_reversed_string] %>%
+    set_names(NULL)
+}
+
+get_first_number <- function(x) {
+  found_string <- str_extract(
+    x,
+    all_digits_regex
+  )
+
+  digits[found_string] %>%
+    set_names(NULL)
+
+}
+get_first_number(problematic_string)
+get_last_number(problematic_string)
+```
+
+It's working as intended, now let's generalise it:
+
+
+```{r}
+tibble(
+  amended = amended,
+  first_digit = get_first_number(amended),
+  last_digit = get_last_number(amended),
+  combined = as.integer(str_c(first_digit, last_digit))
+) %>%
+  pull(combined) %>%
+  sum()
+```
+
+IT WORKED!! THIS WAS THE RIGHT ANSWER!!! 🥳🥳🥹🥹
