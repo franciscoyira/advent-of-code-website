@@ -144,7 +144,7 @@ solution <-
 solution
 ```
 
-❌ Solution was rejected and the website sats it's too low 🤔 
+👎🏽 Solution was rejected. The website says it's too low 🤔 
 
 The most likely suspect here is the way `map(~keep_at(., c(1, length(.))))` is handling the rows with only one digit.
 
