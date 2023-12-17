@@ -2,11 +2,15 @@
 title: "2023: Introduction"
 date: 2023-11-30
 code-tools: false
-categories: [demo]
+categories: [intro]
 ---
 
-Here's a demo introduction page. It's created from `"./_templates/YYYY-intro"` as part of the call to `aoc_new_year(2023)`. 
+Welcome to my [Advent of Code 2023](https://adventofcode.com/2023) journey! This year, I've decided to put a bit of extra-whimsy on this already whimsical set of puzzles by using a "spinning wheel" to decide whether I'll attempt to solve each day's puzzle using R or Python:
 
-It can be deleted with a call to `aoc_delete_intro(2023)` (though there needs to be at least one post in `./2023/day` for the website to render from Quarto v1.4).
+![*Spinning wheel in the TinyDecisions app*](wheel.jpg){fig-align="left" width="300"}
 
-This is a good place to note any overarching themes for the year, what you want to practice/learn, etc.
+This method allows me to both strengthen my already substantial R skills and also improve my fluency in Python, a language in which I have more progress to make.
+
+Also, in previous years, the Advent of Code challenges often caught me unprepared schedule-wise, either due to time constraints or other commitments. However, this year, I've planned ahead to ensure I can engage *at least* with half of the puzzles throughout December (committing to solve ALL the puzzles in December is still too much because some are very challenging, and, well, work and life continue).
+
+I'll aim to post the solutions in a conversational, narrative manner, sharing not only the final code, but also the thought process I followed to solve each problem.

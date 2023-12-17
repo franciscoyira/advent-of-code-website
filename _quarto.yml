@@ -17,10 +17,15 @@ website:
     left:
      - 2023.qmd
     right:
+      - href: https://www.franciscoyira.com/
+        text: "blog"
+        rel: external
+      - href: https://www.franciscoyira.com/subscribe
+        text: "newsletter"
+      - href: https://cv.franciscoyira.com/
+        text: "portfolio"
       - icon: github
         href: https://github.com/franciscoyira/advent-of-code-website
-      - icon: envelope
-        href: https://www.franciscoyira.com/subscribe
       - icon: linkedin
         href: https://www.linkedin.com/in/franciscoyira/
       - icon: mastodon
