@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-12-01">
+
+<title>Advent of Code by Francisco Yirá - 2023: Day 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+<meta property="og:title" content="Advent of Code by Francisco Yirá - 2023: Day 1">
+<meta property="og:description" content="">
+<meta property="og:site-name" content="Advent of Code by Francisco Yirá">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Advent of Code by Francisco Yirá</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../2023.html" rel="" target="">
+ <span class="menu-text">2023</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/franciscoyira/advent-of-code-website" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.franciscoyira.com/subscribe" rel="" target=""><i class="bi bi-envelope" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/franciscoyira/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://techhub.social/home" rel="" target=""><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#part-1" id="toc-part-1" class="nav-link" data-scroll-target="#part-1">Part 1</a>
+  <ul class="collapse">
+  <li><a href="#solving-for-a-particular-case" id="toc-solving-for-a-particular-case" class="nav-link" data-scroll-target="#solving-for-a-particular-case">Solving for a particular case</a></li>
+  <li><a href="#handling-rows-with-just-one-digit" id="toc-handling-rows-with-just-one-digit" class="nav-link" data-scroll-target="#handling-rows-with-just-one-digit">Handling rows with just one digit</a></li>
+  </ul></li>
+  <li><a href="#part-2" id="toc-part-2" class="nav-link" data-scroll-target="#part-2">Part 2</a>
+  <ul class="collapse">
+  <li><a href="#first-naive-attempt" id="toc-first-naive-attempt" class="nav-link" data-scroll-target="#first-naive-attempt">First (naive) attempt</a></li>
+  <li><a href="#second-attempt-handling-overlapping-patterns" id="toc-second-attempt-handling-overlapping-patterns" class="nav-link" data-scroll-target="#second-attempt-handling-overlapping-patterns">Second attempt: handling overlapping patterns</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">2023: Day 1</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+  <div class="quarto-categories">
+    <div class="quarto-category">R</div>
+    <div class="quarto-category">stringr</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 1, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p><a href="https://adventofcode.com/2023/day/1">The original challenge</a></p>
+<p><a href="input" target="_blank">My data</a></p>
+<p>Chosen language: <code>R</code></p>
+<p>Notes:</p>
+<ul>
+<li>Puzzle input is a “calibration document”</li>
+<li>Has been “amended” by an Elf</li>
+<li>Each line was a calibration value, that now needs to be recovered</li>
+<li>Value can be obtained by combining the first digit with the last digit to form a single two-digit number</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>1abc2 -&gt; 12</li>
+<li>pqr3stu8vwx -&gt; 38</li>
+<li>a1b2c3d4e5f -&gt; 15</li>
+<li>treb7uchet -&gt; 77</li>
+</ul>
+<p>Adding these together produces 142.</p>
+<p>Do the same for the whole puzzle input</p>
+</section>
+<section id="part-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-1">Part 1</h2>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Transforming the data to an appropriate data structure:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>amended <span class="ot">&lt;-</span> <span class="fu">read_lines</span>(<span class="fu">here</span>(<span class="st">'2023'</span>, <span class="st">'day'</span>, <span class="st">'1'</span>, <span class="st">'input'</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>amended[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "nqninenmvnpsz874"                          
+ [2] "8twofpmpxkvvdnpdnlpkhseven4ncgkb"          
+ [3] "six8shdkdcdgseven8xczqrnnmthreecckfive"    
+ [4] "qlcnz54dd75nine7jfnlfgz"                   
+ [5] "7vrdhggdkqbnltlgpkkvsdxn2mfpghkntzrhtjgtxr"
+ [6] "cdhmktwo6kjqbprvfour8"                     
+ [7] "ninekkvkeight9three"                       
+ [8] "ms9five71lrfpqxqlbj"                       
+ [9] "9five9sevenldshqfgcnq"                     
+[10] "1one4seven"                                </code></pre>
+</div>
+</div>
+<section id="solving-for-a-particular-case" class="level3">
+<h3 class="anchored" data-anchor-id="solving-for-a-particular-case">Solving for a particular case</h3>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(first_case <span class="ot">&lt;-</span> amended[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "nqninenmvnpsz874"</code></pre>
+</div>
+</div>
+<p>Extracting the numbers</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(matrix_str_numbers <span class="ot">&lt;-</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(first_case, <span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,] "8"  "7"  "4" </code></pre>
+</div>
+</div>
+<p>Extracting all the rows from columns one and three (the first and last number of each row)</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>numbers_i_want <span class="ot">&lt;-</span> matrix_str_numbers[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>numbers_i_want</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "8" "4"</code></pre>
+</div>
+</div>
+<p>(This code will generalise ONLY IF all the other rows have 3 numbers too).</p>
+<p>The following code returns the first and last number “pasted” together and converts the result from string to numeric.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_flatten</span>(numbers_i_want) <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 84</code></pre>
+</div>
+</div>
+<p>Now let’s try to generalise to all input rows:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>amended <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+[1,] "8"  "7"  "4"  ""   ""   ""   ""  
+[2,] "8"  "4"  ""   ""   ""   ""   ""  
+[3,] "8"  "8"  ""   ""   ""   ""   ""  
+[4,] "5"  "4"  "7"  "5"  "7"  ""   ""  
+[5,] "7"  "2"  ""   ""   ""   ""   ""  </code></pre>
+</div>
+</div>
+<p>Oh no. Rows have a different quantity of digits.</p>
+<p>Maybe using <code>simplify=TRUE</code> was a mistake here. Given that each element has a different quantity of digits, a list seems to be a more suitable data structure:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="ot">&lt;-</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>list_digits_preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "8" "7" "4"
+
+[[2]]
+[1] "8" "4"
+
+[[3]]
+[1] "8" "8"
+
+[[4]]
+[1] "5" "4" "7" "5" "7"
+
+[[5]]
+[1] "7" "2"</code></pre>
+</div>
+</div>
+<p>Now, how can I extract the first and last element from each element of the list? My gut feeling is that I’ll need <code>purrr</code> for this:</p>
+<p><code>pluck</code> and <code>keep_at</code> seem to be useful functions for this task</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This should extract the first and last digit from each element of the list </span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">keep_at</span>(., <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">length</span>(.))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "8" "4"
+
+[[2]]
+[1] "8" "4"
+
+[[3]]
+[1] "8" "8"
+
+[[4]]
+[1] "5" "7"
+
+[[5]]
+[1] "7" "2"</code></pre>
+</div>
+</div>
+<p>It is working!!</p>
+<p>Now I’ll apply the action to the whole list:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>list_useful_digits <span class="ot">&lt;-</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">keep_at</span>(., <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">length</span>(.))))</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>list_useful_digits[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "8" "4"
+
+[[2]]
+[1] "8" "4"
+
+[[3]]
+[1] "8" "8"
+
+[[4]]
+[1] "5" "7"
+
+[[5]]
+[1] "7" "2"
+
+[[6]]
+[1] "6" "8"
+
+[[7]]
+[1] "9"
+
+[[8]]
+[1] "9" "1"
+
+[[9]]
+[1] "9" "9"
+
+[[10]]
+[1] "1" "4"</code></pre>
+</div>
+</div>
+<p>Hmmm… Why does element 7 have only 1 digit?</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>amended[<span class="dv">7</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ninekkvkeight9three"</code></pre>
+</div>
+</div>
+<p>It’s got just one digit as a number, but there are other digits written out in words. Should we count those? The prompt isn’t really clear about this. But since the example only talks about digits as numbers, I guess I’ll just go with those for now. If I’ve got this wrong and my solution gets rejected, well, I can always give it another shot</p>
+<p>Now let’s concatenate the digits row-wise, turn them into a number and add them up:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>solution <span class="ot">&lt;-</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  list_useful_digits <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(as.integer) <span class="sc">%&gt;%</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_vector</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>solution</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 39347</code></pre>
+</div>
+</div>
+<p>❌ Solution was rejected and the website sats it’s too low 🤔</p>
+<p>The most likely suspect here is the way <code>map(~keep_at(., c(1, length(.))))</code> is handling the rows with only one digit.</p>
+<p>Some alternatives I could try:</p>
+<ol type="1">
+<li><p>If the input row has only one digit, then use it as first AND last digit when building the number (e.g.&nbsp;if the row only contains 7, the number I would obtain from that row should be 77).</p></li>
+<li><p>Take into account digits that are written as words (e.g.&nbsp;“three”). This is less likely to work and it would be weird for the exercise to expect people to do this and not mentioning it explicitely in the prompt or the examples.</p></li>
+</ol>
+<p>I’ll go with alternative 1.</p>
+</section>
+<section id="handling-rows-with-just-one-digit" class="level3">
+<h3 class="anchored" data-anchor-id="handling-rows-with-just-one-digit">Handling rows with just one digit</h3>
+<p>I’ll take a slice from the first 10 rows, as the first case with one digit appears in row 7:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="ot">&lt;-</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>list_digits_preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "8" "7" "4"
+
+[[2]]
+[1] "8" "4"
+
+[[3]]
+[1] "8" "8"
+
+[[4]]
+[1] "5" "4" "7" "5" "7"
+
+[[5]]
+[1] "7" "2"
+
+[[6]]
+[1] "6" "8"
+
+[[7]]
+[1] "9"
+
+[[8]]
+[1] "9" "7" "1"
+
+[[9]]
+[1] "9" "9"
+
+[[10]]
+[1] "1" "4"</code></pre>
+</div>
+</div>
+<p>I have a feeling that <a href="https://purrr.tidyverse.org/reference/pluck.html"><code>purrr::pluck</code></a> may do the trick here:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>get_first_and_last <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">pluck</span>(x, <span class="dv">1</span>), <span class="fu">pluck</span>(x, <span class="fu">length</span>(x)))</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="sc">%&gt;%</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "8" "4"
+
+[[2]]
+[1] "8" "4"
+
+[[3]]
+[1] "8" "8"
+
+[[4]]
+[1] "5" "7"
+
+[[5]]
+[1] "7" "2"
+
+[[6]]
+[1] "6" "8"
+
+[[7]]
+[1] "9" "9"
+
+[[8]]
+[1] "9" "1"
+
+[[9]]
+[1] "9" "9"
+
+[[10]]
+[1] "1" "4"</code></pre>
+</div>
+</div>
+<p>This function does what I want (and yes, using <code>pluck</code> is a bit unnecessary since I could just have used regular subsetting, e.g.&nbsp;<code>x[[1]]</code> and <code>x[[length(x)]]</code>, but I’m doing this with the <a href="https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf">purrr cheat sheet</a> in front of me, so <code>pluck</code> was what came to my mind).</p>
+<p>2nd attempt, this time using <code>get_first_and_last</code>.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>solution2 <span class="ot">&lt;-</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last) <span class="sc">%&gt;%</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(as.integer) <span class="sc">%&gt;%</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_vector</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>solution2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 56397</code></pre>
+</div>
+</div>
+<p>This is the correct solution!! 🥳🥳🥳</p>
+<p>Onto the second part!</p>
+</section>
+</section>
+<section id="part-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-2">Part 2</h2>
+<p>Saw this one coming: now I need to tackle the digits spelled out as words 😬.</p>
+<section id="first-naive-attempt" class="level3">
+<h3 class="anchored" data-anchor-id="first-naive-attempt">First (naive) attempt</h3>
+<p>IMHO the simplest approach is to write a function that converts digits spelled out in a string into their numeric form. Then, I can incorporate this function into my pipeline using a <code>map</code> call, right before <code>str_extract_all</code>.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit <span class="ot">&lt;-</span> amended[<span class="dv">7</span>]</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ninekkvkeight9three"</code></pre>
+</div>
+</div>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "9kkvk893"</code></pre>
+</div>
+</div>
+<p>Working as expected.</p>
+<p>Now let’s apply the function to the full data.</p>
+<p>I’ll start by creating the replacement vector (although I’m pretty sure it’s already a part of some R package that’s slipping my mind right now).</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>digits <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"one"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"two"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"four"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"five"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"six"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seven"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>solution3 <span class="ot">&lt;-</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits) <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last) <span class="sc">%&gt;%</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(as.integer) <span class="sc">%&gt;%</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_vector</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>solution3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 55266</code></pre>
+</div>
+</div>
+<p>The solution wasn’t right.</p>
+</section>
+<section id="second-attempt-handling-overlapping-patterns" class="level3">
+<h3 class="anchored" data-anchor-id="second-attempt-handling-overlapping-patterns">Second attempt: handling overlapping patterns</h3>
+<p>Time to take a closer look at the pipeline using a <code>tibble</code>.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">original =</span> amended,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">new =</span> original <span class="sc">%&gt;%</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits),</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> amended <span class="sc">%&gt;%</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits) <span class="sc">%&gt;%</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(get_first_and_last) <span class="sc">%&gt;%</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_vector</span>()</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,000 × 3
+   original                                   new                         digits
+   &lt;chr&gt;                                      &lt;chr&gt;                       &lt;chr&gt; 
+ 1 nqninenmvnpsz874                           nq9nmvnpsz874               94    
+ 2 8twofpmpxkvvdnpdnlpkhseven4ncgkb           82fpmpxkvvdnpdnlpkh74ncgkb  84    
+ 3 six8shdkdcdgseven8xczqrnnmthreecckfive     68shdkdcdg78xczqrnnm3cck5   65    
+ 4 qlcnz54dd75nine7jfnlfgz                    qlcnz54dd7597jfnlfgz        57    
+ 5 7vrdhggdkqbnltlgpkkvsdxn2mfpghkntzrhtjgtxr 7vrdhggdkqbnltlgpkkvsdxn2m… 72    
+ 6 cdhmktwo6kjqbprvfour8                      cdhmk26kjqbprv48            28    
+ 7 ninekkvkeight9three                        9kkvk893                    93    
+ 8 ms9five71lrfpqxqlbj                        ms9571lrfpqxqlbj            91    
+ 9 9five9sevenldshqfgcnq                      9597ldshqfgcnq              97    
+10 1one4seven                                 1147                        17    
+# ℹ 990 more rows</code></pre>
+</div>
+</div>
+<p>Hypothesis: The issue might arise in instances like <code>"zoneight234"</code>, where the spellings of two numbers are overlapping.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace_all</span>(<span class="st">"zoneight234"</span>, <span class="at">pattern =</span> digits)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "z1ight234"</code></pre>
+</div>
+</div>
+<p>I’ll try to handle these cases to make sure that every spelled-out digit in the text is returned, even if they overlap.</p>
+<p>Maybe I can get closer to that by using the <code>stringi</code> package?</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>stringi<span class="sc">::</span><span class="fu">stri_replace_all_regex</span>(<span class="st">"zoneight234"</span>, <span class="at">pattern =</span> <span class="fu">names</span>(digits), <span class="at">replacement =</span> digits, <span class="at">vectorize_all =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "z1ight234"</code></pre>
+</div>
+</div>
+<p>This is not working.</p>
+<p>Something else I could try:</p>
+<ol type="1">
+<li>Using the <code>_first</code> and <code>_last</code> functions from stringi to identify digits, whether they are numerically written or spelled out.</li>
+</ol>
+<ol start="2" type="a">
+<li>Then, replacing the spelled-out digits that appear at either the beginning or end of the string.</li>
+</ol>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>problematic_string <span class="ot">&lt;-</span> <span class="st">"zone2344oneight"</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>all_digits_regex <span class="ot">&lt;-</span> <span class="st">"[0123456789]|one|two|three|four|five|six|seven|eight|nine"</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>all_digits_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(digits),</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>stringi<span class="sc">::</span><span class="fu">stri_extract_last_regex</span>(</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">str =</span> problematic_string,</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> all_digits_vector</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "one"   NA      NA      NA      NA      NA      NA      "eight" NA     
+[10] NA      NA      "2"     "3"     "4"     NA      NA      NA      NA     
+[19] NA     </code></pre>
+</div>
+</div>
+<p>Okay, this method DOES return all the digits that appear in the string, but I end up losing details about where the digits are positioned, which is needed for identifying the first and last digits in each row.</p>
+<p>More ideas:</p>
+<ol type="1">
+<li>Using <code>str_localte_all</code>, a <code>stringr</code> function that allows matching each digit as an separate pattern (thus avoiding the overlap problem) and gives information about the POSITION of the pattern. Then use that info to find the first and the last match in each row.</li>
+</ol>
+<p>Example:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_locate_all</span>(</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">string =</span> problematic_string,</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> all_digits_vector</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+     start end
+[1,]     2   4
+[2,]     9  11
+
+[[2]]
+     start end
+
+[[3]]
+     start end
+
+[[4]]
+     start end
+
+[[5]]
+     start end
+
+[[6]]
+     start end
+
+[[7]]
+     start end
+
+[[8]]
+     start end
+[1,]    11  15</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>CRAZY IDEA!!! What if I reverse the string, and then look for first match of the <strong>reversed</strong> names of the digits??</li>
+</ol>
+<p>After all, the only matches that matter for solving this puzzle are the first one and the last one. For the first match, overlapping is not a real problem because it causes the <em>second</em> digit not to match (example: “eight” in “oneight”, here “one” is always matched or detected).</p>
+<p>Reversing the strings and their patterns could mirror this dynamic when matching the last digit.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>regex_reversed <span class="ot">&lt;-</span> <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>vector_reversed <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eno"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"owt"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eerht"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ruof"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"evif"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xis"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"neves"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"thgie"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"6"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"7"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>In this example, I should be able to match “eight” as the last string, despite it overlapping with “one”.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>problematic_string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "zone2344oneight"</code></pre>
+</div>
+</div>
+<p>My strategy is to invert it and then look for “thgie” 😂💀</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>reversed_problematic_string <span class="ot">&lt;-</span> </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  stringi<span class="sc">::</span><span class="fu">stri_reverse</span>(</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  problematic_string</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>reversed_problematic_string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "thgieno4432enoz"</code></pre>
+</div>
+</div>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>found_reversed_string <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  reversed_problematic_string,</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>found_reversed_string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "thgie"</code></pre>
+</div>
+</div>
+<p>After finding it, I can use the following code to get back the original number</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>vector_reversed[found_reversed_string]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>thgie 
+  "8" </code></pre>
+</div>
+</div>
+<p>It’s working. Now, let’s wrap this pipeline in a function to apply it to whole dataset:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>regex_reversed <span class="ot">&lt;-</span> <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>all_digits_regex <span class="ot">&lt;-</span> <span class="st">"[0123456789]|one|two|three|four|five|six|seven|eight|nine"</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>digits_reversed <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eno"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"owt"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eerht"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ruof"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"evif"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xis"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"neves"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"thgie"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb56-20"><a href="#cb56-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"6"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb56-21"><a href="#cb56-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"7"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb56-22"><a href="#cb56-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb56-23"><a href="#cb56-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb56-24"><a href="#cb56-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
+<span id="cb56-25"><a href="#cb56-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb56-26"><a href="#cb56-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-27"><a href="#cb56-27" aria-hidden="true" tabindex="-1"></a>digits <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb56-28"><a href="#cb56-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">"one"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb56-29"><a href="#cb56-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"two"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb56-30"><a href="#cb56-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb56-31"><a href="#cb56-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">"four"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb56-32"><a href="#cb56-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">"five"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb56-33"><a href="#cb56-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">"six"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb56-34"><a href="#cb56-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seven"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb56-35"><a href="#cb56-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb56-36"><a href="#cb56-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb56-37"><a href="#cb56-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb56-38"><a href="#cb56-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb56-39"><a href="#cb56-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb56-40"><a href="#cb56-40" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb56-41"><a href="#cb56-41" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb56-42"><a href="#cb56-42" aria-hidden="true" tabindex="-1"></a>  <span class="st">"6"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb56-43"><a href="#cb56-43" aria-hidden="true" tabindex="-1"></a>  <span class="st">"7"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb56-44"><a href="#cb56-44" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb56-45"><a href="#cb56-45" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb56-46"><a href="#cb56-46" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
+<span id="cb56-47"><a href="#cb56-47" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb56-48"><a href="#cb56-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-49"><a href="#cb56-49" aria-hidden="true" tabindex="-1"></a>get_last_number <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb56-50"><a href="#cb56-50" aria-hidden="true" tabindex="-1"></a>  found_reversed_string <span class="ot">&lt;-</span></span>
+<span id="cb56-51"><a href="#cb56-51" aria-hidden="true" tabindex="-1"></a>    stringi<span class="sc">::</span><span class="fu">stri_reverse</span>(x) <span class="sc">%&gt;%</span></span>
+<span id="cb56-52"><a href="#cb56-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_extract</span>(regex_reversed)</span>
+<span id="cb56-53"><a href="#cb56-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-54"><a href="#cb56-54" aria-hidden="true" tabindex="-1"></a>  digits_reversed[found_reversed_string] <span class="sc">%&gt;%</span></span>
+<span id="cb56-55"><a href="#cb56-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="cn">NULL</span>)</span>
+<span id="cb56-56"><a href="#cb56-56" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb56-57"><a href="#cb56-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-58"><a href="#cb56-58" aria-hidden="true" tabindex="-1"></a>get_first_number <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb56-59"><a href="#cb56-59" aria-hidden="true" tabindex="-1"></a>  found_string <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(</span>
+<span id="cb56-60"><a href="#cb56-60" aria-hidden="true" tabindex="-1"></a>    x,</span>
+<span id="cb56-61"><a href="#cb56-61" aria-hidden="true" tabindex="-1"></a>    all_digits_regex</span>
+<span id="cb56-62"><a href="#cb56-62" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb56-63"><a href="#cb56-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-64"><a href="#cb56-64" aria-hidden="true" tabindex="-1"></a>  digits[found_string] <span class="sc">%&gt;%</span></span>
+<span id="cb56-65"><a href="#cb56-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="cn">NULL</span>)</span>
+<span id="cb56-66"><a href="#cb56-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-67"><a href="#cb56-67" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb56-68"><a href="#cb56-68" aria-hidden="true" tabindex="-1"></a><span class="fu">get_first_number</span>(problematic_string)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1"</code></pre>
+</div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_last_number</span>(problematic_string)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "8"</code></pre>
+</div>
+</div>
+<p>It’s working as intended, now let’s generalise it:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">amended =</span> amended,</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">first_digit =</span> <span class="fu">get_first_number</span>(amended),</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">last_digit =</span> <span class="fu">get_last_number</span>(amended),</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">combined =</span> <span class="fu">as.integer</span>(<span class="fu">str_c</span>(first_digit, last_digit))</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(combined) <span class="sc">%&gt;%</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 55701</code></pre>
+</div>
+</div>
+<p>IT WORKED!! THIS WAS THE RIGHT ANSWER!!! 🥳🥳🥹🥹</p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'alternate';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp("https:\/\/github\.com\/franciscoyira\/advent-of-code-website");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb62" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "2023: Day 1"</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2023-12-1</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - R</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - stringr</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup</span></span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">The original challenge</span><span class="co">](https://adventofcode.com/2023/day/1)</span></span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">My data</span><span class="co">](input)</span>{target="_blank"}</span>
+<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>Chosen language: <span class="in">`R`</span></span>
+<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>Notes:</span>
+<span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Puzzle input is a "calibration document"</span>
+<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Has been "amended" by an Elf</span>
+<span id="cb62-22"><a href="#cb62-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Each line was a calibration value, that now needs to be recovered</span>
+<span id="cb62-23"><a href="#cb62-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Value can be obtained by combining the first digit with the last digit to form a single two-digit number</span>
+<span id="cb62-24"><a href="#cb62-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-25"><a href="#cb62-25" aria-hidden="true" tabindex="-1"></a>Examples:</span>
+<span id="cb62-26"><a href="#cb62-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-27"><a href="#cb62-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>1abc2 -&gt; 12</span>
+<span id="cb62-28"><a href="#cb62-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>pqr3stu8vwx -&gt; 38</span>
+<span id="cb62-29"><a href="#cb62-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a1b2c3d4e5f -&gt; 15</span>
+<span id="cb62-30"><a href="#cb62-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>treb7uchet -&gt; 77</span>
+<span id="cb62-31"><a href="#cb62-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-32"><a href="#cb62-32" aria-hidden="true" tabindex="-1"></a>Adding these together produces 142.</span>
+<span id="cb62-33"><a href="#cb62-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a>Do the same for the whole puzzle input</span>
+<span id="cb62-35"><a href="#cb62-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-36"><a href="#cb62-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 1</span></span>
+<span id="cb62-37"><a href="#cb62-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-40"><a href="#cb62-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-41"><a href="#cb62-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb62-42"><a href="#cb62-42" aria-hidden="true" tabindex="-1"></a>OK <span class="ot">&lt;-</span> <span class="st">"2023"</span> <span class="sc">&lt;</span> <span class="dv">3000</span></span>
+<span id="cb62-43"><a href="#cb62-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Will only evaluate next code block if an actual year has been substituted for the placeholder</span></span>
+<span id="cb62-44"><a href="#cb62-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-45"><a href="#cb62-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-48"><a href="#cb62-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-49"><a href="#cb62-49" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb62-50"><a href="#cb62-50" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb62-51"><a href="#cb62-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-52"><a href="#cb62-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-53"><a href="#cb62-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-54"><a href="#cb62-54" aria-hidden="true" tabindex="-1"></a>Transforming the data to an appropriate data structure:</span>
+<span id="cb62-55"><a href="#cb62-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-58"><a href="#cb62-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-59"><a href="#cb62-59" aria-hidden="true" tabindex="-1"></a>amended <span class="ot">&lt;-</span> <span class="fu">read_lines</span>(<span class="fu">here</span>(<span class="st">'2023'</span>, <span class="st">'day'</span>, <span class="st">'1'</span>, <span class="st">'input'</span>))</span>
+<span id="cb62-60"><a href="#cb62-60" aria-hidden="true" tabindex="-1"></a>amended[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb62-61"><a href="#cb62-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-62"><a href="#cb62-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-63"><a href="#cb62-63" aria-hidden="true" tabindex="-1"></a><span class="fu">### Solving for a particular case</span></span>
+<span id="cb62-66"><a href="#cb62-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-67"><a href="#cb62-67" aria-hidden="true" tabindex="-1"></a>(first_case <span class="ot">&lt;-</span> amended[<span class="dv">1</span>])</span>
+<span id="cb62-68"><a href="#cb62-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-69"><a href="#cb62-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-70"><a href="#cb62-70" aria-hidden="true" tabindex="-1"></a>Extracting the numbers</span>
+<span id="cb62-73"><a href="#cb62-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-74"><a href="#cb62-74" aria-hidden="true" tabindex="-1"></a>(matrix_str_numbers <span class="ot">&lt;-</span></span>
+<span id="cb62-75"><a href="#cb62-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(first_case, <span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb62-76"><a href="#cb62-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-77"><a href="#cb62-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-78"><a href="#cb62-78" aria-hidden="true" tabindex="-1"></a>Extracting all the rows from columns one and three (the first and last number of each row)</span>
+<span id="cb62-81"><a href="#cb62-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-82"><a href="#cb62-82" aria-hidden="true" tabindex="-1"></a>numbers_i_want <span class="ot">&lt;-</span> matrix_str_numbers[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span>
+<span id="cb62-83"><a href="#cb62-83" aria-hidden="true" tabindex="-1"></a>numbers_i_want</span>
+<span id="cb62-84"><a href="#cb62-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-85"><a href="#cb62-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-86"><a href="#cb62-86" aria-hidden="true" tabindex="-1"></a>(This code will generalise ONLY IF all the other rows have 3 numbers too).</span>
+<span id="cb62-87"><a href="#cb62-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-88"><a href="#cb62-88" aria-hidden="true" tabindex="-1"></a>The following code returns the first and last number "pasted" together and converts the result from string to numeric.</span>
+<span id="cb62-91"><a href="#cb62-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-92"><a href="#cb62-92" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_flatten</span>(numbers_i_want) <span class="sc">%&gt;%</span></span>
+<span id="cb62-93"><a href="#cb62-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
+<span id="cb62-94"><a href="#cb62-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-95"><a href="#cb62-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-96"><a href="#cb62-96" aria-hidden="true" tabindex="-1"></a>Now let's try to generalise to all input rows:</span>
+<span id="cb62-97"><a href="#cb62-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-100"><a href="#cb62-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-101"><a href="#cb62-101" aria-hidden="true" tabindex="-1"></a>amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-102"><a href="#cb62-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-103"><a href="#cb62-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
+<span id="cb62-104"><a href="#cb62-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-105"><a href="#cb62-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-106"><a href="#cb62-106" aria-hidden="true" tabindex="-1"></a>Oh no. Rows have a different quantity of digits.</span>
+<span id="cb62-107"><a href="#cb62-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-108"><a href="#cb62-108" aria-hidden="true" tabindex="-1"></a>Maybe using <span class="in">`simplify=TRUE`</span> was a mistake here. Given that each element has a different quantity of digits, a list seems to be a more suitable data structure:</span>
+<span id="cb62-109"><a href="#cb62-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-112"><a href="#cb62-112" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-113"><a href="#cb62-113" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="ot">&lt;-</span> </span>
+<span id="cb62-114"><a href="#cb62-114" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-115"><a href="#cb62-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-116"><a href="#cb62-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
+<span id="cb62-117"><a href="#cb62-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-118"><a href="#cb62-118" aria-hidden="true" tabindex="-1"></a>list_digits_preview</span>
+<span id="cb62-119"><a href="#cb62-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-120"><a href="#cb62-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-121"><a href="#cb62-121" aria-hidden="true" tabindex="-1"></a>Now, how can I extract the first and last element from each element of the list? My gut feeling is that I'll need <span class="in">`purrr`</span> for this:</span>
+<span id="cb62-122"><a href="#cb62-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-123"><a href="#cb62-123" aria-hidden="true" tabindex="-1"></a><span class="in">`pluck`</span> and <span class="in">`keep_at`</span> seem to be useful functions for this task</span>
+<span id="cb62-124"><a href="#cb62-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-127"><a href="#cb62-127" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-128"><a href="#cb62-128" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="sc">%&gt;%</span></span>
+<span id="cb62-129"><a href="#cb62-129" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This should extract the first and last digit from each element of the list </span></span>
+<span id="cb62-130"><a href="#cb62-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">keep_at</span>(., <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">length</span>(.))))</span>
+<span id="cb62-131"><a href="#cb62-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-132"><a href="#cb62-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-133"><a href="#cb62-133" aria-hidden="true" tabindex="-1"></a>It is working!!</span>
+<span id="cb62-134"><a href="#cb62-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-135"><a href="#cb62-135" aria-hidden="true" tabindex="-1"></a>Now I'll apply the action to the whole list:</span>
+<span id="cb62-136"><a href="#cb62-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-139"><a href="#cb62-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-140"><a href="#cb62-140" aria-hidden="true" tabindex="-1"></a>list_useful_digits <span class="ot">&lt;-</span> </span>
+<span id="cb62-141"><a href="#cb62-141" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-142"><a href="#cb62-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-143"><a href="#cb62-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">keep_at</span>(., <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">length</span>(.))))</span>
+<span id="cb62-144"><a href="#cb62-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-145"><a href="#cb62-145" aria-hidden="true" tabindex="-1"></a>list_useful_digits[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb62-146"><a href="#cb62-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-147"><a href="#cb62-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-148"><a href="#cb62-148" aria-hidden="true" tabindex="-1"></a>Hmmm... Why does element  7 have only 1 digit?</span>
+<span id="cb62-149"><a href="#cb62-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-152"><a href="#cb62-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-153"><a href="#cb62-153" aria-hidden="true" tabindex="-1"></a>amended[<span class="dv">7</span>]</span>
+<span id="cb62-154"><a href="#cb62-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-155"><a href="#cb62-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-156"><a href="#cb62-156" aria-hidden="true" tabindex="-1"></a>It's got just one digit as a number, but there are other digits written out in words. Should we count those? The prompt isn't really clear about this. But since the example only talks about digits as numbers, I guess I'll just go with those for now. If I've got this wrong and my solution gets rejected, well, I can always give it another shot</span>
+<span id="cb62-157"><a href="#cb62-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-158"><a href="#cb62-158" aria-hidden="true" tabindex="-1"></a>Now let's concatenate the digits row-wise, turn them into a number and add them up:</span>
+<span id="cb62-159"><a href="#cb62-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-162"><a href="#cb62-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-163"><a href="#cb62-163" aria-hidden="true" tabindex="-1"></a>solution <span class="ot">&lt;-</span> </span>
+<span id="cb62-164"><a href="#cb62-164" aria-hidden="true" tabindex="-1"></a>  list_useful_digits <span class="sc">%&gt;%</span></span>
+<span id="cb62-165"><a href="#cb62-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
+<span id="cb62-166"><a href="#cb62-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(as.integer) <span class="sc">%&gt;%</span></span>
+<span id="cb62-167"><a href="#cb62-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_vector</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb62-168"><a href="#cb62-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb62-169"><a href="#cb62-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-170"><a href="#cb62-170" aria-hidden="true" tabindex="-1"></a>solution</span>
+<span id="cb62-171"><a href="#cb62-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-172"><a href="#cb62-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-173"><a href="#cb62-173" aria-hidden="true" tabindex="-1"></a>❌ Solution was rejected and the website sats it's too low 🤔 </span>
+<span id="cb62-174"><a href="#cb62-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-175"><a href="#cb62-175" aria-hidden="true" tabindex="-1"></a>The most likely suspect here is the way <span class="in">`map(~keep_at(., c(1, length(.))))`</span> is handling the rows with only one digit.</span>
+<span id="cb62-176"><a href="#cb62-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-177"><a href="#cb62-177" aria-hidden="true" tabindex="-1"></a>Some alternatives I could try:</span>
+<span id="cb62-178"><a href="#cb62-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-179"><a href="#cb62-179" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>If the input row has only one digit, then use it as first AND last digit when building the number (e.g. if the row only contains 7, the number I would obtain from that row should be 77).</span>
+<span id="cb62-180"><a href="#cb62-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-181"><a href="#cb62-181" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Take into account digits that are written as words (e.g. "three"). This is less likely to work and it would be weird for the exercise to expect people to do this and not mentioning it explicitely in the prompt or the examples.</span>
+<span id="cb62-182"><a href="#cb62-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-183"><a href="#cb62-183" aria-hidden="true" tabindex="-1"></a>I'll go with alternative 1.</span>
+<span id="cb62-184"><a href="#cb62-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-185"><a href="#cb62-185" aria-hidden="true" tabindex="-1"></a><span class="fu">### Handling rows with just one digit</span></span>
+<span id="cb62-186"><a href="#cb62-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-187"><a href="#cb62-187" aria-hidden="true" tabindex="-1"></a>I'll take a slice from the first 10 rows, as the first case with one digit appears in row 7:</span>
+<span id="cb62-190"><a href="#cb62-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-191"><a href="#cb62-191" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="ot">&lt;-</span> </span>
+<span id="cb62-192"><a href="#cb62-192" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-193"><a href="#cb62-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-194"><a href="#cb62-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb62-195"><a href="#cb62-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-196"><a href="#cb62-196" aria-hidden="true" tabindex="-1"></a>list_digits_preview</span>
+<span id="cb62-197"><a href="#cb62-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-198"><a href="#cb62-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-199"><a href="#cb62-199" aria-hidden="true" tabindex="-1"></a>I have a feeling that <span class="co">[</span><span class="ot">`purrr::pluck`</span><span class="co">](https://purrr.tidyverse.org/reference/pluck.html)</span> may do the trick here:</span>
+<span id="cb62-200"><a href="#cb62-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-203"><a href="#cb62-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-204"><a href="#cb62-204" aria-hidden="true" tabindex="-1"></a>get_first_and_last <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb62-205"><a href="#cb62-205" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">pluck</span>(x, <span class="dv">1</span>), <span class="fu">pluck</span>(x, <span class="fu">length</span>(x)))</span>
+<span id="cb62-206"><a href="#cb62-206" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb62-207"><a href="#cb62-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-208"><a href="#cb62-208" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="sc">%&gt;%</span></span>
+<span id="cb62-209"><a href="#cb62-209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last)</span>
+<span id="cb62-210"><a href="#cb62-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-211"><a href="#cb62-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-212"><a href="#cb62-212" aria-hidden="true" tabindex="-1"></a>This function does what I want (and yes, using <span class="in">`pluck`</span> is a bit unnecessary since I could just have used regular subsetting, e.g. <span class="in">`x[[1]]`</span> and <span class="in">`x[[length(x)]]`</span>, but I'm doing this with the <span class="co">[</span><span class="ot">purrr cheat sheet</span><span class="co">](https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf)</span> in front of me, so <span class="in">`pluck`</span> was what came to my mind).</span>
+<span id="cb62-213"><a href="#cb62-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-214"><a href="#cb62-214" aria-hidden="true" tabindex="-1"></a>2nd attempt, this time using <span class="in">`get_first_and_last`</span>.</span>
+<span id="cb62-215"><a href="#cb62-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-218"><a href="#cb62-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-219"><a href="#cb62-219" aria-hidden="true" tabindex="-1"></a>solution2 <span class="ot">&lt;-</span> </span>
+<span id="cb62-220"><a href="#cb62-220" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-221"><a href="#cb62-221" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-222"><a href="#cb62-222" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last) <span class="sc">%&gt;%</span></span>
+<span id="cb62-223"><a href="#cb62-223" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
+<span id="cb62-224"><a href="#cb62-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(as.integer) <span class="sc">%&gt;%</span></span>
+<span id="cb62-225"><a href="#cb62-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_vector</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb62-226"><a href="#cb62-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb62-227"><a href="#cb62-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-228"><a href="#cb62-228" aria-hidden="true" tabindex="-1"></a>solution2</span>
+<span id="cb62-229"><a href="#cb62-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-230"><a href="#cb62-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-231"><a href="#cb62-231" aria-hidden="true" tabindex="-1"></a>This is the correct solution!! 🥳🥳🥳</span>
+<span id="cb62-232"><a href="#cb62-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-233"><a href="#cb62-233" aria-hidden="true" tabindex="-1"></a>Onto the second part!</span>
+<span id="cb62-234"><a href="#cb62-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-235"><a href="#cb62-235" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 2</span></span>
+<span id="cb62-236"><a href="#cb62-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-237"><a href="#cb62-237" aria-hidden="true" tabindex="-1"></a>Saw this one coming: now I need to tackle the digits spelled out as words 😬. </span>
+<span id="cb62-238"><a href="#cb62-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-239"><a href="#cb62-239" aria-hidden="true" tabindex="-1"></a><span class="fu">### First (naive) attempt</span></span>
+<span id="cb62-240"><a href="#cb62-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-241"><a href="#cb62-241" aria-hidden="true" tabindex="-1"></a>IMHO the simplest approach is to write a function that converts digits spelled out in a string into their numeric form. Then, I can incorporate this function into my pipeline using a <span class="in">`map`</span> call, right before <span class="in">`str_extract_all`</span>.</span>
+<span id="cb62-244"><a href="#cb62-244" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-245"><a href="#cb62-245" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit <span class="ot">&lt;-</span> amended[<span class="dv">7</span>]</span>
+<span id="cb62-246"><a href="#cb62-246" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit</span>
+<span id="cb62-247"><a href="#cb62-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-248"><a href="#cb62-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-249"><a href="#cb62-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-252"><a href="#cb62-252" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-253"><a href="#cb62-253" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit <span class="sc">%&gt;%</span></span>
+<span id="cb62-254"><a href="#cb62-254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(</span>
+<span id="cb62-255"><a href="#cb62-255" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(</span>
+<span id="cb62-256"><a href="#cb62-256" aria-hidden="true" tabindex="-1"></a>      <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-257"><a href="#cb62-257" aria-hidden="true" tabindex="-1"></a>      <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-258"><a href="#cb62-258" aria-hidden="true" tabindex="-1"></a>      <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span></span>
+<span id="cb62-259"><a href="#cb62-259" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb62-260"><a href="#cb62-260" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb62-261"><a href="#cb62-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-262"><a href="#cb62-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-263"><a href="#cb62-263" aria-hidden="true" tabindex="-1"></a>Working as expected.</span>
+<span id="cb62-264"><a href="#cb62-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-265"><a href="#cb62-265" aria-hidden="true" tabindex="-1"></a>Now let's apply the function to the full data.</span>
+<span id="cb62-266"><a href="#cb62-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-267"><a href="#cb62-267" aria-hidden="true" tabindex="-1"></a>I'll start by creating the replacement vector (although I'm pretty sure it's already a part of some R package that's slipping my mind right now).</span>
+<span id="cb62-270"><a href="#cb62-270" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-271"><a href="#cb62-271" aria-hidden="true" tabindex="-1"></a>digits <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb62-272"><a href="#cb62-272" aria-hidden="true" tabindex="-1"></a>  <span class="st">"one"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-273"><a href="#cb62-273" aria-hidden="true" tabindex="-1"></a>  <span class="st">"two"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-274"><a href="#cb62-274" aria-hidden="true" tabindex="-1"></a>  <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-275"><a href="#cb62-275" aria-hidden="true" tabindex="-1"></a>  <span class="st">"four"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-276"><a href="#cb62-276" aria-hidden="true" tabindex="-1"></a>  <span class="st">"five"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-277"><a href="#cb62-277" aria-hidden="true" tabindex="-1"></a>  <span class="st">"six"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-278"><a href="#cb62-278" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seven"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-279"><a href="#cb62-279" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-280"><a href="#cb62-280" aria-hidden="true" tabindex="-1"></a>  <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span></span>
+<span id="cb62-281"><a href="#cb62-281" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-282"><a href="#cb62-282" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-283"><a href="#cb62-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-286"><a href="#cb62-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-287"><a href="#cb62-287" aria-hidden="true" tabindex="-1"></a>solution3 <span class="ot">&lt;-</span> </span>
+<span id="cb62-288"><a href="#cb62-288" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-289"><a href="#cb62-289" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits) <span class="sc">%&gt;%</span></span>
+<span id="cb62-290"><a href="#cb62-290" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-291"><a href="#cb62-291" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last) <span class="sc">%&gt;%</span></span>
+<span id="cb62-292"><a href="#cb62-292" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
+<span id="cb62-293"><a href="#cb62-293" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(as.integer) <span class="sc">%&gt;%</span></span>
+<span id="cb62-294"><a href="#cb62-294" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_vector</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb62-295"><a href="#cb62-295" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb62-296"><a href="#cb62-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-297"><a href="#cb62-297" aria-hidden="true" tabindex="-1"></a>solution3</span>
+<span id="cb62-298"><a href="#cb62-298" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-299"><a href="#cb62-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-300"><a href="#cb62-300" aria-hidden="true" tabindex="-1"></a>The solution wasn't right.</span>
+<span id="cb62-301"><a href="#cb62-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-302"><a href="#cb62-302" aria-hidden="true" tabindex="-1"></a><span class="fu">### Second attempt: handling overlapping patterns</span></span>
+<span id="cb62-303"><a href="#cb62-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-304"><a href="#cb62-304" aria-hidden="true" tabindex="-1"></a>Time to take a closer look at the pipeline using a <span class="in">`tibble`</span>.</span>
+<span id="cb62-305"><a href="#cb62-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-308"><a href="#cb62-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-309"><a href="#cb62-309" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb62-310"><a href="#cb62-310" aria-hidden="true" tabindex="-1"></a>  <span class="at">original =</span> amended,</span>
+<span id="cb62-311"><a href="#cb62-311" aria-hidden="true" tabindex="-1"></a>  <span class="at">new =</span> original <span class="sc">%&gt;%</span></span>
+<span id="cb62-312"><a href="#cb62-312" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits),</span>
+<span id="cb62-313"><a href="#cb62-313" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-314"><a href="#cb62-314" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits) <span class="sc">%&gt;%</span></span>
+<span id="cb62-315"><a href="#cb62-315" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-316"><a href="#cb62-316" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(get_first_and_last) <span class="sc">%&gt;%</span></span>
+<span id="cb62-317"><a href="#cb62-317" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
+<span id="cb62-318"><a href="#cb62-318" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_vector</span>()</span>
+<span id="cb62-319"><a href="#cb62-319" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-320"><a href="#cb62-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-321"><a href="#cb62-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-322"><a href="#cb62-322" aria-hidden="true" tabindex="-1"></a>Hypothesis: The issue might arise in instances like <span class="in">`"zoneight234"`</span>, where the spellings of two numbers are overlapping.</span>
+<span id="cb62-323"><a href="#cb62-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-326"><a href="#cb62-326" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-327"><a href="#cb62-327" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace_all</span>(<span class="st">"zoneight234"</span>, <span class="at">pattern =</span> digits)</span>
+<span id="cb62-328"><a href="#cb62-328" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-329"><a href="#cb62-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-330"><a href="#cb62-330" aria-hidden="true" tabindex="-1"></a>I'll try to handle these cases to make sure that every spelled-out digit in the text is returned, even if they overlap.</span>
+<span id="cb62-331"><a href="#cb62-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-332"><a href="#cb62-332" aria-hidden="true" tabindex="-1"></a>Maybe I can get closer to that by using the <span class="in">`stringi`</span> package?</span>
+<span id="cb62-333"><a href="#cb62-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-336"><a href="#cb62-336" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-337"><a href="#cb62-337" aria-hidden="true" tabindex="-1"></a>stringi<span class="sc">::</span><span class="fu">stri_replace_all_regex</span>(<span class="st">"zoneight234"</span>, <span class="at">pattern =</span> <span class="fu">names</span>(digits), <span class="at">replacement =</span> digits, <span class="at">vectorize_all =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb62-338"><a href="#cb62-338" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-339"><a href="#cb62-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-340"><a href="#cb62-340" aria-hidden="true" tabindex="-1"></a>This is not working.</span>
+<span id="cb62-341"><a href="#cb62-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-342"><a href="#cb62-342" aria-hidden="true" tabindex="-1"></a>Something else I could try:</span>
+<span id="cb62-343"><a href="#cb62-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-344"><a href="#cb62-344" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using the <span class="in">`_first`</span> and <span class="in">`_last`</span> functions from stringi to identify digits, whether they are numerically written or spelled out.</span>
+<span id="cb62-345"><a href="#cb62-345" aria-hidden="true" tabindex="-1"></a>b. Then, replacing the spelled-out digits that appear at either the beginning or end of the string.</span>
+<span id="cb62-346"><a href="#cb62-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-349"><a href="#cb62-349" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-350"><a href="#cb62-350" aria-hidden="true" tabindex="-1"></a>problematic_string <span class="ot">&lt;-</span> <span class="st">"zone2344oneight"</span></span>
+<span id="cb62-351"><a href="#cb62-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-352"><a href="#cb62-352" aria-hidden="true" tabindex="-1"></a>all_digits_regex <span class="ot">&lt;-</span> <span class="st">"[0123456789]|one|two|three|four|five|six|seven|eight|nine"</span></span>
+<span id="cb62-353"><a href="#cb62-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-354"><a href="#cb62-354" aria-hidden="true" tabindex="-1"></a>all_digits_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb62-355"><a href="#cb62-355" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(digits),</span>
+<span id="cb62-356"><a href="#cb62-356" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span></span>
+<span id="cb62-357"><a href="#cb62-357" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-358"><a href="#cb62-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-359"><a href="#cb62-359" aria-hidden="true" tabindex="-1"></a>stringi<span class="sc">::</span><span class="fu">stri_extract_last_regex</span>(</span>
+<span id="cb62-360"><a href="#cb62-360" aria-hidden="true" tabindex="-1"></a>  <span class="at">str =</span> problematic_string,</span>
+<span id="cb62-361"><a href="#cb62-361" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> all_digits_vector</span>
+<span id="cb62-362"><a href="#cb62-362" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-363"><a href="#cb62-363" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-364"><a href="#cb62-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-365"><a href="#cb62-365" aria-hidden="true" tabindex="-1"></a>Okay, this method DOES return all the digits that appear in the string, but  I end up losing details about where the digits are positioned, which is needed for identifying the first and last digits in each row.</span>
+<span id="cb62-366"><a href="#cb62-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-367"><a href="#cb62-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-368"><a href="#cb62-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-369"><a href="#cb62-369" aria-hidden="true" tabindex="-1"></a>More ideas: </span>
+<span id="cb62-370"><a href="#cb62-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-371"><a href="#cb62-371" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using <span class="in">`str_localte_all`</span>, a <span class="in">`stringr`</span> function that allows matching each digit as an separate pattern (thus avoiding the overlap problem) and gives information about the POSITION of the pattern. Then use that info to find the first and the last match in each row.</span>
+<span id="cb62-372"><a href="#cb62-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-373"><a href="#cb62-373" aria-hidden="true" tabindex="-1"></a>Example: </span>
+<span id="cb62-376"><a href="#cb62-376" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-377"><a href="#cb62-377" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_locate_all</span>(</span>
+<span id="cb62-378"><a href="#cb62-378" aria-hidden="true" tabindex="-1"></a>  <span class="at">string =</span> problematic_string,</span>
+<span id="cb62-379"><a href="#cb62-379" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> all_digits_vector</span>
+<span id="cb62-380"><a href="#cb62-380" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>]</span>
+<span id="cb62-381"><a href="#cb62-381" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-382"><a href="#cb62-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-383"><a href="#cb62-383" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>CRAZY IDEA!!! What if I reverse the string, and then look for first match of the **reversed** names of the digits??</span>
+<span id="cb62-384"><a href="#cb62-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-385"><a href="#cb62-385" aria-hidden="true" tabindex="-1"></a>After all, the only matches that matter for solving this puzzle are the first one and the last one. For the first match, overlapping is not a real problem because it causes the *second* digit not to match (example: "eight" in "oneight", here "one" is always matched or detected).</span>
+<span id="cb62-386"><a href="#cb62-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-387"><a href="#cb62-387" aria-hidden="true" tabindex="-1"></a>Reversing the strings and their patterns could mirror this dynamic when matching the last digit.</span>
+<span id="cb62-388"><a href="#cb62-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-391"><a href="#cb62-391" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-392"><a href="#cb62-392" aria-hidden="true" tabindex="-1"></a>regex_reversed <span class="ot">&lt;-</span> <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
+<span id="cb62-393"><a href="#cb62-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-394"><a href="#cb62-394" aria-hidden="true" tabindex="-1"></a>vector_reversed <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb62-395"><a href="#cb62-395" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eno"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-396"><a href="#cb62-396" aria-hidden="true" tabindex="-1"></a>  <span class="st">"owt"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-397"><a href="#cb62-397" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eerht"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-398"><a href="#cb62-398" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ruof"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-399"><a href="#cb62-399" aria-hidden="true" tabindex="-1"></a>  <span class="st">"evif"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-400"><a href="#cb62-400" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xis"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-401"><a href="#cb62-401" aria-hidden="true" tabindex="-1"></a>  <span class="st">"neves"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-402"><a href="#cb62-402" aria-hidden="true" tabindex="-1"></a>  <span class="st">"thgie"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-403"><a href="#cb62-403" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-404"><a href="#cb62-404" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-405"><a href="#cb62-405" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-406"><a href="#cb62-406" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-407"><a href="#cb62-407" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-408"><a href="#cb62-408" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-409"><a href="#cb62-409" aria-hidden="true" tabindex="-1"></a>  <span class="st">"6"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-410"><a href="#cb62-410" aria-hidden="true" tabindex="-1"></a>  <span class="st">"7"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-411"><a href="#cb62-411" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-412"><a href="#cb62-412" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-413"><a href="#cb62-413" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
+<span id="cb62-414"><a href="#cb62-414" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-415"><a href="#cb62-415" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-416"><a href="#cb62-416" aria-hidden="true" tabindex="-1"></a>In this example, I should be able to match "eight" as the last string, despite it overlapping with "one".</span>
+<span id="cb62-419"><a href="#cb62-419" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-420"><a href="#cb62-420" aria-hidden="true" tabindex="-1"></a>problematic_string</span>
+<span id="cb62-421"><a href="#cb62-421" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-422"><a href="#cb62-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-423"><a href="#cb62-423" aria-hidden="true" tabindex="-1"></a>My strategy is to invert it and then look for "thgie" 😂💀</span>
+<span id="cb62-426"><a href="#cb62-426" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-427"><a href="#cb62-427" aria-hidden="true" tabindex="-1"></a>reversed_problematic_string <span class="ot">&lt;-</span> </span>
+<span id="cb62-428"><a href="#cb62-428" aria-hidden="true" tabindex="-1"></a>  stringi<span class="sc">::</span><span class="fu">stri_reverse</span>(</span>
+<span id="cb62-429"><a href="#cb62-429" aria-hidden="true" tabindex="-1"></a>  problematic_string</span>
+<span id="cb62-430"><a href="#cb62-430" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-431"><a href="#cb62-431" aria-hidden="true" tabindex="-1"></a>reversed_problematic_string</span>
+<span id="cb62-432"><a href="#cb62-432" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-433"><a href="#cb62-433" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-436"><a href="#cb62-436" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-437"><a href="#cb62-437" aria-hidden="true" tabindex="-1"></a>found_reversed_string <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(</span>
+<span id="cb62-438"><a href="#cb62-438" aria-hidden="true" tabindex="-1"></a>  reversed_problematic_string,</span>
+<span id="cb62-439"><a href="#cb62-439" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
+<span id="cb62-440"><a href="#cb62-440" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-441"><a href="#cb62-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-442"><a href="#cb62-442" aria-hidden="true" tabindex="-1"></a>found_reversed_string</span>
+<span id="cb62-443"><a href="#cb62-443" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-444"><a href="#cb62-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-445"><a href="#cb62-445" aria-hidden="true" tabindex="-1"></a>After finding it, I can use the following code to get back the original number</span>
+<span id="cb62-448"><a href="#cb62-448" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-449"><a href="#cb62-449" aria-hidden="true" tabindex="-1"></a>vector_reversed[found_reversed_string]</span>
+<span id="cb62-450"><a href="#cb62-450" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-451"><a href="#cb62-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-452"><a href="#cb62-452" aria-hidden="true" tabindex="-1"></a>It's working. Now, let's wrap this pipeline in a function to apply it to whole dataset:</span>
+<span id="cb62-453"><a href="#cb62-453" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-456"><a href="#cb62-456" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-457"><a href="#cb62-457" aria-hidden="true" tabindex="-1"></a>regex_reversed <span class="ot">&lt;-</span> <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
+<span id="cb62-458"><a href="#cb62-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-459"><a href="#cb62-459" aria-hidden="true" tabindex="-1"></a>all_digits_regex <span class="ot">&lt;-</span> <span class="st">"[0123456789]|one|two|three|four|five|six|seven|eight|nine"</span></span>
+<span id="cb62-460"><a href="#cb62-460" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-461"><a href="#cb62-461" aria-hidden="true" tabindex="-1"></a>digits_reversed <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb62-462"><a href="#cb62-462" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eno"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-463"><a href="#cb62-463" aria-hidden="true" tabindex="-1"></a>  <span class="st">"owt"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-464"><a href="#cb62-464" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eerht"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-465"><a href="#cb62-465" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ruof"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-466"><a href="#cb62-466" aria-hidden="true" tabindex="-1"></a>  <span class="st">"evif"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-467"><a href="#cb62-467" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xis"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-468"><a href="#cb62-468" aria-hidden="true" tabindex="-1"></a>  <span class="st">"neves"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-469"><a href="#cb62-469" aria-hidden="true" tabindex="-1"></a>  <span class="st">"thgie"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-470"><a href="#cb62-470" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-471"><a href="#cb62-471" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-472"><a href="#cb62-472" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-473"><a href="#cb62-473" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-474"><a href="#cb62-474" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-475"><a href="#cb62-475" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-476"><a href="#cb62-476" aria-hidden="true" tabindex="-1"></a>  <span class="st">"6"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-477"><a href="#cb62-477" aria-hidden="true" tabindex="-1"></a>  <span class="st">"7"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-478"><a href="#cb62-478" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-479"><a href="#cb62-479" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-480"><a href="#cb62-480" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
+<span id="cb62-481"><a href="#cb62-481" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-482"><a href="#cb62-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-483"><a href="#cb62-483" aria-hidden="true" tabindex="-1"></a>digits <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb62-484"><a href="#cb62-484" aria-hidden="true" tabindex="-1"></a>  <span class="st">"one"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-485"><a href="#cb62-485" aria-hidden="true" tabindex="-1"></a>  <span class="st">"two"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-486"><a href="#cb62-486" aria-hidden="true" tabindex="-1"></a>  <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-487"><a href="#cb62-487" aria-hidden="true" tabindex="-1"></a>  <span class="st">"four"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-488"><a href="#cb62-488" aria-hidden="true" tabindex="-1"></a>  <span class="st">"five"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-489"><a href="#cb62-489" aria-hidden="true" tabindex="-1"></a>  <span class="st">"six"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-490"><a href="#cb62-490" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seven"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-491"><a href="#cb62-491" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-492"><a href="#cb62-492" aria-hidden="true" tabindex="-1"></a>  <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-493"><a href="#cb62-493" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-494"><a href="#cb62-494" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-495"><a href="#cb62-495" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-496"><a href="#cb62-496" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-497"><a href="#cb62-497" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-498"><a href="#cb62-498" aria-hidden="true" tabindex="-1"></a>  <span class="st">"6"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-499"><a href="#cb62-499" aria-hidden="true" tabindex="-1"></a>  <span class="st">"7"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-500"><a href="#cb62-500" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-501"><a href="#cb62-501" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-502"><a href="#cb62-502" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
+<span id="cb62-503"><a href="#cb62-503" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-504"><a href="#cb62-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-505"><a href="#cb62-505" aria-hidden="true" tabindex="-1"></a>get_last_number <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb62-506"><a href="#cb62-506" aria-hidden="true" tabindex="-1"></a>  found_reversed_string <span class="ot">&lt;-</span></span>
+<span id="cb62-507"><a href="#cb62-507" aria-hidden="true" tabindex="-1"></a>    stringi<span class="sc">::</span><span class="fu">stri_reverse</span>(x) <span class="sc">%&gt;%</span></span>
+<span id="cb62-508"><a href="#cb62-508" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_extract</span>(regex_reversed)</span>
+<span id="cb62-509"><a href="#cb62-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-510"><a href="#cb62-510" aria-hidden="true" tabindex="-1"></a>  digits_reversed[found_reversed_string] <span class="sc">%&gt;%</span></span>
+<span id="cb62-511"><a href="#cb62-511" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="cn">NULL</span>)</span>
+<span id="cb62-512"><a href="#cb62-512" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb62-513"><a href="#cb62-513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-514"><a href="#cb62-514" aria-hidden="true" tabindex="-1"></a>get_first_number <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb62-515"><a href="#cb62-515" aria-hidden="true" tabindex="-1"></a>  found_string <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(</span>
+<span id="cb62-516"><a href="#cb62-516" aria-hidden="true" tabindex="-1"></a>    x,</span>
+<span id="cb62-517"><a href="#cb62-517" aria-hidden="true" tabindex="-1"></a>    all_digits_regex</span>
+<span id="cb62-518"><a href="#cb62-518" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb62-519"><a href="#cb62-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-520"><a href="#cb62-520" aria-hidden="true" tabindex="-1"></a>  digits[found_string] <span class="sc">%&gt;%</span></span>
+<span id="cb62-521"><a href="#cb62-521" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="cn">NULL</span>)</span>
+<span id="cb62-522"><a href="#cb62-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-523"><a href="#cb62-523" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb62-524"><a href="#cb62-524" aria-hidden="true" tabindex="-1"></a><span class="fu">get_first_number</span>(problematic_string)</span>
+<span id="cb62-525"><a href="#cb62-525" aria-hidden="true" tabindex="-1"></a><span class="fu">get_last_number</span>(problematic_string)</span>
+<span id="cb62-526"><a href="#cb62-526" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-527"><a href="#cb62-527" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-528"><a href="#cb62-528" aria-hidden="true" tabindex="-1"></a>It's working as intended, now let's generalise it:</span>
+<span id="cb62-529"><a href="#cb62-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-530"><a href="#cb62-530" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-533"><a href="#cb62-533" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-534"><a href="#cb62-534" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb62-535"><a href="#cb62-535" aria-hidden="true" tabindex="-1"></a>  <span class="at">amended =</span> amended,</span>
+<span id="cb62-536"><a href="#cb62-536" aria-hidden="true" tabindex="-1"></a>  <span class="at">first_digit =</span> <span class="fu">get_first_number</span>(amended),</span>
+<span id="cb62-537"><a href="#cb62-537" aria-hidden="true" tabindex="-1"></a>  <span class="at">last_digit =</span> <span class="fu">get_last_number</span>(amended),</span>
+<span id="cb62-538"><a href="#cb62-538" aria-hidden="true" tabindex="-1"></a>  <span class="at">combined =</span> <span class="fu">as.integer</span>(<span class="fu">str_c</span>(first_digit, last_digit))</span>
+<span id="cb62-539"><a href="#cb62-539" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-540"><a href="#cb62-540" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(combined) <span class="sc">%&gt;%</span></span>
+<span id="cb62-541"><a href="#cb62-541" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb62-542"><a href="#cb62-542" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-543"><a href="#cb62-543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-544"><a href="#cb62-544" aria-hidden="true" tabindex="-1"></a>IT WORKED!! THIS WAS THE RIGHT ANSWER!!! 🥳🥳🥹🥹</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
