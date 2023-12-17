@@ -1,1 +1,1 @@
-Sitemap: https://franciscoyira.github.io/advent-of-code-website/sitemap.xml
+Sitemap: https://github.com/franciscoyira/advent-of-code-website/sitemap.xml
