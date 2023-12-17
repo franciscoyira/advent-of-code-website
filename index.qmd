@@ -1,6 +1,6 @@
 ---
 title: "Advent of Code"
-subtitle: "My solutions and notes"
+subtitle: "Solutions and notes by Francisco Yirá"
 #description: "My solutions and notes for Advent of Code."
 code-tools: false
 ---
