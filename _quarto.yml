@@ -9,17 +9,16 @@ execute:
   freeze: auto
   
 website:
-  title: "Advent of Code"
+  title: "Advent of Code by Francisco Yirá"
   #site-url: https://github.com
   description: My solutions to Advent of Code
-  repo-url: https://github.com/EllaKaye/advent-of-code-website-template
+  repo-url: https://github.com/franciscoyira/advent-of-code-website
   navbar:
     left:
-     - 2022.qmd
      - 2023.qmd
     right:
       - icon: github
-        href: https://github.com/EllaKaye/advent-of-code-website-template
+        href: https://github.com/franciscoyira/advent-of-code-website
   open-graph: true
 
 format:
