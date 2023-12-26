@@ -81,7 +81,14 @@
     "href": "2023/day/2023-introduction/index.html",
     "title": "2023: Introduction",
     "section": "",
-    "text": "Welcome to my Advent of Code 2023 journey! This year, I’ve decided to put a bit of extra-whimsy on this already whimsical set of puzzles by using a “spinning wheel” to decide whether I’ll attempt to solve each day’s puzzle using R or Python:\n\n\n\nSpinning wheel in the TinyDecisions app\n\n\nThis method allows me to both strengthen my already substantial R skills and also improve my fluency in Python, a language in which I have more progress to make.\nAlso, in previous years, the Advent of Code challenges often caught me unprepared schedule-wise, either due to time constraints or other commitments. However, this year, I’ve planned ahead to ensure I can engage at least with half of the puzzles throughout December (committing to solve ALL the puzzles in December is still too much because some are very challenging, and, well, work and life continue).\nI’ll aim to post the solutions in a conversational, narrative manner, sharing not only the final code, but also the thought process I followed to solve each problem."
+    "text": "Welcome to my Advent of Code 2023 journey! This year, I’ve decided to put a bit of extra-whimsy on this already whimsical set of puzzles by using a “spinning wheel” to decide whether I’ll attempt to solve each day’s puzzle using R or Python:\nThis method allows me to both strengthen my already substantial R skills and also improve my fluency in Python, a language in which I have more progress to make.\nI’ll aim to post the solutions in a conversational, narrative manner, sharing not only the final code, but also the thought process I followed to solve each problem."
+  },
+  {
+    "objectID": "2023/day/2023-introduction/index.html#on-llms-usage",
+    "href": "2023/day/2023-introduction/index.html#on-llms-usage",
+    "title": "2023: Introduction",
+    "section": "On LLMs usage",
+    "text": "On LLMs usage\nI’m adhering to the guidelines and suggestions made by the Advent of Code team regarding the use of LLMs like ChatGPT to solve the puzzles. That means I’m not using ChatGPT’s help to arrive at the solutions I’m posting on this website. However, once I’m done with a problem (that means, either solving it or giving up), I may use LLMs to seek feedback or explore alternative approaches."
   },
   {
     "objectID": "fonts/Readme.html",
@@ -96,6 +103,13 @@
     "title": "Advent of Code",
     "section": "",
     "text": "Hi there! Welcome to this mini-site where I’ll be sharing my solutions to the Advent of Code puzzles. Advent of Code is a series of increasingly difficult programming challenges, released daily each year throughout December in the run-up to Christmas.\nTo see my solutions and notes, just click on the corresponding year in the top navigation bar (though, as of now, I’ve only published solutions for 2023).\nThis website is created using the EllaKaye/advent-of-code-website-template template repository. In the README of the repo you can find documentation on how to use it and adapt it, in case you can to publish your solutions in a similar format (which you should totally do 😁)."
+  },
+  {
+    "objectID": "index.html#on-llms-usage",
+    "href": "index.html#on-llms-usage",
+    "title": "Advent of Code",
+    "section": "On LLMs usage",
+    "text": "On LLMs usage\nI’m adhering to the guidelines and suggestions made by the Advent of Code team regarding the use of LLMs like ChatGPT to solve the puzzles. That means I’m not using ChatGPT’s help to arrive at the solutions I’m posting on this website. However, once I’m done with a problem (that means, either solving it or giving up), I may use LLMs to seek feedback or explore alternative approaches."
   },
   {
     "objectID": "2022.html",
