@@ -12,3 +12,7 @@ Hi there! Welcome to this mini-site where I'll be sharing my solutions to the Ad
 To see my solutions and notes, just click on the corresponding year in the top navigation bar (though, as of now, I've only published solutions for [2023](/2023.html)).
 
 This website is created using the [EllaKaye/advent-of-code-website-template](https://github.com/EllaKaye/advent-of-code-website-template) template repository. In the README of the repo you can find documentation on how to use it and adapt it, in case you can to publish your solutions in a similar format (which you should totally do 😁).
+
+## On LLMs usage
+
+I'm adhering to the [guidelines and suggestions made by the Advent of Code team](https://adventofcode.com/2023/about#:~:text=Can%20I%20use,programming%20for%20you.) regarding the use of LLMs like ChatGPT to solve the puzzles. That means I'm not using ChatGPT's help to arrive at the solutions I'm posting on this website. However, once I'm done with a problem (that means, either solving it or giving up), I may use LLMs to seek feedback or explore alternative approaches.

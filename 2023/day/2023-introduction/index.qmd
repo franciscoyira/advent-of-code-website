@@ -11,6 +11,8 @@ Welcome to my [Advent of Code 2023](https://adventofcode.com/2023) journey! This
 
 This method allows me to both strengthen my already substantial R skills and also improve my fluency in Python, a language in which I have more progress to make.
 
-Also, in previous years, the Advent of Code challenges often caught me unprepared schedule-wise, either due to time constraints or other commitments. However, this year, I've planned ahead to ensure I can engage *at least* with half of the puzzles throughout December (committing to solve ALL the puzzles in December is still too much because some are very challenging, and, well, work and life continue).
-
 I'll aim to post the solutions in a conversational, narrative manner, sharing not only the final code, but also the thought process I followed to solve each problem.
+
+## On LLMs usage
+
+I'm adhering to the [guidelines and suggestions made by the Advent of Code team](https://adventofcode.com/2023/about#:~:text=Can%20I%20use,programming%20for%20you.) regarding the use of LLMs like ChatGPT to solve the puzzles. That means I'm not using ChatGPT's help to arrive at the solutions I'm posting on this website. However, once I'm done with a problem (that means, either solving it or giving up), I may use LLMs to seek feedback or explore alternative approaches.
