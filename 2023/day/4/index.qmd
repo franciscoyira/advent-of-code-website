@@ -1,0 +1,175 @@
+---
+title: "2023: Day 4"
+date: 2023-12-4
+categories:
+  - R
+  - matrices
+draft: false
+---
+
+## Setup
+
+[The original challenge](https://adventofcode.com/2023/day/4)
+
+[My data](input){target="_blank"}
+
+## Part 1
+
+There are a bunch of cards, which get points based on how many winning numbers do they have.
+I have to calculate how many points are the cards worth *in total*.
+
+```
+Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
+Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19
+Card 3:  1 21 53 59 44 | 69 82 63 72 16 21 14  1
+Card 4: 41 92 73 84 69 | 59 84 76 51 58  5 54 83
+Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
+Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
+```
+
+Numbers to the right of the vertical bar |  are the winning numbers.
+The first winning number to the left of the bar makes the card worth 1 point, and each sucesive winning number doubles the points the card is worth.
+
+```{r boilerplate}
+#| message=FALSE
+library(tidyverse)
+library(here)
+```
+
+Reading the input as a vector
+```{r}
+input <- read_lines(here("2023/day/4/input"))
+input[1:10]
+```
+
+Trying to parse the input as tidy data:
+```{r}
+card_data <- tibble(
+  input = input
+) %>%
+  separate(
+    input,
+    into = c("id", "data"),
+    sep = ": "
+  ) %>%
+  mutate(
+    id = as.integer(str_extract(id, "\\d+"))
+  )
+
+card_data
+```
+
+```{r}
+card_data_split <- card_data %>%
+  separate(
+    data,
+    into = c("my_numbers", "winning_numbers"),
+    sep = " \\| "
+  )
+
+card_data_split
+```
+
+Creating a function that parses the sequences of numbers as numeric vectors:
+```{r}
+to_numbers <- function(x) {
+  str_extract_all(x, "\\d+") %>%
+  map(as.numeric)
+}
+```
+
+
+Function that takes two vectors and calcultes how many elements from the first one are in the second one:
+```{r}
+calculate_n_winning <- function(x, y) {
+  keep(x, ~magrittr::is_in(., y)) %>%
+  length()
+}
+```
+
+
+```{r}
+card_data_processed <-
+  card_data_split %>%
+  mutate(across(c(my_numbers, winning_numbers), to_numbers)) %>%
+  mutate(n_winning = map2_dbl(my_numbers, winning_numbers, calculate_n_winning))
+
+card_data_processed
+```
+
+Now I need a function that doubles its output for each integer greater than 1. Specifically, the function should behave as follows:
+
+- f(0) = 0
+- f(1) = 1
+- f(2) = 2
+- f(3) = 4
+- f(4) = 8
+
+```{r}
+calculate_points <- function(x) {
+  if (x == 0) {
+    return(0)
+  } else {
+    return(2^(x-1))
+  }
+}
+```
+
+Applying the function to calculate how many points the cards are worth:
+```{r}
+card_data_processed %>%
+  mutate(points = map_dbl(n_winning, calculate_points)) %>%
+  count(wt = points)
+```
+
+The solution is correct 🥳
+
+## Part 2
+
+Here I think I need to use some form of recursion:
+
+> "you win copies of the scratchcards below the winning card equal to the number of matches. So, if card 10 were to have 5 matching numbers, you would win one copy each of cards 11, 12, 13, 14, and 15."
+
+> "Copies of scratchcards are scored like normal scratchcards and have the same card number as the card they copied. So, if you win a copy of card 10 and it has 5 matching numbers, it would then win a copy of the same cards that the original card 10 won: cards 11, 12, 13, 14, and 15. This process repeats until none of the copies cause you to win any more cards. (Cards will never make you copy a card past the end of the table.)"
+
+It seems that the only column I need is `n_winning`, along with a new column to keep track of how many copies of the cards I have. I'll store the data in a matrix to access and modify it using indices.
+
+```{r}
+card_data_pt2 <-
+  card_data_processed %>%
+  transmute(
+    n_matches = n_winning,
+    count = 1
+  ) %>%
+  as.matrix()
+
+card_data_pt2[1:10]
+```
+
+Now I need to code a procedure that captures the logic described in the prompt:
+```{r}
+#| cache: true
+n_original_cards <- nrow(card_data_pt2)
+
+for (i in 1:n_original_cards) {
+  n_matches_i <- card_data_pt2[i, 1]
+  count_i <- card_data_pt2[i, 2]
+
+  if (n_matches_i == 0) next
+
+  # If I have N copies of the current card, I'll win copies of the cards below N times
+  for (n in 1:count_i) {
+    for (j in 1:n_matches_i) {
+      if (i+j <= n_original_cards) {
+        # Adding one copy of each of the j cards below
+        card_data_pt2[i+j, 2] = card_data_pt2[i+j, 2] + 1
+      }
+    }
+  } 
+}
+```
+
+Adding up the scratchcards using the `count` column:
+```{r}
+sum(card_data_pt2[,2])
+```
