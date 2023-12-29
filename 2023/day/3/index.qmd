@@ -1,0 +1,269 @@
+---
+title: "2023: Day 3"
+date: 2023-12-3
+categories:
+  - python
+  - arrays
+draft: false
+---
+
+## Setup
+
+[The original challenge](https://adventofcode.com/2023/day/3)
+
+[My data](input){target="_blank"}
+
+## Part 1
+
+Notes:
+
+- A part is missing from an engine; we have to figure out which one using the numbers in the engine schematic (puzzle input).
+- Any number adjacent to a symbol, even diagonally, is a "part number" and should be included in the sum.
+- Periods do not count as a symbol.
+
+Example
+
+```
+467..114..
+...*......
+..35..633.
+......#...
+617*......
+.....+.58.
+..592.....
+......755.
+...$.*....
+.664.598..
+```
+> In this schematic, two numbers are not part numbers because they are not adjacent to a symbol: 114 (top right) and 58 (middle right). Every other number is adjacent to a symbol and so is a part number; their sum is 4361.
+
+Problems I see:
+
+- The input is a sort of matrix/grid, but we're working with multi-digit numbers that occupy several slots/cells of the matrix.
+- Computations need to span both vertical and horizontal axes (so dataframe-oriented methods and functions may not be suitable here).
+
+At this moment, I have no idea which data structure to use for this problem.
+
+The only thing that comes to mind is to put the data in a `numpy` array, then use a nested `for` loop to check certain conditions.
+
+```{python}
+import numpy as np
+import pandas as pd
+```
+
+Importing the data in a numpy array where each element is a character of the input file.
+```{python}
+# Inspiration for this: https://stackoverflow.com/a/75643841/7221164
+with open('input', 'r') as f:
+    input = np.stack([np.fromiter(list(line.strip()), dtype="object") for line in f])
+    print(input)
+```
+
+```{python}
+input.shape
+```
+
+Implementing my `for` loop
+
+- In `current_number`, I'll add the digits I find as I iterate (will reset when a period or a line break is found).
+- `is_valid` is a flag indicating whether the `current_number` should be counted in the sum (i.e., if any of its digits is adjacent to a symbol).
+- `running_sum` keeps track of the total of all valid numbers.
+
+```{python}
+debugging_array = []
+current_number = None
+is_valid = False
+running_sum = 0
+
+max_y = input.shape[0] -1
+max_x = input.shape[1] -1
+
+# Inspiration for this: https://stackoverflow.com/a/49360371
+for iy, ix in np.ndindex(input.shape):
+    value = input[iy, ix]
+
+    if not value.isdigit() or (ix == 0 and iy > 0):
+      # case when a sequence of digits is ending 
+      if current_number is not None:
+        if is_valid:
+          debugging_array.append(str(current_number) + " is valid")
+          running_sum += current_number
+          is_valid = False
+        else:
+          debugging_array.append(str(current_number) + " is NOT valid")
+
+        # reset current_numner
+        current_number = None
+    
+    if value.isdigit():
+      if current_number is None:
+        # case when a sequence of digits is starting
+        current_number = int(value)
+      else:
+        # case when we're in the middle of a sequence of digits
+        current_number = current_number*10 + int(value)
+
+      # check the surrounding elements to know if there is a symbol (only if is_valid = False, otherwise it's not necessary)
+      if is_valid is False:
+        for offset_y, offset_x in np.ndindex((3,3)):
+          curr_y=iy+offset_y-1
+          curr_x=ix+offset_x-1
+
+          # Exception when the "neighbour" would be out of the array
+          if curr_y < 0 or curr_x < 0 or curr_y > max_y or curr_x > max_x:
+            continue
+
+          # Exception when we're on the same number
+          if curr_y == iy and curr_x == ix:
+            continue
+
+          # The check itself
+          # If one of the surrounding elements is not a dot or a digit, the flag switches to True and the for loop ends
+          if input[curr_y, curr_x] != "." and not input[curr_y, curr_x].isdigit():
+            is_valid = True
+            break 
+```
+
+Inspecting how the first numbers from the input were classified:
+```{python}
+debugging_array[:10]
+```
+
+Checking my solution:
+```{python}
+print(running_sum)
+```
+
+The code is very ugly (for my taste), but the solution is correct!!
+
+## Part 2
+
+- One of the gears in the engine is malfunctioning. A gear is represented by a '*' symbol, and it must be adjacent to exactly two part numbers. The gear ratio is calculated by multiplying these two numbers together.
+
+- Task is to determine the gear ratio for each gear and then add them up.
+
+Example:
+
+```
+467..114..
+...*......
+..35..633.
+......#...
+617*......
+.....+.58.
+..592.....
+......755.
+...$.*....
+.664.598..
+```
+
+> Here there are two gears. The first one is located in the top left corner, with part numbers 467 and 35, resulting in a gear ratio of 16345. The second gear is in the lower right corner, and its gear ratio is 451490. (Note that the '*' adjacent to 617 is not a gear because it's only adjacent to one part number.)
+
+> To find the total sum of all the gear ratios in your engine schematic, simply add them up.
+
+Idea to solve this part: each time a number is valid, put it in the corresponding position of a new array that has the same dimensions as the input array.
+
+Then, iterate over the input array with a new for loop that searches for "*" and counts the N of valid numbers surrounding it. 
+
+
+```{python}
+arr_pt2 = np.zeros(input.shape)
+
+current_number = None
+
+max_y = input.shape[0] -1
+max_x = input.shape[1] -1
+
+for iy, ix in np.ndindex(input.shape):
+    value = input[iy, ix]
+    
+    # Case when the element is a * (potentially a gear)
+    if value == "*":
+      arr_pt2[iy, ix] = -1
+
+    # Checking if a number just ended
+    if not value.isdigit() or (ix == 0 and iy > 0):
+      # case when a sequence of digits is ending 
+      if current_number is not None:
+        # I need to write the current_number on the previous positions of arr_pt2
+        # Things to take into account:
+        # 1. overflowing across rows
+        # 2. I need to write the number on as many cells as digits the number has 
+
+        for i in range(len(str(current_number))):
+          # ex: for a 3 digit number, offset will take values -1, -2 and -3
+          offset = -1 - i
+          # we first try to go back one cell in the x axis
+          # (move to the left across the same row)
+          ix_offset = ix + offset
+          iy_offset = iy
+
+          # case when we overflow the beginning of the row
+          if ix_offset < 0:
+            # we move up in the y-axis
+            iy_offset = iy_offset-1
+
+            # when ix_offset == -1, we add 140 to end up with 139
+            ix_offset=ix_offset+input.shape[1]
+
+            # example
+            # if iy_offset, ix_offset == 10, -1
+            # we end up in 9, 139
+          arr_pt2[iy_offset, ix_offset] = current_number
+
+        # reset current_numner
+        current_number = None
+
+    if value.isdigit():
+      if current_number is None:
+        # case when a sequence of digits is starting
+        current_number = int(value)
+      else:
+        # case when we're in the middle of a sequence of digits
+        current_number = current_number*10 + int(value)
+```
+
+After this rather messy `for` loop, I should be able to identify gears by looking at the surrounding cells of all the '-1' values in the array, which represent '*'.
+
+```{python}
+max_y = arr_pt2.shape[0] -1
+max_x = arr_pt2.shape[1] -1
+
+running_sum = 0
+
+for iy, ix in np.ndindex(arr_pt2.shape):
+  value = arr_pt2[iy, ix]
+
+  neighbours = set()
+
+  if value == -1:
+    for offset_y, offset_x in np.ndindex((3,3)):
+      curr_y=iy+offset_y-1
+      curr_x=ix+offset_x-1
+
+      # Exception when the "neighbour" would be out of the array
+      if curr_y < 0 or curr_x < 0 or curr_y > max_y or curr_x > max_x:
+        continue
+
+      # Exception when we're on the same number
+      if curr_y == iy and curr_x == ix:
+        continue
+
+      # The check itself
+      # if a surrounding cell is a number, then I'll add it to the `neighbours` set (this data structure handles duplicated numbers automatically)
+      if arr_pt2[curr_y, curr_x] > 0:
+        neighbours.add(arr_pt2[curr_y, curr_x])
+
+  
+  if len(neighbours) == 2:
+    # multiply the neighbours
+    running_sum += neighbours.pop() * neighbours.pop()
+
+```
+
+Checking my solution:
+```{python}
+print(running_sum)
+```
+
+It was correct!

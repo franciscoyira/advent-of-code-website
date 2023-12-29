@@ -1,0 +1,120 @@
+---
+title: "2023: Day 6"
+date: 2023-12-6
+categories:
+  - python
+  - optimisation
+draft: false
+---
+
+## Setup
+
+[The original challenge](https://adventofcode.com/2023/day/6)
+
+[My data](input){target="_blank"}
+
+Notes:
+
+- We arrive to Island Island
+- There should be a large pile of sand but there isn't
+- Boat races to win trip to Desert Island: fixed amount of time and boat has to travel as far as it can
+- Input: time allowed for each race and best distance until now
+- To win, we need to go farther than each current record holder
+- Boats are **toy boats**: we press a button to charge them, and release them to allow them to move.
+
+> Boats move faster if their button was held longer, but time spent holding the button counts against the total race time. You can only hold the button at the start of the race, and boats don't move until the button is released.
+
+> Your toy boat has a starting speed of zero millimeters per millisecond. For each whole millisecond you spend at the beginning of the race holding down the button, the boat's speed increases by one millimeter per millisecond.
+
+- This is an optimisation problem.
+- For each problem, we have several ways (amount of time we can press the button) that allow us to beat the current record holder.
+
+> To see how much margin of error you have, determine the number of ways you can beat the record in each race; in this example, if you multiply these values together, you get 288 (4 * 8 * 9).
+
+## Part 1
+
+```{python}
+import pandas as pd
+import numpy as np
+```
+
+```{python}
+f = open("input", "r")
+input = f.readlines()
+# input is a list
+```
+
+Extracting the times:
+
+```{python}
+import re
+times = re.findall('[0-9]+', input[0])
+times = list(map(int, times))
+```
+
+Extracting the distances:
+```{python}
+distances = re.findall('[0-9]+', input[1])
+distances = list(map(int, distances))
+```
+
+Next, I think I could write a function that, for any pair of times and distances, returns the count of different values of time that allow to surpass the current record.
+
+
+First, let's write the code of a particular case (using the example in the prompt)
+```{python}
+time = 7
+distance = 9
+n_possible_wins = 0
+
+for i in range(time):
+  speed = i
+  available_time = time - i
+  my_distance = speed*available_time
+
+  if my_distance > distance:
+    n_possible_wins += 1
+
+print(n_possible_wins)
+```
+
+```{python}
+def calculate_n_ways_to_win(time, distance):
+  n_possible_wins = 0
+
+  for i in range(time):
+    speed = i
+    available_time = time - i
+    my_distance = speed*available_time
+
+    if my_distance > distance:
+      n_possible_wins += 1
+
+  return(n_possible_wins)
+```
+
+```{python}
+calculate_n_ways_to_win(7, 9)
+```
+
+Now I need to iterate across the two lists. I would like to do that using something similar to map2, instead of a for loop
+
+```{python}
+n_ways = list(map(calculate_n_ways_to_win, times, distances))
+```
+
+```{python}
+import operator
+from functools import reduce
+
+reduce(operator.mul, n_ways)
+```
+
+## Part 2
+
+The input interpretation changed and all the values of time and distance now actually represent two big numbers.
+
+```{python}
+calculate_n_ways_to_win(47986698, 400121310111540)
+
+```

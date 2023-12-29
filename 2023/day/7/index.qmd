@@ -1,0 +1,342 @@
+---
+title: "2023: Day 7"
+date: 2023-12-7
+categories:
+  - python
+draft: true
+---
+
+## Setup
+
+[The original challenge](https://adventofcode.com/2023/day/7)
+
+[My data](input){target="_blank"}
+
+Notes:
+
+-   Desert Island uses machines to make sand out of rocks but the machines have broken down because they stopped receiving parts needed to fix the machines.
+-   Have to play Camel Cards during the journey to figure out why the parts stopped.
+
+> In Camel Cards, you get a list of hands, and your goal is to order them based on the strength of each hand. A hand consists of five cards labeled one of A, K, Q, J, T, 9, 8, 7, 6, 5, 4, 3, or 2. The relative strength of each card follows this order, where A is the highest and 2 is the lowest.
+
+> Every hand is exactly one type. From strongest to weakest, they are:
+
+> -   Five of a kind, where all five cards have the same label: AAAAA
+>
+> -   Four of a kind, where four cards have the same label and one card has a different label: AA8AA
+>
+> -   Full house, where three cards have the same label, and the remaining two cards share a different label: 23332
+>
+> -   Three of a kind, where three cards have the same label, and the remaining two cards are each different from any other card in the hand: TTT98
+>
+> -   Two pair, where two cards share one label, two other cards share a second - label, and the remaining card has a third label: 23432
+>
+> -   One pair, where two cards share one label, and the other three cards have a different label from the pair and each other: A23A4
+>
+> -   High card, where all cards' labels are distinct: 23456
+
+- Hands are ordered first by type.
+
+- Then, the following rule applies:
+
+> Start by comparing the first card in each hand. If these cards are different, the hand with the stronger first card is considered stronger. If the first card in each hand have the same label, however, then move on to considering the second card in each hand. If they differ, the hand with the higher second card wins; otherwise, continue with the third card in each hand, then the fourth, then the fifth.
+
+> So, 33332 and 2AAAA are both four of a kind hands, but 33332 is stronger because its first card is stronger. Similarly, 77888 and 77788 are both a full house, but 77888 is stronger because its third card is stronger (and both hands have the same first and second card).
+
+Also, there is a *bid* for each hand. In the example input:
+
+```
+32T3K 765
+T55J5 684
+KK677 28
+KTJJT 220
+QQQJA 483
+```
+
+> Each hand wins an amount equal to its bid multiplied by its rank, where the weakest hand gets rank 1, the second-weakest hand gets rank 2, and so on up to the strongest hand. Because there are five hands in this example, the strongest hand will have rank 5 and its bid will be multiplied by 5.
+
+In this example, first we need to put the hands in order of strength.
+
+> - 32T3K is the only one pair and the other hands are all a stronger type, so it gets rank 1.
+> - KK677 and KTJJT are both two pair. Their first cards both have the same label, but the second card of KK677 is stronger (K vs T), so KTJJT gets rank 2 and KK677 gets rank 3.
+> - T55J5 and QQQJA are both three of a kind. QQQJA has a stronger first card, so it gets rank 5 and T55J5 gets rank 4.
+
+Total winnings = (765 * 1 + 220 * 2 + 28 * 3 + 684 * 4 + 483 * 5) = 6440.
+
+Now I have to do the same with [my data](input){target="_blank"}.
+
+## Part 1
+```{python}
+import numpy as np
+import pandas as pd
+```
+
+### Importing the data
+
+Loading the data into a `numpy` array
+```{python}
+input = np.loadtxt('input', dtype = 'object')
+input[:10]
+```
+
+What data structure do I want?
+- two lists, one with the cards, another one with the bids.
+- Alternatively, one dataframe
+
+```{python}
+cards = list(input[:, 0])
+bids = list(map(int, list(input[:, 1])))
+```
+
+### Ranking the hands
+
+One straightforward approach here is to assign points to the hands based on the rules and then sort/rank based on those points.
+
+The algorithm should be something like this:
+
+1. Identify the TYPE of the hand: five of a kind > four of a kind > full house > three of a kind > two pair > one pair > high card. Assign points based on that.
+2. Then, assign points based on the value of each of the cards of the hand, from left to right, using this sorting: (highest score) A, K, Q, J, T, 9, 8, 7, 6, 5, 4, 3, 2 (lowest score).
+
+A reasonable way of doing this would be to create a column with the points based on type, and then one column to the right for each of the cards of the hand, indicating the points corresponding to that card. Finally, perform a `sort_values()`, first by type, and then consecutively breaking ties using the columns to the right.
+
+### Function to get points based on type
+
+I'll start by solving for a particular case:
+
+Helper function:
+```{python}
+def n_distinct_cards(hand):
+  return len(set(list(hand)))
+```
+
+```{python}
+from collections import Counter
+
+example_card = 'AAAAA'
+
+# identify Five of a Kind
+my_n_diff_cards = n_distinct_cards(example_card)
+max_n_cards = max(Counter(list(example_card)).values())
+```
+
+```{python}
+if (my_n_diff_cards == 1):
+  print('Five of a kind')
+elif (my_n_diff_cards == 2):
+  # In this case, the hand could either be four of a kind or full house
+  if (max_n_cards == 4):
+    print('Four of a kind')
+  else:
+    print('Full house')
+elif (my_n_diff_cards == 3):
+  # could be: three of a kind OR two pair
+  if (max_n_cards == 3):
+    print('Three of a kind')
+  else:
+    print('Two pair')
+elif (my_n_diff_cards == 4):
+  print('One pair')
+else:
+  print('High card')
+```
+
+I tested this with all the examples and works as it should. Now I'll wrap it into a function that assignes points 
+
+```{python}
+def points_by_type(hand):
+  my_n_diff_cards = n_distinct_cards(hand)
+  max_n_cards = max(Counter(list(hand)).values())
+
+  if (my_n_diff_cards == 1):
+    #'Five of a kind'
+    return 7
+  elif (my_n_diff_cards == 2):
+    # In this case, the hand could either be four of a kind or full house
+    if (max_n_cards == 4):
+      # Four of a kind
+      return 6
+    else:
+      return 5
+  elif (my_n_diff_cards == 3):
+    # could be: three of a kind OR two pair
+    if (max_n_cards == 3):
+      # Three of a kind
+      return 4
+    else:
+      # Two pair
+      return 3
+  elif (my_n_diff_cards == 4):
+    # One pair
+    return 2
+  else:
+    # High card
+    return 1
+```
+
+Testing with the actual cards:
+```{python}
+list(map(points_by_type, cards))[1:10]
+```
+
+(I think should store the cards and the points as a `pandas` dataframe)
+
+### Function to get the points based on the cards
+
+```{python}
+kinds_cards = list("AKQJT98765432"[::-1])
+kinds_cards
+
+my_card = 'A'
+points_by_card = kinds_cards.index(my_card)
+points_by_card
+```
+
+
+```{python}
+# Trying to obtain a sorting score for the hand using all the cards at once
+kinds_cards = list("AKQJT98765432"[::-1])
+def points_by_card(hand):
+  points_by_cards = 0
+  my_cards = list(hand)
+
+  for card in my_cards:
+    points_by_cards = points_by_cards*13 + kinds_cards.index(card)
+
+  return points_by_cards
+```
+
+```{python}
+df = pd.DataFrame({
+  'hands': cards,
+  'bids': bids
+})
+
+df
+```
+
+```{python}
+df1 = df.assign(
+  points_type = list(map(points_by_type, df.hands)),
+  points_cards = list(map(points_by_card, df.hands)))\
+    .sort_values(by = ['points_type', 'points_cards'])
+```
+
+```{python}
+df1.reset_index(drop = True, inplace = True)
+df1['rank'] = df1.index + 1
+```
+
+```{python}
+sum(df1["bids"] * df1["rank"])
+```
+
+My solution is correct!
+
+## Part 2
+
+> Now, J cards are jokers - wildcards that can act like whatever card would make the hand the strongest type possible.
+
+> To balance this, J cards are now the weakest individual cards, weaker even than 2. The other cards stay in the same order: A, K, Q, T, 9, 8, 7, 6, 5, 4, 3, 2, J.
+
+Implementing this change in `points_by_card` is straightforward. Just need to re-arrange the list that maps the cards to their scores.
+
+
+```{python}
+kinds_cards = list("AKQT98765432J"[::-1])
+```
+
+But I suspect that addressing this new logic in the `points_by_type` function will be more complicated. For each joker, we have to explore what is, potentially, the best type each hand could be if we could swap that card for any other.
+
+Idea: use as input the N of jokers and the hand type without the jokers rule.
+
+- Five of a kind > can't get any better
+- Four of a kind > two scenarios 
+    - 4 jokers: the can turn into the card with different level. Type goes up to Five of a kind.
+    - 1 joker: it can turn into the kind of the other 4 cards. Type goes up too.
+- Full house > two scenarios
+    - 3 jokers: becomes five of a kind
+    - 2 jokers: becomes five of a kind
+- Three of a kind > two scenarios
+    - 3 jokers: becomes four of a kind
+    - 1 joker: becomes four of a kind
+- Two pair > two scenarios
+    - 2 jokers: becomes four of a kind
+    - 1 joker: becomes full house
+- One pair > two scenarios
+    - 2 jokers: becomes three of a kind
+    - 1 joker: becomes three of a kind
+- High card > by definition there can only by up to one joker. In that case, hand becomes "one pair".
+
+So, based on the number of jokers and the initial type of the card, we can infer how the type of the hand is going to change with these new rules.
+
+```{python}
+def new_type(points_type, n_jokers):
+  if n_jokers == 0 or points_type == 7:
+    return points_type
+
+  # Four of a kind becomes five of a kind
+  if points_type == 6:
+    return 7
+
+  # Full house becomes five of a Kind
+  if points_type == 5:
+    return 7
+
+  # Three of a kind becomes four of a kind
+  if points_type == 4:
+    return 6
+
+  # Two pair can become four of a kind or full house
+  if points_type == 3:
+    if n_jokers == 2:
+      return 6
+    else:
+      return 5
+  
+  # One pair becomes three of a kind
+  if points_type == 2:
+    return 4
+
+  # High card becomes one pair
+  if points_type == 1:
+    return 2
+
+```
+
+I also need a function that counts jokers:
+```{python}
+example_card = 'JAJAJ'
+Counter(list(example_card))['J']
+```
+
+```{python}
+def joker_counter(hand):
+  return Counter(list(hand))['J']
+```
+
+
+```{python}
+df1 = df1.assign(
+  n_jokers = list(map(joker_counter, df1.hands)))
+```
+```{python}
+df1 = df1.assign(
+  new_points_type = list(map(new_type, df1.points_type, df1.n_jokers)),
+  # Here I can apply the same function as before because I changed the value of kinds_cards
+  new_points_cards = list(map(points_by_card, df1.hands))
+)
+```
+
+
+```{python}
+df2 = df1.sort_values(by = ['new_points_type', 'new_points_cards'])\
+  .reset_index(drop = True)
+
+
+df2['rank'] = df2.index + 1
+```
+
+
+```{python}
+sum(df2["bids"] * df2["rank"])
+```

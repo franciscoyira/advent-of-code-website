@@ -1,0 +1,184 @@
+---
+title: "2023: Day 2"
+date: 2023-12-2
+categories:
+  - R
+  - stringr
+draft: false
+---
+
+## Setup
+
+[The original challenge](https://adventofcode.com/2023/day/2)
+
+[My data](input){target="_blank"}
+
+Notes:
+
+- There are three types of cubes: green, red, and blue.
+- Secret number of each type in a bag, have to figure out number.
+- We have "sample data" from the bag.
+- The input includes info (samples) from previous games.
+- Games are identified by an ID (e.g., Game 11).
+
+Example:
+
+```
+Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
+Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
+Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
+Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
+Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
+```
+
+In Game 1, three sets of cubes are sampled from the bag (then returned). The first set contains 3 blue and 4 red cubes; the second set has 1 red cube, 2 green cubes, and 6 blue cubes; the third set consists solely of 2 green cubes.
+
+Which games would have been possible if the bag had contained only 12 red cubes, 13 green cubes, and 14 blue cubes? Game 3 would have been impossible as it required 20 red cubes at one point.
+
+After filtering out the impossible games, we can sum their IDs (for instance, in this example, we would obtain a total of 8).
+
+## Part 1
+
+> Determine which games would have been possible if the bag had been loaded with only 12 red cubes, 13 green cubes, and 14 blue cubes. What is the sum of the IDs of those games?
+
+```{r}
+library(tidyverse)
+library(here)
+
+input <- read_file(here("2023/day/2/input")) %>%
+  str_split_1(pattern = '\n') %>%
+  magrittr::extract(1:100)
+
+input[1:10]
+```
+
+What is the most suitable data structure for solving this problem?
+
+I believe I need only this information:
+
+- The ID of the game.
+- The maximum number of cubes for each colour.
+
+Regarding the number of cubes: is the maximum alone sufficient?
+
+Consider there are 10 red cubes.
+
+If the maximum is 10 or less, the game was possible.
+If the maximum is 11 or more, the game was impossible.
+
+Indeed, I just need the maximum number of cubes for each colour in each game.
+
+I think a `tibble` would be a suitable data structure to store this information.
+
+Let's start with the first game:
+```{r}
+first_game <- input[1]
+first_game
+```
+
+Special characters to handle:
+
+- `:`
+- `,`
+- `;
+
+```{r}
+game_data <-
+  tibble(
+    input = input
+  ) %>%
+    separate(
+      input,
+      into = c("id", "data"),
+      sep = ": "
+    ) %>%
+    mutate(
+      id = as.integer(str_extract(id, "\\d+"))
+    )
+
+game_data
+```
+
+I need to obtain the number of cubes that have appeared for each colour:
+```{r}
+game_data_1 <- game_data[["data"]][[1]]
+game_data_1
+```
+
+I think I can use `str_match_all` with a capturing pattern associated with the colours and simply ignore everything else.
+
+```{r}
+n_cubes_colour <- 
+  str_match_all(
+    game_data_1,
+    "(\\d+) ([red|green|blue]+)"
+  )[[1]][,2:3]
+
+colnames(n_cubes_colour) <- c("n", "colour")
+
+n_cubes_colour %>%
+  as_tibble() %>%
+  group_by(colour) %>%
+  summarise(n = max(as.numeric(n)))
+```
+
+Now it's time to wrap the code above into a function and apply it to all the games:
+```{r}
+get_count_cubes <-
+  function(x) {
+    matrix_count_cubes <-
+    str_match_all(
+      x,
+      "(\\d+) ([red|green|blue]+)"
+    )[[1]][,2:3]
+
+    colnames(matrix_count_cubes) <- c("n", "colour")
+
+    matrix_count_cubes %>%
+      as_tibble() %>%
+      group_by(colour) %>%
+      summarise(n = max(as.numeric(n)))
+}
+```
+
+(I'm concerned this approach may not scale effectively if the input for the second part is significantly larger.)
+
+```{r}
+game_data_tidy <- 
+  game_data %>%
+  mutate(data = map(data, get_count_cubes)) %>%
+  unnest(data) %>%
+  pivot_wider(
+    id_cols = id,
+    names_from = colour,
+    values_from = n
+  )
+```
+
+My attempted solution to *determine which games would have been possible if the bag had been loaded with only 12 red cubes, 13 green cubes, and 14 blue cubes. What is the sum of the IDs of those games?*.
+
+```{r}
+game_data_tidy %>%
+  filter(red <= 12, green <= 13, blue <= 14) %>%
+  pull(id) %>%
+  sum()
+```
+
+IT IS CORRECT!!! 🥳🥳🥳🥳 
+
+## Part 2
+
+> In each game you played, what is the fewest number of cubes of each color that could have been in the bag to make the game possible?
+
+> The power of a set of cubes is equal to the numbers of red, green, and blue cubes multiplied together. The power of the minimum set of cubes in game 1 is 48. In games 2-5 it was 12, 1560, 630, and 36, respectively. Adding up these five powers produces the sum 2286.
+
+> For each game, find the minimum set of cubes that must have been present. What is the sum of the power of these sets?
+
+Given the data structure I'm using, this second part seems easy.
+
+```{r}
+game_data_tidy %>%
+  summarise(sum(red*green*blue))
+```
+
+It is correct too!!
