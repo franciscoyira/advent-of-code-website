@@ -2,9 +2,8 @@
 title: "2023: Day 8"
 date: 2023-12-8
 categories:
-  - TAG_1
-  - TAG_2
-draft: true
+  - python
+  - graphs
 ---
 
 ## Setup
@@ -13,15 +12,233 @@ draft: true
 
 [My data](input){target="_blank"}
 
+Notes:
+
+- Input has left/right instructions and a network of labelled nodes.
+- We're meant to use the left/right instructions to navigate the network.
+- AAA is where we are and ZZZ is where we're going.
+
+Example of how the nodes are navigated:
+
+```
+RL
+
+AAA = (BBB, CCC)
+BBB = (DDD, EEE)
+CCC = (ZZZ, GGG)
+DDD = (DDD, DDD)
+EEE = (EEE, EEE)
+GGG = (GGG, GGG)
+ZZZ = (ZZZ, ZZZ)
+```
+> Starting with AAA, you need to look up the next element based on the next left/right instruction in your input. In this example, start with AAA and go right (R) by choosing the right element of AAA, CCC. Then, L means to choose the left element of CCC, ZZZ. By following the left/right instructions, you reach ZZZ in 2 steps.
+
+> you might not find ZZZ right away. If you run out of left/right instructions, repeat the whole sequence of instructions as necessary: RL really means RLRLRLRLRLRLRLRL... and so on
+
+The Question:
+
+> Starting at AAA, follow the left/right instructions. How many steps are required to reach ZZZ?
+
 ## Part 1
 
-```{r}
-library(aochelpers)
-# other options: aoc_input_data_frame(), aoc_input_matrix()
-input <- aoc_input_vector(8, 2023)
-head(input)
+```{python}
+import pandas as pd
+import numpy as np
 ```
+
+First I need to load the data in a suitable data structure:
+
+I'm going to load the instructions as an array:
+```{python}
+input = open('input', 'r')
+instructions = input.readline().splitlines()
+instructions = np.array(list(instructions[0]), dtype='object')
+instructions
+```
+
+Now, I need to load the node information.
+
+Given that the node names appear to be unique, I could use a dictionary with the node names as keys. The value of each key could be another dictionary with 'L' and 'R' as keys, simplifying navigation through the nodes based on the instructions (I hope).
+
+```{python}
+# Loading the node information in a numpy array
+nodes = np.loadtxt('input', skiprows=2, dtype='str')
+
+# Removing column that doesn't contain useful information
+nodes = nodes[:, [0, 2, 3]]
+nodes = np.char.replace(nodes, '(', '')
+nodes = np.char.replace(nodes, ')', '')
+nodes = np.char.replace(nodes, ',', '')
+nodes[:10]
+```
+
+Converting the numpy array into a dictionary through iteration.
+
+I'll create a function that receives a row of the array and creates a key-value pair with 'L' and 'R' keys:
+
+```{python}
+def create_dict(node):
+  my_dict = {node[0]: {'L': node[1], 'R': node[2]}}
+  return my_dict
+
+nodes_array = np.apply_along_axis(create_dict, axis=1, arr=nodes)
+
+from collections import ChainMap
+nodes_dict = dict(ChainMap(*nodes_array))
+
+# Example
+nodes_dict['XLV']
+```
+
+Next step is (indefinitely) iterating through the `instructions` until reaching `"ZZZ"`, while keeping track of the number of steps required to do so.
+
+```{python}
+steps = 0
+current_node = 'AAA'
+length_instructions = len(instructions)
+
+while current_node != 'ZZZ':
+  i_current_instruction = steps % length_instructions 
+  current_instruction = instructions[i_current_instruction]
+  current_node = nodes_dict[current_node][current_instruction]
+  steps += 1
+
+print(f'It took {steps} steps')
+```
+
+It was correct!
 
 ## Part 2
 
+> The number of nodes with names ending in A is equal to the number ending in Z! If you were a ghost, you'd probably just start at every node that ends with A and follow all of the paths at the same time until they all simultaneously end up at nodes that end with Z.
 
+For example:
+
+```
+LR
+
+11A = (11B, XXX)
+11B = (XXX, 11Z)
+11Z = (11B, XXX)
+22A = (22B, XXX)
+22B = (22C, 22C)
+22C = (22Z, 22Z)
+22Z = (22B, 22B)
+XXX = (XXX, XXX)
+```
+
+> Here, there are two starting nodes, 11A and 22A (because they both end with A). As you follow each left/right instruction, use that instruction to simultaneously navigate away from both nodes you're currently on. Repeat this process until all of the nodes you're currently on end with Z.
+
+> (If only some of the nodes you're on end with Z, they act like any other node and you continue as normal.)
+
+> Simultaneously start on every node that ends with A. How many steps does it take before you're only on nodes that end with Z?
+
+I THINK I can work this out making changes only to the logic and keeping the data structures of the input (`instructions` and `nodes_dict`) as they are right now.
+
+The initialisation of the current node requires modification, since now we have to start simultaneously from all the nodes that end in 'A'.
+
+```{python}
+# current_node = 'AAA'
+all_nodes = list(nodes_dict.keys())
+
+import re
+patA = re.compile(r'[A-Z0-9]{2}A')
+starting_nodes = [node for node in all_nodes if patA.match(node)]
+starting_nodes
+```
+
+```{python}
+#| eval: false
+steps = 0
+
+current_nodes = starting_nodes
+
+patZ = re.compile(r'[A-Z0-9]{2}Z')
+all_z = False
+
+while all_z is False:
+  # Code related to iterating thorugh instructions doesn't change
+  # I changed the names to make them more succinct
+  i_curr_ins = steps % length_instructions 
+  curr_ins = instructions[i_curr_ins]
+
+  # This code has to change
+  # current_node = nodes_dict[current_node][current_instruction]
+  current_nodes = [nodes_dict[node][curr_ins] for node in current_nodes]
+
+  steps += 1
+  is_z = [bool(patZ.match(node)) for node in current_nodes]
+  all_z = all(is_z)
+  if sum(is_z) > 4:
+    print(current_nodes)
+    print(steps)
+```
+
+Even though this code might technically reach the right answer given enough time, it takes way too long to be considered a viable solution.
+
+I wasn't able to come up with a better solution on my own 🥲 so I took a *hint from Reddit* where they suggested identifying patterns on the number of steps required to reach a node ending in 'Z' from each of the starting nodes, and then using those patterns to identify a common number in the series.
+
+
+```{python}
+# Initialization values
+steps = 0
+current_nodes = starting_nodes
+patZ = re.compile(r'[A-Z0-9]{2}Z')
+all_z = False
+
+# Dictionary of empty lists with the starting nodes as keys
+steps_ending_z = {}
+for node in starting_nodes:
+  steps_ending_z[node] = []
+
+steps_ending_z
+```
+
+```{python}
+while all_z is False and steps < 1000000:
+  # This code is necessary for appropriately reading the instructions
+  i_curr_ins = steps % length_instructions 
+  curr_ins = instructions[i_curr_ins]
+
+  current_nodes = [nodes_dict[node][curr_ins] for node in current_nodes]
+
+  # For any node that ends in Z,
+  # add the current value of `steps` to the corresponding list of the dictionary
+  is_z = [False] * len(current_nodes)
+  for i, node in enumerate(current_nodes):
+    if patZ.match(node):
+      is_z[i] = True
+      steps_ending_z[starting_nodes[i]].append(steps)
+  
+  all_z = all(is_z)
+
+  steps += 1
+```
+
+
+```{python}
+for i, node in enumerate(steps_ending_z):
+  print('Starting node:', node)
+  print('Steps to be in node where last letter was Z:\n', steps_ending_z[node][:10])
+  print('Steps between nodes ending in Z:')
+  print(np.diff(steps_ending_z[node][:15]))
+  print('\n')
+```
+
+We can see that for each starting node, there is a regular pattern of number of steps taken before reaching again a node ending in Z.
+
+Let's take the MCM of these numbers (steps between nodes ending in Z):
+
+```{python}
+def get_steps_between(node, steps_ending_z):
+  return np.unique(np.diff(steps_ending_z[node]))
+
+steps_between= [get_steps_between(node, steps_ending_z) for node in steps_ending_z]
+
+steps_between = np.concatenate(steps_between)
+
+solution = np.lcm.reduce(steps_between)
+solution
+```
+
+Yay! That was the correct solution!
