@@ -1,0 +1,178 @@
+---
+title: "2023: Day 9"
+date: 2023-12-9
+categories:
+  - R
+  - sequences
+  - map
+draft: false
+---
+
+## Setup and notes
+
+[The original challenge](https://adventofcode.com/2023/day/9)
+
+[My data](input){target="_blank"}
+
+Puzzle input: series of values about the oasis ecosystem. Each line corresponds to the history of a single value.
+
+For example:
+
+```
+0 3 6 9 12 15
+1 3 6 10 15 21
+10 13 16 21 30 45
+```
+Must create environmental report with prediction of the next value in each series.
+
+
+> To do this, start by making a new sequence from the difference at each step of your history. If that sequence is not all zeroes, repeat this process, using the sequence you just generated as the input sequence. Once all of the values in your latest sequence are zeroes, you can extrapolate what the next value of the original history should be.
+
+Example:
+```
+0   3   6   9  12  15
+  3   3   3   3   3
+    0   0   0   0
+```
+
+> To extrapolate, start by adding a new zero to the end of your list of zeroes; because the zeroes represent differences between the two values above them, this also means there is now a placeholder in every sequence above it:
+
+```
+0   3   6   9  12  15   B
+  3   3   3   3   3   A
+    0   0   0   0   0
+```
+
+In this example, the next value in sequence (`B`) is *18*.
+
+Note that for each series it may be necessary to obtain a different number of sequences until reaching the all-zero differences.
+
+```
+1   3   6  10  15  21
+  2   3   4   5   6
+    1   1   1   1
+      0   0   0
+```
+
+> Analyze your OASIS report and extrapolate the next value for each history. What is the sum of these extrapolated values?
+
+## Part 1
+
+I think it's a good idea to load this data as a list of vectors (each row in the input would be a vector).
+
+```{r packages}
+library(tidyverse)
+library(here)
+```
+
+```{r loading inpuy}
+input <- here("2023/day/9/input")  %>%
+  read_lines() %>%
+  str_split(" ") %>%
+  map(as.numeric) %>%
+  map(list)
+
+input[1:5]
+```
+
+Now, for each item of the list, I should iteratively add `diff`s until all of the elements of the last diff are zero.
+
+Let's do it for a base case:
+```{r}
+example_case <- input[[1]]
+
+last_vector <- example_case[[1]]
+
+output <- example_case
+
+while (any(last_vector) != 0) {
+  last_vector <- diff(last_vector)
+  output <- append(output, list(last_vector))
+}
+
+output
+```
+
+Now let's turn this into a function and apply it to the original list through `purrr:map`
+```{r}
+obtain_diffs <- function(history) {
+  last_vector <- history[[1]]
+
+  output <- history
+
+  while (any(last_vector != 0)) {
+    last_vector <- diff(last_vector)
+    output <- append(output, list(last_vector))
+  }
+
+  output
+}
+
+obtain_diffs(input[[1]])
+```
+
+```{r}
+series_with_diffs <- map(input, obtain_diffs)
+series_with_diffs[[1]]
+```
+
+Cool, now the next step is to make the predictions/imputations using this data. Again, all the series behave independently, so they're suitable for functional programming (creating functions and then apply them through `purrr::map`).
+
+```{r}
+example_case <- series_with_diffs[[1]]
+
+current_element <- example_case[[20]]
+
+current_element[length(current_element)]
+
+# I have to "iterate in reverse" from the last element to the first one
+current_diff <- 0
+for (i in rev(seq_along(example_case))) {
+  current_seq <- example_case[[i]]
+  last_el_seq <- current_seq[length(current_seq)]
+  current_seq <- c(current_seq, last_el_seq+current_diff)
+  example_case[[i]] <- current_seq
+
+  current_diff <- current_seq[length(current_seq)] # new element in the sequence
+}
+```
+
+The code above solves for a single, example case. Now I'll wrap it in a function and apply it to each of the sequences in the list:
+
+```{r}
+add_to_history <- function(history_with_diffs) {
+
+  current_element <- history_with_diffs[[length(history_with_diffs)]]
+
+  current_element[length(current_element)]
+
+  # I have to "iterate in reverse" from the last element to the first one
+  current_diff <- 0
+  for (i in rev(seq_along(history_with_diffs))) {
+    current_seq <- history_with_diffs[[i]]
+    last_el_seq <- current_seq[length(current_seq)]
+    current_seq <- c(current_seq, last_el_seq+current_diff)
+    history_with_diffs[[i]] <- current_seq
+
+    current_diff <- current_seq[length(current_seq)] # new element in the sequence
+  }
+
+  history_with_diffs
+}
+```
+
+```{r}
+series_with_diffs2 <- map(series_with_diffs, add_to_history)
+```
+
+Now I have to get the last element of the first sequence (`~.[[1]][length(.[[1]])]`) in each element of `series_with_diffs2` and add all them up.
+```{r}
+map_dbl(series_with_diffs2, ~.[[1]][length(.[[1]])]) %>%
+  sum()
+```
+
+The solution is correct!
+
+## Part 2
+
+
