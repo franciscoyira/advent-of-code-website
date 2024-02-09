@@ -144,8 +144,6 @@ add_to_history <- function(history_with_diffs) {
 
   current_element <- history_with_diffs[[length(history_with_diffs)]]
 
-  current_element[length(current_element)]
-
   # I have to "iterate in reverse" from the last element to the first one
   current_diff <- 0
   for (i in rev(seq_along(history_with_diffs))) {
@@ -175,4 +173,33 @@ The solution is correct!
 
 ## Part 2
 
+Part 2 is just extrapolating backwards instead of forwards. I'm sure that I can do this by just adjusting some parameters in the functions I've already created.
 
+```{r}
+add_to_history_backwards <- function(history_with_diffs) {
+
+  current_element <- history_with_diffs[[length(history_with_diffs)]]
+
+  # I have to "iterate in reverse" from the last element to the first one
+  current_diff <- 0
+  for (i in rev(seq_along(history_with_diffs))) {
+    current_seq <- history_with_diffs[[i]]
+    first_el_seq <- current_seq[1]
+    current_seq <- c(first_el_seq-current_diff, current_seq)
+    history_with_diffs[[i]] <- current_seq
+
+    current_diff <- current_seq[1] # new element in the sequence
+  }
+
+  history_with_diffs
+}
+```
+
+
+```{r}
+map(series_with_diffs, add_to_history_backwards) %>%
+  map_dbl(~.[[1]][1]) %>%
+  sum()
+```
+
+It's correct too!
