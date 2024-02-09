@@ -5,6 +5,7 @@ categories:
   - R
   - sequences
   - map
+draft: false
 ---
 
 ## Setup and notes
@@ -59,12 +60,12 @@ Note that for each series it may be necessary to obtain a different number of se
 
 I think it's a good idea to load this data as a list of vectors (each row in the input would be a vector).
 
-```{r packages}
+```{r}
 library(tidyverse)
 library(here)
 ```
 
-```{r loading inpuy}
+```{r}
 input <- here("2023/day/9/input")  %>%
   read_lines() %>%
   str_split(" ") %>%
