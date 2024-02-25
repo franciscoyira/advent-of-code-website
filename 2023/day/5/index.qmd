@@ -1,0 +1,224 @@
+---
+title: "2023: Day 5"
+date: 2023-12-5
+categories:
+  - R
+  - dplyr
+  - intervals
+draft: false
+---
+
+## Setup
+
+[The original challenge](https://adventofcode.com/2023/day/5)
+
+[My data](input){target="_blank"}
+
+## Part 1
+
+Input: an almanac that lists all the seeds that need to be planted to solve Island Island food production problem.
+
+We start with a list of seeds identified by numbers.
+
+Mapping System: Each seed is associated, based on its number, with specific types of agricultural resources (soil, fertilizer, water, and so on), which are also identified by numbers, through a series of mappings that connect "source" numbers with "destination" numbers.
+
+> \[The mappings indicate\] what type of soil to use with each kind of seed, what type of fertilizer to use with each kind of soil, what type of water to use with each kind of fertilizer, and so on.
+
+> Every type of seed, soil, fertilizer and so on is identified with a number, but numbers are reused by each category - that is, soil 123 and fertilizer 123 aren't necessarily related to each other.
+
+For example:
+
+```
+seeds: 79 14 55 13
+
+seed-to-soil map:
+50 98 2
+52 50 48
+```
+
+> Rather than list every source number and its corresponding destination number one by one, the maps describe **entire ranges of numbers** that can be converted...
+
+> The first line has a destination range start of 50, a source range start of 98, and a range length of 2. This line means that the source range starts at 98 and contains two values: 98 and 99. The destination range is the same length, but it starts at 50, so its two values are 50 and 51. With this information, you know that seed number 98 corresponds to soil number 50 and that seed number 99 corresponds to soil number 51.
+
+> Any source numbers that aren't mapped correspond to the same destination number. So, seed number 10 corresponds to soil number 10.
+
+Available mappings go from seed to location (seed -> soil -> fertilizer -> water -> light -> temperature -> humidity -> location).
+
+> Find the lowest location number that corresponds to any of the initial seeds
+
+```{r boilerplate}
+#| message: FALSE
+#| echo: FALSE
+library(tidyverse)
+library(here)
+here::i_am('2023/day/5/index.qmd')
+```
+
+Ideas of how to approach this problem:
+
+- Store seeds numbers as a vector.
+- Turn each mapping into a function.
+- Crazy idea: make a "function factory" (https://adv-r.hadley.nz/function-factories.html) to programatically create functions for each mapping using the numbers from each one.
+
+Storing the seeds as a vector:
+```{r}
+seeds <- read_lines(here("2023/day/5/input"), n_max = 1) %>%
+  str_extract_all("\\d+") %>%
+  as_vector() %>%
+  as.numeric()
+
+seeds
+```
+
+Now it's time to load the mappings. I'll start loading a single mapping in a vector as a "proof of concept":
+```{r}
+seed_to_soil <-
+  read_lines(here("2023/day/5/input"), skip = 3, n_max = 22)
+
+seed_to_soil
+```
+
+The sample mapping was correctly loaded but I think it will be easier to work with the mappings if I transform them into a dataframe first.
+
+```{r}
+mapping <- 
+  seed_to_soil %>%
+  map(~str_split_1(., " ")) %>%
+  map(as.numeric) %>%
+  map(~set_names(., c("start_dest", "start_source", "range"))) %>%
+  enframe() %>%
+  unnest_wider(value) %>%
+  mutate(
+    end_source = start_source + range - 1,
+    offset = start_dest - start_source
+    ) %>%
+  select(start_source, end_source, offset) %>%
+  arrange(start_source)
+
+mapping
+```
+
+Now I'll create a function that receives a function as input (e.g. a seed) and:
+
+- Looks up which *source range* does it belong to (this is very similar to Excel's VLOOKUP).
+- Returns the input number adjusted by the corresponding offset.
+
+```{r}
+compute_mapping <- function(input, mapping) {
+  tibble(input = input) %>%
+  left_join(
+    mapping, by = join_by(between(input, start_source, end_source))) %>%
+  mutate(
+    offset = replace_na(offset, 0),
+    output = input + offset
+  ) %>%
+  pull(output)
+}
+```
+
+```{r}
+compute_mapping(seeds, mapping)
+```
+
+This works as expected for the sample mapping.
+
+Now I need to generalise this procedure. For this, I have to read all the mappings from the input file as dataframes.
+
+The following pipeline does just that, creating a nested dataframe where the first column is the *name of the mapping* (e.g. seed-to-soil, soil-to-fertilizer, and so on) and the second column is the mapping itself.
+```{r}
+mappings_df <-
+  read_lines(here("2023/day/5/input"), skip =2) %>%
+  tibble(x = .) %>%
+  filter(x != "") %>%
+  mutate(name = str_match(x, '(.+) map')[,2]) %>%
+  fill(name) %>%
+  filter(!str_detect(x, "map")) %>%
+  nest(data = x) %>%
+  mutate(data = map(data, as_vector))
+
+mappings_df
+```
+
+There's just one problem: the mappings in the column `data` are not yet parsed as dataframes. They're currently just vectors, with each item combining the source, destination, and offset into a single string.
+```{r}
+mappings_df[['data']][[1]][1:5]
+```
+
+To solve this, I'm creating the function `chr_to_mapping`, which takes these character vectors as input and returns the mapping dataframes I want as output.
+```{r}
+chr_to_mapping <- function(chr)  {
+  chr %>%
+  map(~str_split_1(., " ")) %>%
+  map(as.numeric) %>%
+  map(~set_names(., c("start_dest", "start_source", "range"))) %>%
+  enframe() %>%
+  unnest_wider(value) %>%
+  mutate(
+    end_source = start_source + range - 1,
+    offset = start_dest - start_source
+    ) %>%
+  select(start_source, end_source, offset) %>%
+  arrange(start_source)
+}
+```
+
+Next, I use `purrr::map` to apply this function to the `data` column, creating the `mappings` list-column that contains the dataframes I need.
+
+```{r}
+mappings_df <- mappings_df %>%
+  mutate(
+    mappings = map(data, chr_to_mapping)
+  )
+```
+
+Then, I can simply `pull` the `mappings`, and starting with the seeds, use the `compute_mapping` function to apply all the mappings and determine the final location values.
+
+```{r}
+mappings <- mappings_df %>% pull(mappings)
+
+values <- seeds
+
+for (i in seq_along(mappings)) {
+  values <- compute_mapping(values, mappings[[i]])
+}
+```
+
+The solution is just the minimum of these location values.
+```{r}
+min(values)
+```
+
+## Part 2
+
+Now it turns out that the `seeds` are actually RANGES.
+
+> The values on the initial seeds: line come in pairs. Within each pair, the first value is the start of the range and the second value is the length of the range. So, in the first line of the example above:
+
+> `seeds: 79 14 55 13`
+
+> This line describes two ranges of seed numbers to be planted in the garden. The first range starts with seed number 79 and contains 14 values: 79, 80, ..., 91, 92. The second range starts with seed number 55 and contains 13 values: 55, 56, ..., 66, 67.
+
+It seems the computational cost/complexity of my solution is going to scale abruptly given this new interpretation of the input.
+
+The first thing I'll try to do is to represent the ranges as vectors:
+
+```{r}
+seeds_m <- matrix(seeds, ncol = 2, byrow = TRUE) 
+
+colnames(seeds_m) <- c("start", "range")
+
+df_all_seeds <- as_tibble(seeds_m) %>%
+  mutate(all_seeds = map2(start, range, ~as.numeric(.x:(.x + .y))))
+
+df_all_seeds
+```
+
+I tried (in code that not shown here) to just run my previous code on `all_seeds` but it just doesn't work: my computer runs out of memory.
+
+Then I tried some alternative approaches that may have been more efficient, such as:
+
+- **Collapsing all the mappings** (seed-to-soil, soil-to-fertilizer, and so on) into just one look-up table that directly maps seeds to locations. This may save memory in the `compute_mapping` process. The problem is that this is easier said than done. Implementing this idea is not trivial, at least not for me. After a couple of attempts I ended up giving up with this path because I didn't have enough time to figure out how to pull it off.
+
+- **Using the `intervals` R package**. This package seems to allow performing interval operations (such as intersections and complements) in a more efficient way, without having to explicitly load all the numbers of the interval in memory. Unfortunately, I also ran out of my "time budget" when trying to implement this idea, so I ended up giving up on it too. Still, I have a strong feeling that "this was the way" to efficiently tackle Part 2 of this problem.
+
+Note: one of the issues I couldn't solve was that the intervals are so huge that even trying to perform *one* transformation causes a `cannot allocate vector of size XX.X Gb` error. This problem is not addressed by the "collapsing all the mappings" idea. So, even if I had been able to implement it, I would still have ran into the same error. That's why I suspect that the `intervals` approach has higher chances of success.
