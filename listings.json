@@ -1,5 +1,11 @@
 [
   {
+    "listing": "/2022.html",
+    "items": [
+      "/2022/day/1/index.html"
+    ]
+  },
+  {
     "listing": "/2023.html",
     "items": [
       "/2023/day/2023-introduction/index.html",
@@ -7,15 +13,10 @@
       "/2023/day/2/index.html",
       "/2023/day/3/index.html",
       "/2023/day/4/index.html",
+      "/2023/day/5/index.html",
       "/2023/day/6/index.html",
       "/2023/day/8/index.html",
       "/2023/day/9/index.html"
-    ]
-  },
-  {
-    "listing": "/2022.html",
-    "items": [
-      "/2022/day/1/index.html"
     ]
   }
 ]
