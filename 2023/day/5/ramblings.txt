@@ -1,0 +1,225 @@
+
+[This was my stream of consciousness when I tried to solve part 2 of day. I'm leaving it here for completeness sake]
+
+## Part 2
+
+Turning seeds into ranges
+
+
+```{r}
+seeds_m <- matrix(seeds, ncol = 2, byrow = TRUE) 
+
+colnames(seeds_m) <- c("start", "range")
+
+df_all_seeds <- as_tibble(seeds_m) %>%
+  mutate(all_seeds = map2(start, range, ~as.numeric(.x:(.x + .y))))
+
+df_all_seeds
+```
+
+I need a different, more efficient approach for obtaining this answer because with the current algorithm I'm running out of memory.
+
+Idea 1: create a more "concise" version of the mappings list, with just the initial inputs and the final outputs.
+
+```{r}
+mappings[[1]] %>%
+  mutate(
+    offset_start = start_source + offset,
+    offset_end = end_source + offset  
+  ) %>%
+  left_join(
+    mappings[[2]],
+    by = join_by(overlaps(offset_start, offset_end, start_source, end_source))
+  ) %>%
+  mutate(
+    start_source.x = case_when(
+      start_source.y < offset_start ~ offset_start - offset.x,
+      start_source.y >= offset_start ~ start_source.y - offset.x
+    ),
+    end
+  )
+```
+
+Minimal example
+```{r}
+poc_mapping_1 <- 
+  tibble(
+    start_source = 0,
+    end_source = 100,
+    offset = 55
+  )
+
+poc_mapping_2 <- 
+  tibble(
+    start_source = c(10, 50, 60),
+    end_source = c(49, 59, 85),
+    offset = -5
+  )
+```
+
+After applying the algorithm or function to this POCs mappings, I should end up with 5 ranges
+
+
+```{r}
+poc_mapping_1 %>%
+  mutate(
+    offset_start = start_source + offset,
+    offset_end = end_source + offset  
+  ) %>%
+  full_join(
+    poc_mapping_2,
+    by = join_by(overlaps(offset_start, offset_end, start_source, end_source))
+  ) %>%
+  View()
+```
+
+Measured in .y units:
+10-49 ✅
+50-54 -> requires splitting
+55-59 -> requires splitting
+60-85 ✅
+86-155 -> ???
+
+Another way: using the intervals package
+
+```{r}
+library(intervals)
+```
+
+```{r}
+interval_1 <- Intervals(
+  matrix(
+    c(
+      55, 155
+      ),
+    byrow = TRUE,
+    ncol = 2),
+    closed = c(TRUE,TRUE ),
+    type = "Z" )
+
+interval_1
+```
+
+```{r}
+interval_2 <- Intervals(
+  matrix(
+    c(
+      10, 49,
+      50, 59,
+      60, 85
+      ),
+    byrow = TRUE,
+    ncol = 2),
+    closed = c(TRUE,TRUE ),
+    type = "Z" )
+
+interval_2
+```
+
+```{r}
+interval_difference(interval_1, interval_2)
+```
+
+Idea: for each interval from the LHS, calculate the intersection and difference with each interval in the RHS.
+Then de-duplicate that.
+
+```{r}
+my_intervals <- list(0)
+
+for (i in 1:nrow(interval_2)) {
+  my_intervals[[i]] <- interval_intersection(interval_1, interval_2[i])
+}
+
+```
+
+```{r}
+my_intervals2 <- list(0)
+
+for (i in 1:nrow(interval_2)) {
+  my_intervals[[i]] <- interval_complement(interval_1, interval_2[i])
+}
+```
+
+
+
+```{r}
+poc_mapping_1 %>%
+  mutate(source_interval = map2(start_source, end_source, ~Intervals(c(.x, .y))))
+```
+
+
+THE SAME "SPLITTING RANGES" ALGORITHM I HAVE TO USE HERE COULD BE USED TO MAP THE SEEDS RANGES!! THIS IS THE WAY.
+
+First, do the seeds fit into memory?
+
+```{r}
+n_seeds <- df_all_seeds  %>%
+  mutate(length = map_dbl(all_seeds, length)) %>%
+  pull(length) %>%
+  sum()
+
+n_seeds
+```
+
+It's complicated
+
+```{r}
+for (i in 1:100000) {
+  for (j in seq_along(mappings)) {
+    test_var <- compute_mapping(n_seeds[i], mappings[[j]])
+  } 
+}
+```
+
+```{r}
+max_length_seeds <- df_all_seeds  %>%
+  mutate(length = map_dbl(all_seeds, length)) %>%
+  pull(length) %>%
+  max()
+```
+
+```{r}
+library(pryr)
+mem_used()
+```
+
+```{r}
+process_seeds <- function(seeds, mappings) {
+  gc()
+  values <- seeds
+
+  for (i in seq_along(mappings)) {
+    values <- compute_mapping(values, mappings[[i]])
+  }
+
+  result <- min(values)
+
+  gc()
+
+  result
+}
+
+```
+
+```{r}
+seeds_list <- df_all_seeds[["all_seeds"]]
+
+locations <- map_dbl(seeds_list, process_seeds, mappings)
+```
+
+It's not working. I need a more efficient version of this (maybe?)
+
+```{r}
+compute_mapping <- function(input, mapping) {
+  tibble(input = input) %>%
+  left_join(
+    mapping, by = join_by(between(input, start_source, end_source))) %>%
+  mutate(
+    offset = replace_na(offset, 0),
+    output = input + offset
+  ) %>%
+  pull(output)
+}
+```
+
+NEXT THING TO TRY: data.table
