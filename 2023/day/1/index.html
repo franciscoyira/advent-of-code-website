@@ -201,7 +201,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-block"><div><h1 class="title">2023: Day 1</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
   <div class="quarto-categories">
     <div class="quarto-category">R</div>
-    <div class="quarto-category">stringr</div>
   </div>
   </div>
 
@@ -1586,481 +1585,480 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2023-12-1</span></span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span></span>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - R</span></span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - stringr</span></span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false</span></span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup</span></span>
-<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">The original challenge</span><span class="co">](https://adventofcode.com/2023/day/1)</span></span>
-<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">My data</span><span class="co">](input)</span>{target="_blank"}</span>
-<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>Chosen language: <span class="in">`R`</span></span>
-<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>Notes:</span>
-<span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Puzzle input is a "calibration document"</span>
-<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Has been "amended" by an Elf</span>
-<span id="cb62-22"><a href="#cb62-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Each line was a calibration value, that now needs to be recovered</span>
-<span id="cb62-23"><a href="#cb62-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Value can be obtained by combining the first digit with the last digit to form a single two-digit number</span>
-<span id="cb62-24"><a href="#cb62-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-25"><a href="#cb62-25" aria-hidden="true" tabindex="-1"></a>Examples:</span>
-<span id="cb62-26"><a href="#cb62-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-27"><a href="#cb62-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>1abc2 -&gt; 12</span>
-<span id="cb62-28"><a href="#cb62-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>pqr3stu8vwx -&gt; 38</span>
-<span id="cb62-29"><a href="#cb62-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a1b2c3d4e5f -&gt; 15</span>
-<span id="cb62-30"><a href="#cb62-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>treb7uchet -&gt; 77</span>
-<span id="cb62-31"><a href="#cb62-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-32"><a href="#cb62-32" aria-hidden="true" tabindex="-1"></a>Adding these together produces 142.</span>
-<span id="cb62-33"><a href="#cb62-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a>Do the same for the whole puzzle input</span>
-<span id="cb62-35"><a href="#cb62-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-36"><a href="#cb62-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 1</span></span>
-<span id="cb62-37"><a href="#cb62-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-40"><a href="#cb62-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-41"><a href="#cb62-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb62-42"><a href="#cb62-42" aria-hidden="true" tabindex="-1"></a>OK <span class="ot">&lt;-</span> <span class="st">"2023"</span> <span class="sc">&lt;</span> <span class="dv">3000</span></span>
-<span id="cb62-43"><a href="#cb62-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Will only evaluate next code block if an actual year has been substituted for the placeholder</span></span>
-<span id="cb62-44"><a href="#cb62-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-45"><a href="#cb62-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-48"><a href="#cb62-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-49"><a href="#cb62-49" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb62-50"><a href="#cb62-50" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb62-51"><a href="#cb62-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup</span></span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">The original challenge</span><span class="co">](https://adventofcode.com/2023/day/1)</span></span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">My data</span><span class="co">](input)</span>{target="_blank"}</span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a>Chosen language: <span class="in">`R`</span></span>
+<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a>Notes:</span>
+<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Puzzle input is a "calibration document"</span>
+<span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Has been "amended" by an Elf</span>
+<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Each line was a calibration value, that now needs to be recovered</span>
+<span id="cb62-22"><a href="#cb62-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Value can be obtained by combining the first digit with the last digit to form a single two-digit number</span>
+<span id="cb62-23"><a href="#cb62-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-24"><a href="#cb62-24" aria-hidden="true" tabindex="-1"></a>Examples:</span>
+<span id="cb62-25"><a href="#cb62-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-26"><a href="#cb62-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>1abc2 -&gt; 12</span>
+<span id="cb62-27"><a href="#cb62-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>pqr3stu8vwx -&gt; 38</span>
+<span id="cb62-28"><a href="#cb62-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a1b2c3d4e5f -&gt; 15</span>
+<span id="cb62-29"><a href="#cb62-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>treb7uchet -&gt; 77</span>
+<span id="cb62-30"><a href="#cb62-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-31"><a href="#cb62-31" aria-hidden="true" tabindex="-1"></a>Adding these together produces 142.</span>
+<span id="cb62-32"><a href="#cb62-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-33"><a href="#cb62-33" aria-hidden="true" tabindex="-1"></a>Do the same for the whole puzzle input</span>
+<span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-35"><a href="#cb62-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 1</span></span>
+<span id="cb62-36"><a href="#cb62-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-39"><a href="#cb62-39" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-40"><a href="#cb62-40" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb62-41"><a href="#cb62-41" aria-hidden="true" tabindex="-1"></a>OK <span class="ot">&lt;-</span> <span class="st">"2023"</span> <span class="sc">&lt;</span> <span class="dv">3000</span></span>
+<span id="cb62-42"><a href="#cb62-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Will only evaluate next code block if an actual year has been substituted for the placeholder</span></span>
+<span id="cb62-43"><a href="#cb62-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-44"><a href="#cb62-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-47"><a href="#cb62-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-48"><a href="#cb62-48" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb62-49"><a href="#cb62-49" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb62-50"><a href="#cb62-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-51"><a href="#cb62-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-52"><a href="#cb62-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-53"><a href="#cb62-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-54"><a href="#cb62-54" aria-hidden="true" tabindex="-1"></a>Transforming the data to an appropriate data structure:</span>
-<span id="cb62-55"><a href="#cb62-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-58"><a href="#cb62-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-59"><a href="#cb62-59" aria-hidden="true" tabindex="-1"></a>amended <span class="ot">&lt;-</span> <span class="fu">read_lines</span>(<span class="fu">here</span>(<span class="st">'2023'</span>, <span class="st">'day'</span>, <span class="st">'1'</span>, <span class="st">'input'</span>))</span>
-<span id="cb62-60"><a href="#cb62-60" aria-hidden="true" tabindex="-1"></a>amended[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb62-61"><a href="#cb62-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-62"><a href="#cb62-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-63"><a href="#cb62-63" aria-hidden="true" tabindex="-1"></a><span class="fu">### Solving for a particular case</span></span>
-<span id="cb62-66"><a href="#cb62-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-67"><a href="#cb62-67" aria-hidden="true" tabindex="-1"></a>(first_case <span class="ot">&lt;-</span> amended[<span class="dv">1</span>])</span>
-<span id="cb62-68"><a href="#cb62-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-69"><a href="#cb62-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-70"><a href="#cb62-70" aria-hidden="true" tabindex="-1"></a>Extracting the numbers</span>
-<span id="cb62-73"><a href="#cb62-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-74"><a href="#cb62-74" aria-hidden="true" tabindex="-1"></a>(matrix_str_numbers <span class="ot">&lt;-</span></span>
-<span id="cb62-75"><a href="#cb62-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(first_case, <span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb62-76"><a href="#cb62-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-77"><a href="#cb62-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-78"><a href="#cb62-78" aria-hidden="true" tabindex="-1"></a>Extracting all the rows from columns one and three (the first and last number of each row)</span>
-<span id="cb62-81"><a href="#cb62-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-82"><a href="#cb62-82" aria-hidden="true" tabindex="-1"></a>numbers_i_want <span class="ot">&lt;-</span> matrix_str_numbers[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span>
-<span id="cb62-83"><a href="#cb62-83" aria-hidden="true" tabindex="-1"></a>numbers_i_want</span>
-<span id="cb62-84"><a href="#cb62-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-85"><a href="#cb62-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-86"><a href="#cb62-86" aria-hidden="true" tabindex="-1"></a>(This code will generalise ONLY IF all the other rows have 3 numbers too).</span>
-<span id="cb62-87"><a href="#cb62-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-88"><a href="#cb62-88" aria-hidden="true" tabindex="-1"></a>The following code returns the first and last number "pasted" together and converts the result from string to numeric.</span>
-<span id="cb62-91"><a href="#cb62-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-92"><a href="#cb62-92" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_flatten</span>(numbers_i_want) <span class="sc">%&gt;%</span></span>
-<span id="cb62-93"><a href="#cb62-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
-<span id="cb62-94"><a href="#cb62-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-95"><a href="#cb62-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-96"><a href="#cb62-96" aria-hidden="true" tabindex="-1"></a>Now let's try to generalise to all input rows:</span>
-<span id="cb62-97"><a href="#cb62-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-100"><a href="#cb62-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-101"><a href="#cb62-101" aria-hidden="true" tabindex="-1"></a>amended <span class="sc">%&gt;%</span></span>
-<span id="cb62-102"><a href="#cb62-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb62-103"><a href="#cb62-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
-<span id="cb62-104"><a href="#cb62-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-105"><a href="#cb62-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-106"><a href="#cb62-106" aria-hidden="true" tabindex="-1"></a>Oh no. Rows have a different quantity of digits.</span>
-<span id="cb62-107"><a href="#cb62-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-108"><a href="#cb62-108" aria-hidden="true" tabindex="-1"></a>Maybe using <span class="in">`simplify=TRUE`</span> was a mistake here. Given that each element has a different quantity of digits, a list seems to be a more suitable data structure:</span>
-<span id="cb62-109"><a href="#cb62-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-112"><a href="#cb62-112" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-113"><a href="#cb62-113" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="ot">&lt;-</span> </span>
-<span id="cb62-114"><a href="#cb62-114" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
-<span id="cb62-115"><a href="#cb62-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb62-116"><a href="#cb62-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
-<span id="cb62-117"><a href="#cb62-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-118"><a href="#cb62-118" aria-hidden="true" tabindex="-1"></a>list_digits_preview</span>
-<span id="cb62-119"><a href="#cb62-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-120"><a href="#cb62-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-121"><a href="#cb62-121" aria-hidden="true" tabindex="-1"></a>Now, how can I extract the first and last element from each element of the list? My gut feeling is that I'll need <span class="in">`purrr`</span> for this:</span>
-<span id="cb62-122"><a href="#cb62-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-123"><a href="#cb62-123" aria-hidden="true" tabindex="-1"></a><span class="in">`pluck`</span> and <span class="in">`keep_at`</span> seem to be useful functions for this task</span>
-<span id="cb62-124"><a href="#cb62-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-127"><a href="#cb62-127" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-128"><a href="#cb62-128" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="sc">%&gt;%</span></span>
-<span id="cb62-129"><a href="#cb62-129" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This should extract the first and last digit from each element of the list </span></span>
-<span id="cb62-130"><a href="#cb62-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">keep_at</span>(., <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">length</span>(.))))</span>
-<span id="cb62-131"><a href="#cb62-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-132"><a href="#cb62-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-133"><a href="#cb62-133" aria-hidden="true" tabindex="-1"></a>It is working!!</span>
-<span id="cb62-134"><a href="#cb62-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-135"><a href="#cb62-135" aria-hidden="true" tabindex="-1"></a>Now I'll apply the action to the whole list:</span>
-<span id="cb62-136"><a href="#cb62-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-139"><a href="#cb62-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-140"><a href="#cb62-140" aria-hidden="true" tabindex="-1"></a>list_useful_digits <span class="ot">&lt;-</span> </span>
-<span id="cb62-141"><a href="#cb62-141" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
-<span id="cb62-142"><a href="#cb62-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb62-143"><a href="#cb62-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">keep_at</span>(., <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">length</span>(.))))</span>
-<span id="cb62-144"><a href="#cb62-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-145"><a href="#cb62-145" aria-hidden="true" tabindex="-1"></a>list_useful_digits[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb62-146"><a href="#cb62-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-147"><a href="#cb62-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-148"><a href="#cb62-148" aria-hidden="true" tabindex="-1"></a>Hmmm... Why does element  7 have only 1 digit?</span>
-<span id="cb62-149"><a href="#cb62-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-152"><a href="#cb62-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-153"><a href="#cb62-153" aria-hidden="true" tabindex="-1"></a>amended[<span class="dv">7</span>]</span>
-<span id="cb62-154"><a href="#cb62-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-155"><a href="#cb62-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-156"><a href="#cb62-156" aria-hidden="true" tabindex="-1"></a>It's got just one digit as a number, but there are other digits written out in words. Should we count those? The prompt isn't really clear about this. But since the example only talks about digits as numbers, I guess I'll just go with those for now. If I've got this wrong and my solution gets rejected, well, I can always give it another shot</span>
-<span id="cb62-157"><a href="#cb62-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-158"><a href="#cb62-158" aria-hidden="true" tabindex="-1"></a>Now let's concatenate the digits row-wise, turn them into a number and add them up:</span>
-<span id="cb62-159"><a href="#cb62-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-162"><a href="#cb62-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-163"><a href="#cb62-163" aria-hidden="true" tabindex="-1"></a>solution <span class="ot">&lt;-</span> </span>
-<span id="cb62-164"><a href="#cb62-164" aria-hidden="true" tabindex="-1"></a>  list_useful_digits <span class="sc">%&gt;%</span></span>
-<span id="cb62-165"><a href="#cb62-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
-<span id="cb62-166"><a href="#cb62-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(as.integer) <span class="sc">%&gt;%</span></span>
-<span id="cb62-167"><a href="#cb62-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_vector</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb62-168"><a href="#cb62-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb62-169"><a href="#cb62-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-170"><a href="#cb62-170" aria-hidden="true" tabindex="-1"></a>solution</span>
-<span id="cb62-171"><a href="#cb62-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-172"><a href="#cb62-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-173"><a href="#cb62-173" aria-hidden="true" tabindex="-1"></a>👎🏽 Solution was rejected. The website says it's too low 🤔 </span>
-<span id="cb62-174"><a href="#cb62-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-175"><a href="#cb62-175" aria-hidden="true" tabindex="-1"></a>The most likely suspect here is the way <span class="in">`map(~keep_at(., c(1, length(.))))`</span> is handling the rows with only one digit.</span>
-<span id="cb62-176"><a href="#cb62-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-177"><a href="#cb62-177" aria-hidden="true" tabindex="-1"></a>Some alternatives I could try:</span>
-<span id="cb62-178"><a href="#cb62-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-179"><a href="#cb62-179" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>If the input row has only one digit, then use it as first AND last digit when building the number (e.g. if the row only contains 7, the number I would obtain from that row should be 77).</span>
-<span id="cb62-180"><a href="#cb62-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-181"><a href="#cb62-181" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Take into account digits that are written as words (e.g. "three"). This is less likely to work and it would be weird for the exercise to expect people to do this and not mentioning it explicitely in the prompt or the examples.</span>
-<span id="cb62-182"><a href="#cb62-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-183"><a href="#cb62-183" aria-hidden="true" tabindex="-1"></a>I'll go with alternative 1.</span>
-<span id="cb62-184"><a href="#cb62-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-185"><a href="#cb62-185" aria-hidden="true" tabindex="-1"></a><span class="fu">### Handling rows with just one digit</span></span>
-<span id="cb62-186"><a href="#cb62-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-187"><a href="#cb62-187" aria-hidden="true" tabindex="-1"></a>I'll take a slice from the first 10 rows, as the first case with one digit appears in row 7:</span>
-<span id="cb62-190"><a href="#cb62-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-191"><a href="#cb62-191" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="ot">&lt;-</span> </span>
-<span id="cb62-192"><a href="#cb62-192" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
-<span id="cb62-193"><a href="#cb62-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb62-194"><a href="#cb62-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb62-195"><a href="#cb62-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-196"><a href="#cb62-196" aria-hidden="true" tabindex="-1"></a>list_digits_preview</span>
-<span id="cb62-197"><a href="#cb62-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-198"><a href="#cb62-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-199"><a href="#cb62-199" aria-hidden="true" tabindex="-1"></a>I have a feeling that <span class="co">[</span><span class="ot">`purrr::pluck`</span><span class="co">](https://purrr.tidyverse.org/reference/pluck.html)</span> may do the trick here:</span>
-<span id="cb62-200"><a href="#cb62-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-203"><a href="#cb62-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-204"><a href="#cb62-204" aria-hidden="true" tabindex="-1"></a>get_first_and_last <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb62-205"><a href="#cb62-205" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">pluck</span>(x, <span class="dv">1</span>), <span class="fu">pluck</span>(x, <span class="fu">length</span>(x)))</span>
-<span id="cb62-206"><a href="#cb62-206" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb62-207"><a href="#cb62-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-208"><a href="#cb62-208" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="sc">%&gt;%</span></span>
-<span id="cb62-209"><a href="#cb62-209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last)</span>
-<span id="cb62-210"><a href="#cb62-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-211"><a href="#cb62-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-212"><a href="#cb62-212" aria-hidden="true" tabindex="-1"></a>This function does what I want (and yes, using <span class="in">`pluck`</span> is a bit unnecessary since I could just have used regular subsetting, e.g. <span class="in">`x[[1]]`</span> and <span class="in">`x[[length(x)]]`</span>, but I'm doing this with the <span class="co">[</span><span class="ot">purrr cheat sheet</span><span class="co">](https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf)</span> in front of me, so <span class="in">`pluck`</span> was what came to my mind).</span>
-<span id="cb62-213"><a href="#cb62-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-214"><a href="#cb62-214" aria-hidden="true" tabindex="-1"></a>2nd attempt, this time using <span class="in">`get_first_and_last`</span>.</span>
-<span id="cb62-215"><a href="#cb62-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-218"><a href="#cb62-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-219"><a href="#cb62-219" aria-hidden="true" tabindex="-1"></a>solution2 <span class="ot">&lt;-</span> </span>
-<span id="cb62-220"><a href="#cb62-220" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
-<span id="cb62-221"><a href="#cb62-221" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb62-222"><a href="#cb62-222" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last) <span class="sc">%&gt;%</span></span>
-<span id="cb62-223"><a href="#cb62-223" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
-<span id="cb62-224"><a href="#cb62-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(as.integer) <span class="sc">%&gt;%</span></span>
-<span id="cb62-225"><a href="#cb62-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_vector</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb62-226"><a href="#cb62-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb62-227"><a href="#cb62-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-228"><a href="#cb62-228" aria-hidden="true" tabindex="-1"></a>solution2</span>
-<span id="cb62-229"><a href="#cb62-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-230"><a href="#cb62-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-231"><a href="#cb62-231" aria-hidden="true" tabindex="-1"></a>This is the correct solution!! 🥳🥳🥳</span>
-<span id="cb62-232"><a href="#cb62-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-233"><a href="#cb62-233" aria-hidden="true" tabindex="-1"></a>Onto the second part!</span>
-<span id="cb62-234"><a href="#cb62-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-235"><a href="#cb62-235" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 2</span></span>
-<span id="cb62-236"><a href="#cb62-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-237"><a href="#cb62-237" aria-hidden="true" tabindex="-1"></a>Saw this one coming: now I need to tackle the digits spelled out as words 😬. </span>
-<span id="cb62-238"><a href="#cb62-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-239"><a href="#cb62-239" aria-hidden="true" tabindex="-1"></a><span class="fu">### First (naive) attempt</span></span>
-<span id="cb62-240"><a href="#cb62-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-241"><a href="#cb62-241" aria-hidden="true" tabindex="-1"></a>IMHO the simplest approach is to write a function that converts digits spelled out in a string into their numeric form. Then, I can incorporate this function into my pipeline using a <span class="in">`map`</span> call, right before <span class="in">`str_extract_all`</span>.</span>
-<span id="cb62-244"><a href="#cb62-244" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-245"><a href="#cb62-245" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit <span class="ot">&lt;-</span> amended[<span class="dv">7</span>]</span>
-<span id="cb62-246"><a href="#cb62-246" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit</span>
-<span id="cb62-247"><a href="#cb62-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-53"><a href="#cb62-53" aria-hidden="true" tabindex="-1"></a>Transforming the data to an appropriate data structure:</span>
+<span id="cb62-54"><a href="#cb62-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-57"><a href="#cb62-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-58"><a href="#cb62-58" aria-hidden="true" tabindex="-1"></a>amended <span class="ot">&lt;-</span> <span class="fu">read_lines</span>(<span class="fu">here</span>(<span class="st">'2023'</span>, <span class="st">'day'</span>, <span class="st">'1'</span>, <span class="st">'input'</span>))</span>
+<span id="cb62-59"><a href="#cb62-59" aria-hidden="true" tabindex="-1"></a>amended[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb62-60"><a href="#cb62-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-61"><a href="#cb62-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-62"><a href="#cb62-62" aria-hidden="true" tabindex="-1"></a><span class="fu">### Solving for a particular case</span></span>
+<span id="cb62-65"><a href="#cb62-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-66"><a href="#cb62-66" aria-hidden="true" tabindex="-1"></a>(first_case <span class="ot">&lt;-</span> amended[<span class="dv">1</span>])</span>
+<span id="cb62-67"><a href="#cb62-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-68"><a href="#cb62-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-69"><a href="#cb62-69" aria-hidden="true" tabindex="-1"></a>Extracting the numbers</span>
+<span id="cb62-72"><a href="#cb62-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-73"><a href="#cb62-73" aria-hidden="true" tabindex="-1"></a>(matrix_str_numbers <span class="ot">&lt;-</span></span>
+<span id="cb62-74"><a href="#cb62-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(first_case, <span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb62-75"><a href="#cb62-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-76"><a href="#cb62-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-77"><a href="#cb62-77" aria-hidden="true" tabindex="-1"></a>Extracting all the rows from columns one and three (the first and last number of each row)</span>
+<span id="cb62-80"><a href="#cb62-80" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-81"><a href="#cb62-81" aria-hidden="true" tabindex="-1"></a>numbers_i_want <span class="ot">&lt;-</span> matrix_str_numbers[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span>
+<span id="cb62-82"><a href="#cb62-82" aria-hidden="true" tabindex="-1"></a>numbers_i_want</span>
+<span id="cb62-83"><a href="#cb62-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-84"><a href="#cb62-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-85"><a href="#cb62-85" aria-hidden="true" tabindex="-1"></a>(This code will generalise ONLY IF all the other rows have 3 numbers too).</span>
+<span id="cb62-86"><a href="#cb62-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-87"><a href="#cb62-87" aria-hidden="true" tabindex="-1"></a>The following code returns the first and last number "pasted" together and converts the result from string to numeric.</span>
+<span id="cb62-90"><a href="#cb62-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-91"><a href="#cb62-91" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_flatten</span>(numbers_i_want) <span class="sc">%&gt;%</span></span>
+<span id="cb62-92"><a href="#cb62-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
+<span id="cb62-93"><a href="#cb62-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-94"><a href="#cb62-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-95"><a href="#cb62-95" aria-hidden="true" tabindex="-1"></a>Now let's try to generalise to all input rows:</span>
+<span id="cb62-96"><a href="#cb62-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-99"><a href="#cb62-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-100"><a href="#cb62-100" aria-hidden="true" tabindex="-1"></a>amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-101"><a href="#cb62-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-102"><a href="#cb62-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
+<span id="cb62-103"><a href="#cb62-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-104"><a href="#cb62-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-105"><a href="#cb62-105" aria-hidden="true" tabindex="-1"></a>Oh no. Rows have a different quantity of digits.</span>
+<span id="cb62-106"><a href="#cb62-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-107"><a href="#cb62-107" aria-hidden="true" tabindex="-1"></a>Maybe using <span class="in">`simplify=TRUE`</span> was a mistake here. Given that each element has a different quantity of digits, a list seems to be a more suitable data structure:</span>
+<span id="cb62-108"><a href="#cb62-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-111"><a href="#cb62-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-112"><a href="#cb62-112" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="ot">&lt;-</span> </span>
+<span id="cb62-113"><a href="#cb62-113" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-114"><a href="#cb62-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-115"><a href="#cb62-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
+<span id="cb62-116"><a href="#cb62-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-117"><a href="#cb62-117" aria-hidden="true" tabindex="-1"></a>list_digits_preview</span>
+<span id="cb62-118"><a href="#cb62-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-119"><a href="#cb62-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-120"><a href="#cb62-120" aria-hidden="true" tabindex="-1"></a>Now, how can I extract the first and last element from each element of the list? My gut feeling is that I'll need <span class="in">`purrr`</span> for this:</span>
+<span id="cb62-121"><a href="#cb62-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-122"><a href="#cb62-122" aria-hidden="true" tabindex="-1"></a><span class="in">`pluck`</span> and <span class="in">`keep_at`</span> seem to be useful functions for this task</span>
+<span id="cb62-123"><a href="#cb62-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-126"><a href="#cb62-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-127"><a href="#cb62-127" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="sc">%&gt;%</span></span>
+<span id="cb62-128"><a href="#cb62-128" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This should extract the first and last digit from each element of the list </span></span>
+<span id="cb62-129"><a href="#cb62-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">keep_at</span>(., <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">length</span>(.))))</span>
+<span id="cb62-130"><a href="#cb62-130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-131"><a href="#cb62-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-132"><a href="#cb62-132" aria-hidden="true" tabindex="-1"></a>It is working!!</span>
+<span id="cb62-133"><a href="#cb62-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-134"><a href="#cb62-134" aria-hidden="true" tabindex="-1"></a>Now I'll apply the action to the whole list:</span>
+<span id="cb62-135"><a href="#cb62-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-138"><a href="#cb62-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-139"><a href="#cb62-139" aria-hidden="true" tabindex="-1"></a>list_useful_digits <span class="ot">&lt;-</span> </span>
+<span id="cb62-140"><a href="#cb62-140" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-141"><a href="#cb62-141" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-142"><a href="#cb62-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">keep_at</span>(., <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">length</span>(.))))</span>
+<span id="cb62-143"><a href="#cb62-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-144"><a href="#cb62-144" aria-hidden="true" tabindex="-1"></a>list_useful_digits[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb62-145"><a href="#cb62-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-146"><a href="#cb62-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-147"><a href="#cb62-147" aria-hidden="true" tabindex="-1"></a>Hmmm... Why does element  7 have only 1 digit?</span>
+<span id="cb62-148"><a href="#cb62-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-151"><a href="#cb62-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-152"><a href="#cb62-152" aria-hidden="true" tabindex="-1"></a>amended[<span class="dv">7</span>]</span>
+<span id="cb62-153"><a href="#cb62-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-154"><a href="#cb62-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-155"><a href="#cb62-155" aria-hidden="true" tabindex="-1"></a>It's got just one digit as a number, but there are other digits written out in words. Should we count those? The prompt isn't really clear about this. But since the example only talks about digits as numbers, I guess I'll just go with those for now. If I've got this wrong and my solution gets rejected, well, I can always give it another shot</span>
+<span id="cb62-156"><a href="#cb62-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-157"><a href="#cb62-157" aria-hidden="true" tabindex="-1"></a>Now let's concatenate the digits row-wise, turn them into a number and add them up:</span>
+<span id="cb62-158"><a href="#cb62-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-161"><a href="#cb62-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-162"><a href="#cb62-162" aria-hidden="true" tabindex="-1"></a>solution <span class="ot">&lt;-</span> </span>
+<span id="cb62-163"><a href="#cb62-163" aria-hidden="true" tabindex="-1"></a>  list_useful_digits <span class="sc">%&gt;%</span></span>
+<span id="cb62-164"><a href="#cb62-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
+<span id="cb62-165"><a href="#cb62-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(as.integer) <span class="sc">%&gt;%</span></span>
+<span id="cb62-166"><a href="#cb62-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_vector</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb62-167"><a href="#cb62-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb62-168"><a href="#cb62-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-169"><a href="#cb62-169" aria-hidden="true" tabindex="-1"></a>solution</span>
+<span id="cb62-170"><a href="#cb62-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-171"><a href="#cb62-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-172"><a href="#cb62-172" aria-hidden="true" tabindex="-1"></a>👎🏽 Solution was rejected. The website says it's too low 🤔 </span>
+<span id="cb62-173"><a href="#cb62-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-174"><a href="#cb62-174" aria-hidden="true" tabindex="-1"></a>The most likely suspect here is the way <span class="in">`map(~keep_at(., c(1, length(.))))`</span> is handling the rows with only one digit.</span>
+<span id="cb62-175"><a href="#cb62-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-176"><a href="#cb62-176" aria-hidden="true" tabindex="-1"></a>Some alternatives I could try:</span>
+<span id="cb62-177"><a href="#cb62-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-178"><a href="#cb62-178" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>If the input row has only one digit, then use it as first AND last digit when building the number (e.g. if the row only contains 7, the number I would obtain from that row should be 77).</span>
+<span id="cb62-179"><a href="#cb62-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-180"><a href="#cb62-180" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Take into account digits that are written as words (e.g. "three"). This is less likely to work and it would be weird for the exercise to expect people to do this and not mentioning it explicitely in the prompt or the examples.</span>
+<span id="cb62-181"><a href="#cb62-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-182"><a href="#cb62-182" aria-hidden="true" tabindex="-1"></a>I'll go with alternative 1.</span>
+<span id="cb62-183"><a href="#cb62-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-184"><a href="#cb62-184" aria-hidden="true" tabindex="-1"></a><span class="fu">### Handling rows with just one digit</span></span>
+<span id="cb62-185"><a href="#cb62-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-186"><a href="#cb62-186" aria-hidden="true" tabindex="-1"></a>I'll take a slice from the first 10 rows, as the first case with one digit appears in row 7:</span>
+<span id="cb62-189"><a href="#cb62-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-190"><a href="#cb62-190" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="ot">&lt;-</span> </span>
+<span id="cb62-191"><a href="#cb62-191" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-192"><a href="#cb62-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-193"><a href="#cb62-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb62-194"><a href="#cb62-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-195"><a href="#cb62-195" aria-hidden="true" tabindex="-1"></a>list_digits_preview</span>
+<span id="cb62-196"><a href="#cb62-196" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-197"><a href="#cb62-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-198"><a href="#cb62-198" aria-hidden="true" tabindex="-1"></a>I have a feeling that <span class="co">[</span><span class="ot">`purrr::pluck`</span><span class="co">](https://purrr.tidyverse.org/reference/pluck.html)</span> may do the trick here:</span>
+<span id="cb62-199"><a href="#cb62-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-202"><a href="#cb62-202" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-203"><a href="#cb62-203" aria-hidden="true" tabindex="-1"></a>get_first_and_last <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb62-204"><a href="#cb62-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">pluck</span>(x, <span class="dv">1</span>), <span class="fu">pluck</span>(x, <span class="fu">length</span>(x)))</span>
+<span id="cb62-205"><a href="#cb62-205" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb62-206"><a href="#cb62-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-207"><a href="#cb62-207" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="sc">%&gt;%</span></span>
+<span id="cb62-208"><a href="#cb62-208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last)</span>
+<span id="cb62-209"><a href="#cb62-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-210"><a href="#cb62-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-211"><a href="#cb62-211" aria-hidden="true" tabindex="-1"></a>This function does what I want (and yes, using <span class="in">`pluck`</span> is a bit unnecessary since I could just have used regular subsetting, e.g. <span class="in">`x[[1]]`</span> and <span class="in">`x[[length(x)]]`</span>, but I'm doing this with the <span class="co">[</span><span class="ot">purrr cheat sheet</span><span class="co">](https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf)</span> in front of me, so <span class="in">`pluck`</span> was what came to my mind).</span>
+<span id="cb62-212"><a href="#cb62-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-213"><a href="#cb62-213" aria-hidden="true" tabindex="-1"></a>2nd attempt, this time using <span class="in">`get_first_and_last`</span>.</span>
+<span id="cb62-214"><a href="#cb62-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-217"><a href="#cb62-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-218"><a href="#cb62-218" aria-hidden="true" tabindex="-1"></a>solution2 <span class="ot">&lt;-</span> </span>
+<span id="cb62-219"><a href="#cb62-219" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-220"><a href="#cb62-220" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-221"><a href="#cb62-221" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last) <span class="sc">%&gt;%</span></span>
+<span id="cb62-222"><a href="#cb62-222" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
+<span id="cb62-223"><a href="#cb62-223" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(as.integer) <span class="sc">%&gt;%</span></span>
+<span id="cb62-224"><a href="#cb62-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_vector</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb62-225"><a href="#cb62-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb62-226"><a href="#cb62-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-227"><a href="#cb62-227" aria-hidden="true" tabindex="-1"></a>solution2</span>
+<span id="cb62-228"><a href="#cb62-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-229"><a href="#cb62-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-230"><a href="#cb62-230" aria-hidden="true" tabindex="-1"></a>This is the correct solution!! 🥳🥳🥳</span>
+<span id="cb62-231"><a href="#cb62-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-232"><a href="#cb62-232" aria-hidden="true" tabindex="-1"></a>Onto the second part!</span>
+<span id="cb62-233"><a href="#cb62-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-234"><a href="#cb62-234" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 2</span></span>
+<span id="cb62-235"><a href="#cb62-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-236"><a href="#cb62-236" aria-hidden="true" tabindex="-1"></a>Saw this one coming: now I need to tackle the digits spelled out as words 😬. </span>
+<span id="cb62-237"><a href="#cb62-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-238"><a href="#cb62-238" aria-hidden="true" tabindex="-1"></a><span class="fu">### First (naive) attempt</span></span>
+<span id="cb62-239"><a href="#cb62-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-240"><a href="#cb62-240" aria-hidden="true" tabindex="-1"></a>IMHO the simplest approach is to write a function that converts digits spelled out in a string into their numeric form. Then, I can incorporate this function into my pipeline using a <span class="in">`map`</span> call, right before <span class="in">`str_extract_all`</span>.</span>
+<span id="cb62-243"><a href="#cb62-243" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-244"><a href="#cb62-244" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit <span class="ot">&lt;-</span> amended[<span class="dv">7</span>]</span>
+<span id="cb62-245"><a href="#cb62-245" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit</span>
+<span id="cb62-246"><a href="#cb62-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-247"><a href="#cb62-247" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-248"><a href="#cb62-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-249"><a href="#cb62-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-252"><a href="#cb62-252" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-253"><a href="#cb62-253" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit <span class="sc">%&gt;%</span></span>
-<span id="cb62-254"><a href="#cb62-254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(</span>
-<span id="cb62-255"><a href="#cb62-255" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(</span>
-<span id="cb62-256"><a href="#cb62-256" aria-hidden="true" tabindex="-1"></a>      <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
-<span id="cb62-257"><a href="#cb62-257" aria-hidden="true" tabindex="-1"></a>      <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
-<span id="cb62-258"><a href="#cb62-258" aria-hidden="true" tabindex="-1"></a>      <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span></span>
-<span id="cb62-259"><a href="#cb62-259" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb62-260"><a href="#cb62-260" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb62-261"><a href="#cb62-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-262"><a href="#cb62-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-263"><a href="#cb62-263" aria-hidden="true" tabindex="-1"></a>Working as expected.</span>
-<span id="cb62-264"><a href="#cb62-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-265"><a href="#cb62-265" aria-hidden="true" tabindex="-1"></a>Now let's apply the function to the full data.</span>
-<span id="cb62-266"><a href="#cb62-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-267"><a href="#cb62-267" aria-hidden="true" tabindex="-1"></a>I'll start by creating the replacement vector (although I'm pretty sure it's already a part of some R package that's slipping my mind right now).</span>
-<span id="cb62-270"><a href="#cb62-270" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-271"><a href="#cb62-271" aria-hidden="true" tabindex="-1"></a>digits <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb62-272"><a href="#cb62-272" aria-hidden="true" tabindex="-1"></a>  <span class="st">"one"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
-<span id="cb62-273"><a href="#cb62-273" aria-hidden="true" tabindex="-1"></a>  <span class="st">"two"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
-<span id="cb62-274"><a href="#cb62-274" aria-hidden="true" tabindex="-1"></a>  <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
-<span id="cb62-275"><a href="#cb62-275" aria-hidden="true" tabindex="-1"></a>  <span class="st">"four"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
-<span id="cb62-276"><a href="#cb62-276" aria-hidden="true" tabindex="-1"></a>  <span class="st">"five"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
-<span id="cb62-277"><a href="#cb62-277" aria-hidden="true" tabindex="-1"></a>  <span class="st">"six"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
-<span id="cb62-278"><a href="#cb62-278" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seven"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
-<span id="cb62-279"><a href="#cb62-279" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
-<span id="cb62-280"><a href="#cb62-280" aria-hidden="true" tabindex="-1"></a>  <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span></span>
-<span id="cb62-281"><a href="#cb62-281" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb62-282"><a href="#cb62-282" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-283"><a href="#cb62-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-286"><a href="#cb62-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-287"><a href="#cb62-287" aria-hidden="true" tabindex="-1"></a>solution3 <span class="ot">&lt;-</span> </span>
-<span id="cb62-288"><a href="#cb62-288" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
-<span id="cb62-289"><a href="#cb62-289" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits) <span class="sc">%&gt;%</span></span>
-<span id="cb62-290"><a href="#cb62-290" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb62-291"><a href="#cb62-291" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last) <span class="sc">%&gt;%</span></span>
-<span id="cb62-292"><a href="#cb62-292" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
-<span id="cb62-293"><a href="#cb62-293" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(as.integer) <span class="sc">%&gt;%</span></span>
-<span id="cb62-294"><a href="#cb62-294" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_vector</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb62-295"><a href="#cb62-295" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb62-296"><a href="#cb62-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-297"><a href="#cb62-297" aria-hidden="true" tabindex="-1"></a>solution3</span>
-<span id="cb62-298"><a href="#cb62-298" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-299"><a href="#cb62-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-300"><a href="#cb62-300" aria-hidden="true" tabindex="-1"></a>The solution wasn't right.</span>
-<span id="cb62-301"><a href="#cb62-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-302"><a href="#cb62-302" aria-hidden="true" tabindex="-1"></a><span class="fu">### Second attempt: handling overlapping patterns</span></span>
-<span id="cb62-303"><a href="#cb62-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-304"><a href="#cb62-304" aria-hidden="true" tabindex="-1"></a>Time to take a closer look at the pipeline using a <span class="in">`tibble`</span>.</span>
-<span id="cb62-305"><a href="#cb62-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-308"><a href="#cb62-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-309"><a href="#cb62-309" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb62-310"><a href="#cb62-310" aria-hidden="true" tabindex="-1"></a>  <span class="at">original =</span> amended,</span>
-<span id="cb62-311"><a href="#cb62-311" aria-hidden="true" tabindex="-1"></a>  <span class="at">new =</span> original <span class="sc">%&gt;%</span></span>
-<span id="cb62-312"><a href="#cb62-312" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits),</span>
-<span id="cb62-313"><a href="#cb62-313" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> amended <span class="sc">%&gt;%</span></span>
-<span id="cb62-314"><a href="#cb62-314" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits) <span class="sc">%&gt;%</span></span>
-<span id="cb62-315"><a href="#cb62-315" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb62-316"><a href="#cb62-316" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(get_first_and_last) <span class="sc">%&gt;%</span></span>
-<span id="cb62-317"><a href="#cb62-317" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
-<span id="cb62-318"><a href="#cb62-318" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_vector</span>()</span>
-<span id="cb62-319"><a href="#cb62-319" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb62-320"><a href="#cb62-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-321"><a href="#cb62-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-322"><a href="#cb62-322" aria-hidden="true" tabindex="-1"></a>Hypothesis: The issue might arise in instances like <span class="in">`"zoneight234"`</span>, where the spellings of two numbers are overlapping.</span>
-<span id="cb62-323"><a href="#cb62-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-326"><a href="#cb62-326" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-327"><a href="#cb62-327" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace_all</span>(<span class="st">"zoneight234"</span>, <span class="at">pattern =</span> digits)</span>
-<span id="cb62-328"><a href="#cb62-328" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-329"><a href="#cb62-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-330"><a href="#cb62-330" aria-hidden="true" tabindex="-1"></a>I'll try to handle these cases to make sure that every spelled-out digit in the text is returned, even if they overlap.</span>
-<span id="cb62-331"><a href="#cb62-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-332"><a href="#cb62-332" aria-hidden="true" tabindex="-1"></a>Maybe I can get closer to that by using the <span class="in">`stringi`</span> package?</span>
-<span id="cb62-333"><a href="#cb62-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-336"><a href="#cb62-336" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-337"><a href="#cb62-337" aria-hidden="true" tabindex="-1"></a>stringi<span class="sc">::</span><span class="fu">stri_replace_all_regex</span>(<span class="st">"zoneight234"</span>, <span class="at">pattern =</span> <span class="fu">names</span>(digits), <span class="at">replacement =</span> digits, <span class="at">vectorize_all =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb62-338"><a href="#cb62-338" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-339"><a href="#cb62-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-340"><a href="#cb62-340" aria-hidden="true" tabindex="-1"></a>This is not working.</span>
-<span id="cb62-341"><a href="#cb62-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-342"><a href="#cb62-342" aria-hidden="true" tabindex="-1"></a>Something else I could try:</span>
-<span id="cb62-343"><a href="#cb62-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-344"><a href="#cb62-344" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using the <span class="in">`_first`</span> and <span class="in">`_last`</span> functions from stringi to identify digits, whether they are numerically written or spelled out.</span>
-<span id="cb62-345"><a href="#cb62-345" aria-hidden="true" tabindex="-1"></a>b. Then, replacing the spelled-out digits that appear at either the beginning or end of the string.</span>
-<span id="cb62-346"><a href="#cb62-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-349"><a href="#cb62-349" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-350"><a href="#cb62-350" aria-hidden="true" tabindex="-1"></a>problematic_string <span class="ot">&lt;-</span> <span class="st">"zone2344oneight"</span></span>
-<span id="cb62-351"><a href="#cb62-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-352"><a href="#cb62-352" aria-hidden="true" tabindex="-1"></a>all_digits_regex <span class="ot">&lt;-</span> <span class="st">"[0123456789]|one|two|three|four|five|six|seven|eight|nine"</span></span>
-<span id="cb62-353"><a href="#cb62-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-354"><a href="#cb62-354" aria-hidden="true" tabindex="-1"></a>all_digits_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb62-355"><a href="#cb62-355" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(digits),</span>
-<span id="cb62-356"><a href="#cb62-356" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span></span>
-<span id="cb62-357"><a href="#cb62-357" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb62-358"><a href="#cb62-358" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-359"><a href="#cb62-359" aria-hidden="true" tabindex="-1"></a>stringi<span class="sc">::</span><span class="fu">stri_extract_last_regex</span>(</span>
-<span id="cb62-360"><a href="#cb62-360" aria-hidden="true" tabindex="-1"></a>  <span class="at">str =</span> problematic_string,</span>
-<span id="cb62-361"><a href="#cb62-361" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> all_digits_vector</span>
-<span id="cb62-362"><a href="#cb62-362" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb62-363"><a href="#cb62-363" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-364"><a href="#cb62-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-365"><a href="#cb62-365" aria-hidden="true" tabindex="-1"></a>Okay, this method DOES return all the digits that appear in the string, but  I end up losing details about where the digits are positioned, which is needed for identifying the first and last digits in each row.</span>
+<span id="cb62-251"><a href="#cb62-251" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-252"><a href="#cb62-252" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit <span class="sc">%&gt;%</span></span>
+<span id="cb62-253"><a href="#cb62-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(</span>
+<span id="cb62-254"><a href="#cb62-254" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(</span>
+<span id="cb62-255"><a href="#cb62-255" aria-hidden="true" tabindex="-1"></a>      <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-256"><a href="#cb62-256" aria-hidden="true" tabindex="-1"></a>      <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-257"><a href="#cb62-257" aria-hidden="true" tabindex="-1"></a>      <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span></span>
+<span id="cb62-258"><a href="#cb62-258" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb62-259"><a href="#cb62-259" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb62-260"><a href="#cb62-260" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-261"><a href="#cb62-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-262"><a href="#cb62-262" aria-hidden="true" tabindex="-1"></a>Working as expected.</span>
+<span id="cb62-263"><a href="#cb62-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-264"><a href="#cb62-264" aria-hidden="true" tabindex="-1"></a>Now let's apply the function to the full data.</span>
+<span id="cb62-265"><a href="#cb62-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-266"><a href="#cb62-266" aria-hidden="true" tabindex="-1"></a>I'll start by creating the replacement vector (although I'm pretty sure it's already a part of some R package that's slipping my mind right now).</span>
+<span id="cb62-269"><a href="#cb62-269" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-270"><a href="#cb62-270" aria-hidden="true" tabindex="-1"></a>digits <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb62-271"><a href="#cb62-271" aria-hidden="true" tabindex="-1"></a>  <span class="st">"one"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-272"><a href="#cb62-272" aria-hidden="true" tabindex="-1"></a>  <span class="st">"two"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-273"><a href="#cb62-273" aria-hidden="true" tabindex="-1"></a>  <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-274"><a href="#cb62-274" aria-hidden="true" tabindex="-1"></a>  <span class="st">"four"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-275"><a href="#cb62-275" aria-hidden="true" tabindex="-1"></a>  <span class="st">"five"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-276"><a href="#cb62-276" aria-hidden="true" tabindex="-1"></a>  <span class="st">"six"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-277"><a href="#cb62-277" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seven"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-278"><a href="#cb62-278" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-279"><a href="#cb62-279" aria-hidden="true" tabindex="-1"></a>  <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span></span>
+<span id="cb62-280"><a href="#cb62-280" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-281"><a href="#cb62-281" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-282"><a href="#cb62-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-285"><a href="#cb62-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-286"><a href="#cb62-286" aria-hidden="true" tabindex="-1"></a>solution3 <span class="ot">&lt;-</span> </span>
+<span id="cb62-287"><a href="#cb62-287" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-288"><a href="#cb62-288" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits) <span class="sc">%&gt;%</span></span>
+<span id="cb62-289"><a href="#cb62-289" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-290"><a href="#cb62-290" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last) <span class="sc">%&gt;%</span></span>
+<span id="cb62-291"><a href="#cb62-291" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
+<span id="cb62-292"><a href="#cb62-292" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(as.integer) <span class="sc">%&gt;%</span></span>
+<span id="cb62-293"><a href="#cb62-293" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_vector</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb62-294"><a href="#cb62-294" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb62-295"><a href="#cb62-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-296"><a href="#cb62-296" aria-hidden="true" tabindex="-1"></a>solution3</span>
+<span id="cb62-297"><a href="#cb62-297" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-298"><a href="#cb62-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-299"><a href="#cb62-299" aria-hidden="true" tabindex="-1"></a>The solution wasn't right.</span>
+<span id="cb62-300"><a href="#cb62-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-301"><a href="#cb62-301" aria-hidden="true" tabindex="-1"></a><span class="fu">### Second attempt: handling overlapping patterns</span></span>
+<span id="cb62-302"><a href="#cb62-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-303"><a href="#cb62-303" aria-hidden="true" tabindex="-1"></a>Time to take a closer look at the pipeline using a <span class="in">`tibble`</span>.</span>
+<span id="cb62-304"><a href="#cb62-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-307"><a href="#cb62-307" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-308"><a href="#cb62-308" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb62-309"><a href="#cb62-309" aria-hidden="true" tabindex="-1"></a>  <span class="at">original =</span> amended,</span>
+<span id="cb62-310"><a href="#cb62-310" aria-hidden="true" tabindex="-1"></a>  <span class="at">new =</span> original <span class="sc">%&gt;%</span></span>
+<span id="cb62-311"><a href="#cb62-311" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits),</span>
+<span id="cb62-312"><a href="#cb62-312" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> amended <span class="sc">%&gt;%</span></span>
+<span id="cb62-313"><a href="#cb62-313" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits) <span class="sc">%&gt;%</span></span>
+<span id="cb62-314"><a href="#cb62-314" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-315"><a href="#cb62-315" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(get_first_and_last) <span class="sc">%&gt;%</span></span>
+<span id="cb62-316"><a href="#cb62-316" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
+<span id="cb62-317"><a href="#cb62-317" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_vector</span>()</span>
+<span id="cb62-318"><a href="#cb62-318" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-319"><a href="#cb62-319" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-320"><a href="#cb62-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-321"><a href="#cb62-321" aria-hidden="true" tabindex="-1"></a>Hypothesis: The issue might arise in instances like <span class="in">`"zoneight234"`</span>, where the spellings of two numbers are overlapping.</span>
+<span id="cb62-322"><a href="#cb62-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-325"><a href="#cb62-325" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-326"><a href="#cb62-326" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace_all</span>(<span class="st">"zoneight234"</span>, <span class="at">pattern =</span> digits)</span>
+<span id="cb62-327"><a href="#cb62-327" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-328"><a href="#cb62-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-329"><a href="#cb62-329" aria-hidden="true" tabindex="-1"></a>I'll try to handle these cases to make sure that every spelled-out digit in the text is returned, even if they overlap.</span>
+<span id="cb62-330"><a href="#cb62-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-331"><a href="#cb62-331" aria-hidden="true" tabindex="-1"></a>Maybe I can get closer to that by using the <span class="in">`stringi`</span> package?</span>
+<span id="cb62-332"><a href="#cb62-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-335"><a href="#cb62-335" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-336"><a href="#cb62-336" aria-hidden="true" tabindex="-1"></a>stringi<span class="sc">::</span><span class="fu">stri_replace_all_regex</span>(<span class="st">"zoneight234"</span>, <span class="at">pattern =</span> <span class="fu">names</span>(digits), <span class="at">replacement =</span> digits, <span class="at">vectorize_all =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb62-337"><a href="#cb62-337" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-338"><a href="#cb62-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-339"><a href="#cb62-339" aria-hidden="true" tabindex="-1"></a>This is not working.</span>
+<span id="cb62-340"><a href="#cb62-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-341"><a href="#cb62-341" aria-hidden="true" tabindex="-1"></a>Something else I could try:</span>
+<span id="cb62-342"><a href="#cb62-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-343"><a href="#cb62-343" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using the <span class="in">`_first`</span> and <span class="in">`_last`</span> functions from stringi to identify digits, whether they are numerically written or spelled out.</span>
+<span id="cb62-344"><a href="#cb62-344" aria-hidden="true" tabindex="-1"></a>b. Then, replacing the spelled-out digits that appear at either the beginning or end of the string.</span>
+<span id="cb62-345"><a href="#cb62-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-348"><a href="#cb62-348" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-349"><a href="#cb62-349" aria-hidden="true" tabindex="-1"></a>problematic_string <span class="ot">&lt;-</span> <span class="st">"zone2344oneight"</span></span>
+<span id="cb62-350"><a href="#cb62-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-351"><a href="#cb62-351" aria-hidden="true" tabindex="-1"></a>all_digits_regex <span class="ot">&lt;-</span> <span class="st">"[0123456789]|one|two|three|four|five|six|seven|eight|nine"</span></span>
+<span id="cb62-352"><a href="#cb62-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-353"><a href="#cb62-353" aria-hidden="true" tabindex="-1"></a>all_digits_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb62-354"><a href="#cb62-354" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(digits),</span>
+<span id="cb62-355"><a href="#cb62-355" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span></span>
+<span id="cb62-356"><a href="#cb62-356" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-357"><a href="#cb62-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-358"><a href="#cb62-358" aria-hidden="true" tabindex="-1"></a>stringi<span class="sc">::</span><span class="fu">stri_extract_last_regex</span>(</span>
+<span id="cb62-359"><a href="#cb62-359" aria-hidden="true" tabindex="-1"></a>  <span class="at">str =</span> problematic_string,</span>
+<span id="cb62-360"><a href="#cb62-360" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> all_digits_vector</span>
+<span id="cb62-361"><a href="#cb62-361" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-362"><a href="#cb62-362" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-363"><a href="#cb62-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-364"><a href="#cb62-364" aria-hidden="true" tabindex="-1"></a>Okay, this method DOES return all the digits that appear in the string, but  I end up losing details about where the digits are positioned, which is needed for identifying the first and last digits in each row.</span>
+<span id="cb62-365"><a href="#cb62-365" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-366"><a href="#cb62-366" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-367"><a href="#cb62-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-368"><a href="#cb62-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-369"><a href="#cb62-369" aria-hidden="true" tabindex="-1"></a>More ideas: </span>
-<span id="cb62-370"><a href="#cb62-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-371"><a href="#cb62-371" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using <span class="in">`str_localte_all`</span>, a <span class="in">`stringr`</span> function that allows matching each digit as an separate pattern (thus avoiding the overlap problem) and gives information about the POSITION of the pattern. Then use that info to find the first and the last match in each row.</span>
-<span id="cb62-372"><a href="#cb62-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-373"><a href="#cb62-373" aria-hidden="true" tabindex="-1"></a>Example: </span>
-<span id="cb62-376"><a href="#cb62-376" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-377"><a href="#cb62-377" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_locate_all</span>(</span>
-<span id="cb62-378"><a href="#cb62-378" aria-hidden="true" tabindex="-1"></a>  <span class="at">string =</span> problematic_string,</span>
-<span id="cb62-379"><a href="#cb62-379" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> all_digits_vector</span>
-<span id="cb62-380"><a href="#cb62-380" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>]</span>
-<span id="cb62-381"><a href="#cb62-381" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-382"><a href="#cb62-382" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-383"><a href="#cb62-383" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>CRAZY IDEA!!! What if I reverse the string, and then look for first match of the **reversed** names of the digits??</span>
-<span id="cb62-384"><a href="#cb62-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-385"><a href="#cb62-385" aria-hidden="true" tabindex="-1"></a>After all, the only matches that matter for solving this puzzle are the first one and the last one. For the first match, overlapping is not a real problem because it causes the *second* digit not to match (example: "eight" in "oneight", here "one" is always matched or detected).</span>
-<span id="cb62-386"><a href="#cb62-386" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-387"><a href="#cb62-387" aria-hidden="true" tabindex="-1"></a>Reversing the strings and their patterns could mirror this dynamic when matching the last digit.</span>
-<span id="cb62-388"><a href="#cb62-388" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-391"><a href="#cb62-391" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-392"><a href="#cb62-392" aria-hidden="true" tabindex="-1"></a>regex_reversed <span class="ot">&lt;-</span> <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
-<span id="cb62-393"><a href="#cb62-393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-394"><a href="#cb62-394" aria-hidden="true" tabindex="-1"></a>vector_reversed <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb62-395"><a href="#cb62-395" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eno"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
-<span id="cb62-396"><a href="#cb62-396" aria-hidden="true" tabindex="-1"></a>  <span class="st">"owt"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
-<span id="cb62-397"><a href="#cb62-397" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eerht"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
-<span id="cb62-398"><a href="#cb62-398" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ruof"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
-<span id="cb62-399"><a href="#cb62-399" aria-hidden="true" tabindex="-1"></a>  <span class="st">"evif"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
-<span id="cb62-400"><a href="#cb62-400" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xis"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
-<span id="cb62-401"><a href="#cb62-401" aria-hidden="true" tabindex="-1"></a>  <span class="st">"neves"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
-<span id="cb62-402"><a href="#cb62-402" aria-hidden="true" tabindex="-1"></a>  <span class="st">"thgie"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
-<span id="cb62-403"><a href="#cb62-403" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
-<span id="cb62-404"><a href="#cb62-404" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
-<span id="cb62-405"><a href="#cb62-405" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
-<span id="cb62-406"><a href="#cb62-406" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
-<span id="cb62-407"><a href="#cb62-407" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
-<span id="cb62-408"><a href="#cb62-408" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
-<span id="cb62-409"><a href="#cb62-409" aria-hidden="true" tabindex="-1"></a>  <span class="st">"6"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
-<span id="cb62-410"><a href="#cb62-410" aria-hidden="true" tabindex="-1"></a>  <span class="st">"7"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
-<span id="cb62-411"><a href="#cb62-411" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
-<span id="cb62-412"><a href="#cb62-412" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
-<span id="cb62-413"><a href="#cb62-413" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
-<span id="cb62-414"><a href="#cb62-414" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb62-415"><a href="#cb62-415" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-416"><a href="#cb62-416" aria-hidden="true" tabindex="-1"></a>In this example, I should be able to match "eight" as the last string, despite it overlapping with "one".</span>
-<span id="cb62-419"><a href="#cb62-419" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-420"><a href="#cb62-420" aria-hidden="true" tabindex="-1"></a>problematic_string</span>
-<span id="cb62-421"><a href="#cb62-421" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-422"><a href="#cb62-422" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-423"><a href="#cb62-423" aria-hidden="true" tabindex="-1"></a>My strategy is to invert it and then look for "thgie" 😂💀</span>
-<span id="cb62-426"><a href="#cb62-426" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-427"><a href="#cb62-427" aria-hidden="true" tabindex="-1"></a>reversed_problematic_string <span class="ot">&lt;-</span> </span>
-<span id="cb62-428"><a href="#cb62-428" aria-hidden="true" tabindex="-1"></a>  stringi<span class="sc">::</span><span class="fu">stri_reverse</span>(</span>
-<span id="cb62-429"><a href="#cb62-429" aria-hidden="true" tabindex="-1"></a>  problematic_string</span>
-<span id="cb62-430"><a href="#cb62-430" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb62-431"><a href="#cb62-431" aria-hidden="true" tabindex="-1"></a>reversed_problematic_string</span>
-<span id="cb62-432"><a href="#cb62-432" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-433"><a href="#cb62-433" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-436"><a href="#cb62-436" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-437"><a href="#cb62-437" aria-hidden="true" tabindex="-1"></a>found_reversed_string <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(</span>
-<span id="cb62-438"><a href="#cb62-438" aria-hidden="true" tabindex="-1"></a>  reversed_problematic_string,</span>
-<span id="cb62-439"><a href="#cb62-439" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
-<span id="cb62-440"><a href="#cb62-440" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb62-441"><a href="#cb62-441" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-442"><a href="#cb62-442" aria-hidden="true" tabindex="-1"></a>found_reversed_string</span>
-<span id="cb62-443"><a href="#cb62-443" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-444"><a href="#cb62-444" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-445"><a href="#cb62-445" aria-hidden="true" tabindex="-1"></a>After finding it, I can use the following code to get back the original number</span>
-<span id="cb62-448"><a href="#cb62-448" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-449"><a href="#cb62-449" aria-hidden="true" tabindex="-1"></a>vector_reversed[found_reversed_string]</span>
-<span id="cb62-450"><a href="#cb62-450" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-451"><a href="#cb62-451" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-452"><a href="#cb62-452" aria-hidden="true" tabindex="-1"></a>It's working. Now, let's wrap this pipeline in a function to apply it to whole dataset:</span>
-<span id="cb62-453"><a href="#cb62-453" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-456"><a href="#cb62-456" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-457"><a href="#cb62-457" aria-hidden="true" tabindex="-1"></a>regex_reversed <span class="ot">&lt;-</span> <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
-<span id="cb62-458"><a href="#cb62-458" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-459"><a href="#cb62-459" aria-hidden="true" tabindex="-1"></a>all_digits_regex <span class="ot">&lt;-</span> <span class="st">"[0123456789]|one|two|three|four|five|six|seven|eight|nine"</span></span>
-<span id="cb62-460"><a href="#cb62-460" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-461"><a href="#cb62-461" aria-hidden="true" tabindex="-1"></a>digits_reversed <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb62-462"><a href="#cb62-462" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eno"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
-<span id="cb62-463"><a href="#cb62-463" aria-hidden="true" tabindex="-1"></a>  <span class="st">"owt"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
-<span id="cb62-464"><a href="#cb62-464" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eerht"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
-<span id="cb62-465"><a href="#cb62-465" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ruof"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
-<span id="cb62-466"><a href="#cb62-466" aria-hidden="true" tabindex="-1"></a>  <span class="st">"evif"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
-<span id="cb62-467"><a href="#cb62-467" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xis"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
-<span id="cb62-468"><a href="#cb62-468" aria-hidden="true" tabindex="-1"></a>  <span class="st">"neves"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
-<span id="cb62-469"><a href="#cb62-469" aria-hidden="true" tabindex="-1"></a>  <span class="st">"thgie"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
-<span id="cb62-470"><a href="#cb62-470" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
-<span id="cb62-471"><a href="#cb62-471" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
-<span id="cb62-472"><a href="#cb62-472" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
-<span id="cb62-473"><a href="#cb62-473" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
-<span id="cb62-474"><a href="#cb62-474" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
-<span id="cb62-475"><a href="#cb62-475" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
-<span id="cb62-476"><a href="#cb62-476" aria-hidden="true" tabindex="-1"></a>  <span class="st">"6"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
-<span id="cb62-477"><a href="#cb62-477" aria-hidden="true" tabindex="-1"></a>  <span class="st">"7"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
-<span id="cb62-478"><a href="#cb62-478" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
-<span id="cb62-479"><a href="#cb62-479" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
-<span id="cb62-480"><a href="#cb62-480" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
-<span id="cb62-481"><a href="#cb62-481" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb62-482"><a href="#cb62-482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-483"><a href="#cb62-483" aria-hidden="true" tabindex="-1"></a>digits <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb62-484"><a href="#cb62-484" aria-hidden="true" tabindex="-1"></a>  <span class="st">"one"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
-<span id="cb62-485"><a href="#cb62-485" aria-hidden="true" tabindex="-1"></a>  <span class="st">"two"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
-<span id="cb62-486"><a href="#cb62-486" aria-hidden="true" tabindex="-1"></a>  <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
-<span id="cb62-487"><a href="#cb62-487" aria-hidden="true" tabindex="-1"></a>  <span class="st">"four"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
-<span id="cb62-488"><a href="#cb62-488" aria-hidden="true" tabindex="-1"></a>  <span class="st">"five"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
-<span id="cb62-489"><a href="#cb62-489" aria-hidden="true" tabindex="-1"></a>  <span class="st">"six"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
-<span id="cb62-490"><a href="#cb62-490" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seven"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
-<span id="cb62-491"><a href="#cb62-491" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
-<span id="cb62-492"><a href="#cb62-492" aria-hidden="true" tabindex="-1"></a>  <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
-<span id="cb62-493"><a href="#cb62-493" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
-<span id="cb62-494"><a href="#cb62-494" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
-<span id="cb62-495"><a href="#cb62-495" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
-<span id="cb62-496"><a href="#cb62-496" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
-<span id="cb62-497"><a href="#cb62-497" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
-<span id="cb62-498"><a href="#cb62-498" aria-hidden="true" tabindex="-1"></a>  <span class="st">"6"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
-<span id="cb62-499"><a href="#cb62-499" aria-hidden="true" tabindex="-1"></a>  <span class="st">"7"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
-<span id="cb62-500"><a href="#cb62-500" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
-<span id="cb62-501"><a href="#cb62-501" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
-<span id="cb62-502"><a href="#cb62-502" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
-<span id="cb62-503"><a href="#cb62-503" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb62-504"><a href="#cb62-504" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-505"><a href="#cb62-505" aria-hidden="true" tabindex="-1"></a>get_last_number <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb62-506"><a href="#cb62-506" aria-hidden="true" tabindex="-1"></a>  found_reversed_string <span class="ot">&lt;-</span></span>
-<span id="cb62-507"><a href="#cb62-507" aria-hidden="true" tabindex="-1"></a>    stringi<span class="sc">::</span><span class="fu">stri_reverse</span>(x) <span class="sc">%&gt;%</span></span>
-<span id="cb62-508"><a href="#cb62-508" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_extract</span>(regex_reversed)</span>
-<span id="cb62-509"><a href="#cb62-509" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-510"><a href="#cb62-510" aria-hidden="true" tabindex="-1"></a>  digits_reversed[found_reversed_string] <span class="sc">%&gt;%</span></span>
-<span id="cb62-511"><a href="#cb62-511" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="cn">NULL</span>)</span>
-<span id="cb62-512"><a href="#cb62-512" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb62-513"><a href="#cb62-513" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-514"><a href="#cb62-514" aria-hidden="true" tabindex="-1"></a>get_first_number <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb62-515"><a href="#cb62-515" aria-hidden="true" tabindex="-1"></a>  found_string <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(</span>
-<span id="cb62-516"><a href="#cb62-516" aria-hidden="true" tabindex="-1"></a>    x,</span>
-<span id="cb62-517"><a href="#cb62-517" aria-hidden="true" tabindex="-1"></a>    all_digits_regex</span>
-<span id="cb62-518"><a href="#cb62-518" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb62-519"><a href="#cb62-519" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-520"><a href="#cb62-520" aria-hidden="true" tabindex="-1"></a>  digits[found_string] <span class="sc">%&gt;%</span></span>
-<span id="cb62-521"><a href="#cb62-521" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="cn">NULL</span>)</span>
-<span id="cb62-522"><a href="#cb62-522" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-523"><a href="#cb62-523" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb62-524"><a href="#cb62-524" aria-hidden="true" tabindex="-1"></a><span class="fu">get_first_number</span>(problematic_string)</span>
-<span id="cb62-525"><a href="#cb62-525" aria-hidden="true" tabindex="-1"></a><span class="fu">get_last_number</span>(problematic_string)</span>
-<span id="cb62-526"><a href="#cb62-526" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-527"><a href="#cb62-527" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-528"><a href="#cb62-528" aria-hidden="true" tabindex="-1"></a>It's working as intended, now let's generalise it:</span>
+<span id="cb62-368"><a href="#cb62-368" aria-hidden="true" tabindex="-1"></a>More ideas: </span>
+<span id="cb62-369"><a href="#cb62-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-370"><a href="#cb62-370" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using <span class="in">`str_localte_all`</span>, a <span class="in">`stringr`</span> function that allows matching each digit as an separate pattern (thus avoiding the overlap problem) and gives information about the POSITION of the pattern. Then use that info to find the first and the last match in each row.</span>
+<span id="cb62-371"><a href="#cb62-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-372"><a href="#cb62-372" aria-hidden="true" tabindex="-1"></a>Example: </span>
+<span id="cb62-375"><a href="#cb62-375" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-376"><a href="#cb62-376" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_locate_all</span>(</span>
+<span id="cb62-377"><a href="#cb62-377" aria-hidden="true" tabindex="-1"></a>  <span class="at">string =</span> problematic_string,</span>
+<span id="cb62-378"><a href="#cb62-378" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> all_digits_vector</span>
+<span id="cb62-379"><a href="#cb62-379" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>]</span>
+<span id="cb62-380"><a href="#cb62-380" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-381"><a href="#cb62-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-382"><a href="#cb62-382" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>CRAZY IDEA!!! What if I reverse the string, and then look for first match of the **reversed** names of the digits??</span>
+<span id="cb62-383"><a href="#cb62-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-384"><a href="#cb62-384" aria-hidden="true" tabindex="-1"></a>After all, the only matches that matter for solving this puzzle are the first one and the last one. For the first match, overlapping is not a real problem because it causes the *second* digit not to match (example: "eight" in "oneight", here "one" is always matched or detected).</span>
+<span id="cb62-385"><a href="#cb62-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-386"><a href="#cb62-386" aria-hidden="true" tabindex="-1"></a>Reversing the strings and their patterns could mirror this dynamic when matching the last digit.</span>
+<span id="cb62-387"><a href="#cb62-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-390"><a href="#cb62-390" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-391"><a href="#cb62-391" aria-hidden="true" tabindex="-1"></a>regex_reversed <span class="ot">&lt;-</span> <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
+<span id="cb62-392"><a href="#cb62-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-393"><a href="#cb62-393" aria-hidden="true" tabindex="-1"></a>vector_reversed <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb62-394"><a href="#cb62-394" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eno"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-395"><a href="#cb62-395" aria-hidden="true" tabindex="-1"></a>  <span class="st">"owt"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-396"><a href="#cb62-396" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eerht"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-397"><a href="#cb62-397" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ruof"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-398"><a href="#cb62-398" aria-hidden="true" tabindex="-1"></a>  <span class="st">"evif"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-399"><a href="#cb62-399" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xis"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-400"><a href="#cb62-400" aria-hidden="true" tabindex="-1"></a>  <span class="st">"neves"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-401"><a href="#cb62-401" aria-hidden="true" tabindex="-1"></a>  <span class="st">"thgie"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-402"><a href="#cb62-402" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-403"><a href="#cb62-403" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-404"><a href="#cb62-404" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-405"><a href="#cb62-405" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-406"><a href="#cb62-406" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-407"><a href="#cb62-407" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-408"><a href="#cb62-408" aria-hidden="true" tabindex="-1"></a>  <span class="st">"6"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-409"><a href="#cb62-409" aria-hidden="true" tabindex="-1"></a>  <span class="st">"7"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-410"><a href="#cb62-410" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-411"><a href="#cb62-411" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-412"><a href="#cb62-412" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
+<span id="cb62-413"><a href="#cb62-413" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-414"><a href="#cb62-414" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-415"><a href="#cb62-415" aria-hidden="true" tabindex="-1"></a>In this example, I should be able to match "eight" as the last string, despite it overlapping with "one".</span>
+<span id="cb62-418"><a href="#cb62-418" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-419"><a href="#cb62-419" aria-hidden="true" tabindex="-1"></a>problematic_string</span>
+<span id="cb62-420"><a href="#cb62-420" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-421"><a href="#cb62-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-422"><a href="#cb62-422" aria-hidden="true" tabindex="-1"></a>My strategy is to invert it and then look for "thgie" 😂💀</span>
+<span id="cb62-425"><a href="#cb62-425" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-426"><a href="#cb62-426" aria-hidden="true" tabindex="-1"></a>reversed_problematic_string <span class="ot">&lt;-</span> </span>
+<span id="cb62-427"><a href="#cb62-427" aria-hidden="true" tabindex="-1"></a>  stringi<span class="sc">::</span><span class="fu">stri_reverse</span>(</span>
+<span id="cb62-428"><a href="#cb62-428" aria-hidden="true" tabindex="-1"></a>  problematic_string</span>
+<span id="cb62-429"><a href="#cb62-429" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-430"><a href="#cb62-430" aria-hidden="true" tabindex="-1"></a>reversed_problematic_string</span>
+<span id="cb62-431"><a href="#cb62-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-432"><a href="#cb62-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-435"><a href="#cb62-435" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-436"><a href="#cb62-436" aria-hidden="true" tabindex="-1"></a>found_reversed_string <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(</span>
+<span id="cb62-437"><a href="#cb62-437" aria-hidden="true" tabindex="-1"></a>  reversed_problematic_string,</span>
+<span id="cb62-438"><a href="#cb62-438" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
+<span id="cb62-439"><a href="#cb62-439" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-440"><a href="#cb62-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-441"><a href="#cb62-441" aria-hidden="true" tabindex="-1"></a>found_reversed_string</span>
+<span id="cb62-442"><a href="#cb62-442" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-443"><a href="#cb62-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-444"><a href="#cb62-444" aria-hidden="true" tabindex="-1"></a>After finding it, I can use the following code to get back the original number</span>
+<span id="cb62-447"><a href="#cb62-447" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-448"><a href="#cb62-448" aria-hidden="true" tabindex="-1"></a>vector_reversed[found_reversed_string]</span>
+<span id="cb62-449"><a href="#cb62-449" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-450"><a href="#cb62-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-451"><a href="#cb62-451" aria-hidden="true" tabindex="-1"></a>It's working. Now, let's wrap this pipeline in a function to apply it to whole dataset:</span>
+<span id="cb62-452"><a href="#cb62-452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-455"><a href="#cb62-455" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-456"><a href="#cb62-456" aria-hidden="true" tabindex="-1"></a>regex_reversed <span class="ot">&lt;-</span> <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
+<span id="cb62-457"><a href="#cb62-457" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-458"><a href="#cb62-458" aria-hidden="true" tabindex="-1"></a>all_digits_regex <span class="ot">&lt;-</span> <span class="st">"[0123456789]|one|two|three|four|five|six|seven|eight|nine"</span></span>
+<span id="cb62-459"><a href="#cb62-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-460"><a href="#cb62-460" aria-hidden="true" tabindex="-1"></a>digits_reversed <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb62-461"><a href="#cb62-461" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eno"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-462"><a href="#cb62-462" aria-hidden="true" tabindex="-1"></a>  <span class="st">"owt"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-463"><a href="#cb62-463" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eerht"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-464"><a href="#cb62-464" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ruof"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-465"><a href="#cb62-465" aria-hidden="true" tabindex="-1"></a>  <span class="st">"evif"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-466"><a href="#cb62-466" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xis"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-467"><a href="#cb62-467" aria-hidden="true" tabindex="-1"></a>  <span class="st">"neves"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-468"><a href="#cb62-468" aria-hidden="true" tabindex="-1"></a>  <span class="st">"thgie"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-469"><a href="#cb62-469" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-470"><a href="#cb62-470" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-471"><a href="#cb62-471" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-472"><a href="#cb62-472" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-473"><a href="#cb62-473" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-474"><a href="#cb62-474" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-475"><a href="#cb62-475" aria-hidden="true" tabindex="-1"></a>  <span class="st">"6"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-476"><a href="#cb62-476" aria-hidden="true" tabindex="-1"></a>  <span class="st">"7"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-477"><a href="#cb62-477" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-478"><a href="#cb62-478" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-479"><a href="#cb62-479" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
+<span id="cb62-480"><a href="#cb62-480" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-481"><a href="#cb62-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-482"><a href="#cb62-482" aria-hidden="true" tabindex="-1"></a>digits <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb62-483"><a href="#cb62-483" aria-hidden="true" tabindex="-1"></a>  <span class="st">"one"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-484"><a href="#cb62-484" aria-hidden="true" tabindex="-1"></a>  <span class="st">"two"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-485"><a href="#cb62-485" aria-hidden="true" tabindex="-1"></a>  <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-486"><a href="#cb62-486" aria-hidden="true" tabindex="-1"></a>  <span class="st">"four"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-487"><a href="#cb62-487" aria-hidden="true" tabindex="-1"></a>  <span class="st">"five"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-488"><a href="#cb62-488" aria-hidden="true" tabindex="-1"></a>  <span class="st">"six"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-489"><a href="#cb62-489" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seven"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-490"><a href="#cb62-490" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-491"><a href="#cb62-491" aria-hidden="true" tabindex="-1"></a>  <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-492"><a href="#cb62-492" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb62-493"><a href="#cb62-493" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
+<span id="cb62-494"><a href="#cb62-494" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"3"</span>,</span>
+<span id="cb62-495"><a href="#cb62-495" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb62-496"><a href="#cb62-496" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"5"</span>,</span>
+<span id="cb62-497"><a href="#cb62-497" aria-hidden="true" tabindex="-1"></a>  <span class="st">"6"</span> <span class="ot">=</span> <span class="st">"6"</span>,</span>
+<span id="cb62-498"><a href="#cb62-498" aria-hidden="true" tabindex="-1"></a>  <span class="st">"7"</span> <span class="ot">=</span> <span class="st">"7"</span>,</span>
+<span id="cb62-499"><a href="#cb62-499" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
+<span id="cb62-500"><a href="#cb62-500" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
+<span id="cb62-501"><a href="#cb62-501" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
+<span id="cb62-502"><a href="#cb62-502" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-503"><a href="#cb62-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-504"><a href="#cb62-504" aria-hidden="true" tabindex="-1"></a>get_last_number <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb62-505"><a href="#cb62-505" aria-hidden="true" tabindex="-1"></a>  found_reversed_string <span class="ot">&lt;-</span></span>
+<span id="cb62-506"><a href="#cb62-506" aria-hidden="true" tabindex="-1"></a>    stringi<span class="sc">::</span><span class="fu">stri_reverse</span>(x) <span class="sc">%&gt;%</span></span>
+<span id="cb62-507"><a href="#cb62-507" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_extract</span>(regex_reversed)</span>
+<span id="cb62-508"><a href="#cb62-508" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-509"><a href="#cb62-509" aria-hidden="true" tabindex="-1"></a>  digits_reversed[found_reversed_string] <span class="sc">%&gt;%</span></span>
+<span id="cb62-510"><a href="#cb62-510" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="cn">NULL</span>)</span>
+<span id="cb62-511"><a href="#cb62-511" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb62-512"><a href="#cb62-512" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-513"><a href="#cb62-513" aria-hidden="true" tabindex="-1"></a>get_first_number <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb62-514"><a href="#cb62-514" aria-hidden="true" tabindex="-1"></a>  found_string <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(</span>
+<span id="cb62-515"><a href="#cb62-515" aria-hidden="true" tabindex="-1"></a>    x,</span>
+<span id="cb62-516"><a href="#cb62-516" aria-hidden="true" tabindex="-1"></a>    all_digits_regex</span>
+<span id="cb62-517"><a href="#cb62-517" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb62-518"><a href="#cb62-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-519"><a href="#cb62-519" aria-hidden="true" tabindex="-1"></a>  digits[found_string] <span class="sc">%&gt;%</span></span>
+<span id="cb62-520"><a href="#cb62-520" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="cn">NULL</span>)</span>
+<span id="cb62-521"><a href="#cb62-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-522"><a href="#cb62-522" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb62-523"><a href="#cb62-523" aria-hidden="true" tabindex="-1"></a><span class="fu">get_first_number</span>(problematic_string)</span>
+<span id="cb62-524"><a href="#cb62-524" aria-hidden="true" tabindex="-1"></a><span class="fu">get_last_number</span>(problematic_string)</span>
+<span id="cb62-525"><a href="#cb62-525" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-526"><a href="#cb62-526" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-527"><a href="#cb62-527" aria-hidden="true" tabindex="-1"></a>It's working as intended, now let's generalise it:</span>
+<span id="cb62-528"><a href="#cb62-528" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-529"><a href="#cb62-529" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-530"><a href="#cb62-530" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-533"><a href="#cb62-533" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-534"><a href="#cb62-534" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb62-535"><a href="#cb62-535" aria-hidden="true" tabindex="-1"></a>  <span class="at">amended =</span> amended,</span>
-<span id="cb62-536"><a href="#cb62-536" aria-hidden="true" tabindex="-1"></a>  <span class="at">first_digit =</span> <span class="fu">get_first_number</span>(amended),</span>
-<span id="cb62-537"><a href="#cb62-537" aria-hidden="true" tabindex="-1"></a>  <span class="at">last_digit =</span> <span class="fu">get_last_number</span>(amended),</span>
-<span id="cb62-538"><a href="#cb62-538" aria-hidden="true" tabindex="-1"></a>  <span class="at">combined =</span> <span class="fu">as.integer</span>(<span class="fu">str_c</span>(first_digit, last_digit))</span>
-<span id="cb62-539"><a href="#cb62-539" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb62-540"><a href="#cb62-540" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(combined) <span class="sc">%&gt;%</span></span>
-<span id="cb62-541"><a href="#cb62-541" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb62-542"><a href="#cb62-542" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-543"><a href="#cb62-543" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-544"><a href="#cb62-544" aria-hidden="true" tabindex="-1"></a>IT WORKED!! THIS WAS THE RIGHT ANSWER!!! 🥳🥳🥹🥹</span>
+<span id="cb62-532"><a href="#cb62-532" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-533"><a href="#cb62-533" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb62-534"><a href="#cb62-534" aria-hidden="true" tabindex="-1"></a>  <span class="at">amended =</span> amended,</span>
+<span id="cb62-535"><a href="#cb62-535" aria-hidden="true" tabindex="-1"></a>  <span class="at">first_digit =</span> <span class="fu">get_first_number</span>(amended),</span>
+<span id="cb62-536"><a href="#cb62-536" aria-hidden="true" tabindex="-1"></a>  <span class="at">last_digit =</span> <span class="fu">get_last_number</span>(amended),</span>
+<span id="cb62-537"><a href="#cb62-537" aria-hidden="true" tabindex="-1"></a>  <span class="at">combined =</span> <span class="fu">as.integer</span>(<span class="fu">str_c</span>(first_digit, last_digit))</span>
+<span id="cb62-538"><a href="#cb62-538" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-539"><a href="#cb62-539" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(combined) <span class="sc">%&gt;%</span></span>
+<span id="cb62-540"><a href="#cb62-540" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb62-541"><a href="#cb62-541" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb62-542"><a href="#cb62-542" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-543"><a href="#cb62-543" aria-hidden="true" tabindex="-1"></a>IT WORKED!! THIS WAS THE RIGHT ANSWER!!! 🥳🥳🥹🥹</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
