@@ -3,7 +3,6 @@ title: "2023: Day 6"
 date: 2023-12-6
 categories:
   - python
-  - optimisation
 draft: false
 ---
 

@@ -3,7 +3,6 @@ title: "2023: Day 4"
 date: 2023-12-4
 categories:
   - R
-  - matrices
 draft: false
 ---
 

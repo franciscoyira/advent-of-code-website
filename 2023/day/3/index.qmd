@@ -3,7 +3,6 @@ title: "2023: Day 3"
 date: 2023-12-3
 categories:
   - python
-  - arrays
 draft: false
 ---
 
