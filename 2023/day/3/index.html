@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">2023: Day 3</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">2023: Day 3</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
   <div class="quarto-categories">
     <div class="quarto-category">python</div>
   </div>
@@ -251,21 +251,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>At this moment, I have no idea which data structure to use for this problem.</p>
 <p>The only thing that comes to mind is to put the data in a <code>numpy</code> array, then use a nested <code>for</code> loop to check certain conditions.</p>
 <div id="46727171" class="cell" data-execution_count="1">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <p>Importing the data in a numpy array where each element is a character of the input file.</p>
 <div id="db13517b" class="cell" data-execution_count="2">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspiration for this: https://stackoverflow.com/a/75643841/7221164</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'input'</span>, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span> <span class="op">=</span> np.stack([np.fromiter(<span class="bu">list</span>(line.strip()), dtype<span class="op">=</span><span class="st">"object"</span>) <span class="cf">for</span> line <span class="kw">in</span> f])</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">input</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[['.' '.' '.' ... '.' '.' '.']
  ['.' '.' '.' ... '.' '.' '.']
@@ -277,10 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="863f1606" class="cell" data-execution_count="3">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span>.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>(140, 140)</code></pre>
 </div>
@@ -292,8 +283,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>running_sum</code> keeps track of the total of all valid numbers.</li>
 </ul>
 <div id="71be8c70" class="cell" data-execution_count="4">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>debugging_array <span class="op">=</span> []</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>current_number <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>is_valid <span class="op">=</span> <span class="va">False</span></span>
@@ -346,14 +335,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> <span class="bu">input</span>[curr_y, curr_x] <span class="op">!=</span> <span class="st">"."</span> <span class="kw">and</span> <span class="kw">not</span> <span class="bu">input</span>[curr_y, curr_x].isdigit():</span>
 <span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>            is_valid <span class="op">=</span> <span class="va">True</span></span>
 <span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <p>Inspecting how the first numbers from the input were classified:</p>
 <div id="d2db9124" class="cell" data-execution_count="5">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>debugging_array[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>['401 is valid',
  '425 is NOT valid',
@@ -369,10 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Checking my solution:</p>
 <div id="01e63c0c" class="cell" data-execution_count="6">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(running_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>543867</code></pre>
 </div>
@@ -405,8 +387,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Idea to solve this part: each time a number is valid, put it in the corresponding position of a new array that has the same dimensions as the input array.</p>
 <p>Then, iterate over the input array with a new for loop that searches for “*” and counts the N of valid numbers surrounding it.</p>
 <div id="d37250f4" class="cell" data-execution_count="7">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>arr_pt2 <span class="op">=</span> np.zeros(<span class="bu">input</span>.shape)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>current_number <span class="op">=</span> <span class="va">None</span></span>
@@ -461,12 +441,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span>:</span>
 <span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>        <span class="co"># case when we're in the middle of a sequence of digits</span></span>
 <span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>        current_number <span class="op">=</span> current_number<span class="op">*</span><span class="dv">10</span> <span class="op">+</span> <span class="bu">int</span>(value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <p>After this rather messy <code>for</code> loop, I should be able to identify gears by looking at the surrounding cells of all the ‘-1’ values in the array, which represent ’*’.</p>
 <div id="c2bf1c53" class="cell" data-execution_count="8">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>max_y <span class="op">=</span> arr_pt2.shape[<span class="dv">0</span>] <span class="op">-</span><span class="dv">1</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>max_x <span class="op">=</span> arr_pt2.shape[<span class="dv">1</span>] <span class="op">-</span><span class="dv">1</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -499,14 +476,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="bu">len</span>(neighbours) <span class="op">==</span> <span class="dv">2</span>:</span>
 <span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># multiply the neighbours</span></span>
 <span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>    running_sum <span class="op">+=</span> neighbours.pop() <span class="op">*</span> neighbours.pop()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <p>Checking my solution:</p>
 <div id="d41f53e3" class="cell" data-execution_count="9">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(running_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>79613331.0</code></pre>
 </div>

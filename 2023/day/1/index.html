@@ -198,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">2023: Day 1</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">2023: Day 1</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
   <div class="quarto-categories">
     <div class="quarto-category">R</div>
   </div>
@@ -249,19 +249,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="part-1" class="level2">
 <h2 class="anchored" data-anchor-id="part-1">Part 1</h2>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <p>Transforming the data to an appropriate data structure:</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>amended <span class="ot">&lt;-</span> <span class="fu">read_lines</span>(<span class="fu">here</span>(<span class="st">'2023'</span>, <span class="st">'day'</span>, <span class="st">'1'</span>, <span class="st">'input'</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>amended[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "nqninenmvnpsz874"                          
  [2] "8twofpmpxkvvdnpdnlpkhseven4ncgkb"          
@@ -278,21 +272,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="solving-for-a-particular-case" class="level3">
 <h3 class="anchored" data-anchor-id="solving-for-a-particular-case">Solving for a particular case</h3>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(first_case <span class="ot">&lt;-</span> amended[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "nqninenmvnpsz874"</code></pre>
 </div>
 </div>
 <p>Extracting the numbers</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(matrix_str_numbers <span class="ot">&lt;-</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(first_case, <span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3]
 [1,] "8"  "7"  "4" </code></pre>
@@ -300,11 +288,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Extracting all the rows from columns one and three (the first and last number of each row)</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>numbers_i_want <span class="ot">&lt;-</span> matrix_str_numbers[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>numbers_i_want</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "8" "4"</code></pre>
 </div>
@@ -312,23 +297,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>(This code will generalise ONLY IF all the other rows have 3 numbers too).</p>
 <p>The following code returns the first and last number “pasted” together and converts the result from string to numeric.</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_flatten</span>(numbers_i_want) <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 84</code></pre>
 </div>
 </div>
 <p>Now let’s try to generalise to all input rows:</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>amended <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7]
 [1,] "8"  "7"  "4"  ""   ""   ""   ""  
@@ -341,15 +320,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Oh no. Rows have a different quantity of digits.</p>
 <p>Maybe using <code>simplify=TRUE</code> was a mistake here. Given that each element has a different quantity of digits, a list seems to be a more suitable data structure:</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="ot">&lt;-</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>list_digits_preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] "8" "7" "4"
@@ -370,12 +346,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now, how can I extract the first and last element from each element of the list? My gut feeling is that I’ll need <code>purrr</code> for this:</p>
 <p><code>pluck</code> and <code>keep_at</code> seem to be useful functions for this task</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="sc">%&gt;%</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This should extract the first and last digit from each element of the list </span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">keep_at</span>(., <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">length</span>(.))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] "8" "4"
@@ -396,15 +369,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>It is working!!</p>
 <p>Now I’ll apply the action to the whole list:</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>list_useful_digits <span class="ot">&lt;-</span> </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">keep_at</span>(., <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">length</span>(.))))</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>list_useful_digits[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] "8" "4"
@@ -439,10 +409,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Hmmm… Why does element 7 have only 1 digit?</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>amended[<span class="dv">7</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "ninekkvkeight9three"</code></pre>
 </div>
@@ -450,8 +417,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>It’s got just one digit as a number, but there are other digits written out in words. Should we count those? The prompt isn’t really clear about this. But since the example only talks about digits as numbers, I guess I’ll just go with those for now. If I’ve got this wrong and my solution gets rejected, well, I can always give it another shot</p>
 <p>Now let’s concatenate the digits row-wise, turn them into a number and add them up:</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>solution <span class="ot">&lt;-</span> </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  list_useful_digits <span class="sc">%&gt;%</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
@@ -460,7 +425,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>solution</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 39347</code></pre>
 </div>
@@ -478,15 +442,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="handling-rows-with-just-one-digit">Handling rows with just one digit</h3>
 <p>I’ll take a slice from the first 10 rows, as the first case with one digit appears in row 7:</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="ot">&lt;-</span> </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>list_digits_preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] "8" "7" "4"
@@ -521,15 +482,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>I have a feeling that <a href="https://purrr.tidyverse.org/reference/pluck.html"><code>purrr::pluck</code></a> may do the trick here:</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>get_first_and_last <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">pluck</span>(x, <span class="dv">1</span>), <span class="fu">pluck</span>(x, <span class="fu">length</span>(x)))</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>list_digits_preview <span class="sc">%&gt;%</span></span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(get_first_and_last)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] "8" "4"
@@ -565,8 +523,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This function does what I want (and yes, using <code>pluck</code> is a bit unnecessary since I could just have used regular subsetting, e.g.&nbsp;<code>x[[1]]</code> and <code>x[[length(x)]]</code>, but I’m doing this with the <a href="https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf">purrr cheat sheet</a> in front of me, so <code>pluck</code> was what came to my mind).</p>
 <p>2nd attempt, this time using <code>get_first_and_last</code>.</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>solution2 <span class="ot">&lt;-</span> </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract_all</span>(<span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">d'</span>) <span class="sc">%&gt;%</span></span>
@@ -577,7 +533,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
 <span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>solution2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 56397</code></pre>
 </div>
@@ -593,18 +548,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="first-naive-attempt">First (naive) attempt</h3>
 <p>IMHO the simplest approach is to write a function that converts digits spelled out in a string into their numeric form. Then, I can incorporate this function into my pipeline using a <code>map</code> call, right before <code>str_extract_all</code>.</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit <span class="ot">&lt;-</span> amended[<span class="dv">7</span>]</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "ninekkvkeight9three"</code></pre>
 </div>
 </div>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>case_with_spelled_digit <span class="sc">%&gt;%</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(</span>
@@ -613,7 +563,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">"three"</span> <span class="ot">=</span> <span class="st">"3"</span></span>
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "9kkvk893"</code></pre>
 </div>
@@ -622,8 +571,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now let’s apply the function to the full data.</p>
 <p>I’ll start by creating the replacement vector (although I’m pretty sure it’s already a part of some R package that’s slipping my mind right now).</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>digits <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"one"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"two"</span> <span class="ot">=</span> <span class="st">"2"</span>,</span>
@@ -635,11 +582,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eight"</span> <span class="ot">=</span> <span class="st">"8"</span>,</span>
 <span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"nine"</span> <span class="ot">=</span> <span class="st">"9"</span></span>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>solution3 <span class="ot">&lt;-</span> </span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  amended <span class="sc">%&gt;%</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> digits) <span class="sc">%&gt;%</span></span>
@@ -651,7 +595,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
 <span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>solution3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 55266</code></pre>
 </div>
@@ -662,8 +605,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="second-attempt-handling-overlapping-patterns">Second attempt: handling overlapping patterns</h3>
 <p>Time to take a closer look at the pipeline using a <code>tibble</code>.</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">original =</span> amended,</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">new =</span> original <span class="sc">%&gt;%</span></span>
@@ -675,7 +616,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(str_flatten) <span class="sc">%&gt;%</span></span>
 <span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_vector</span>()</span>
 <span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,000 × 3
    original                                   new                         digits
@@ -695,10 +635,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Hypothesis: The issue might arise in instances like <code>"zoneight234"</code>, where the spellings of two numbers are overlapping.</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace_all</span>(<span class="st">"zoneight234"</span>, <span class="at">pattern =</span> digits)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "z1ight234"</code></pre>
 </div>
@@ -706,10 +643,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I’ll try to handle these cases to make sure that every spelled-out digit in the text is returned, even if they overlap.</p>
 <p>Maybe I can get closer to that by using the <code>stringi</code> package?</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>stringi<span class="sc">::</span><span class="fu">stri_replace_all_regex</span>(<span class="st">"zoneight234"</span>, <span class="at">pattern =</span> <span class="fu">names</span>(digits), <span class="at">replacement =</span> digits, <span class="at">vectorize_all =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "z1ight234"</code></pre>
 </div>
@@ -723,8 +657,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Then, replacing the spelled-out digits that appear at either the beginning or end of the string.</li>
 </ol>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>problematic_string <span class="ot">&lt;-</span> <span class="st">"zone2344oneight"</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>all_digits_regex <span class="ot">&lt;-</span> <span class="st">"[0123456789]|one|two|three|four|five|six|seven|eight|nine"</span></span>
@@ -738,7 +670,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">str =</span> problematic_string,</span>
 <span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> all_digits_vector</span>
 <span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "one"   NA      NA      NA      NA      NA      NA      "eight" NA     
 [10] NA      NA      "2"     "3"     "4"     NA      NA      NA      NA     
@@ -752,13 +683,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>Example:</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_locate_all</span>(</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">string =</span> problematic_string,</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> all_digits_vector</span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
      start end
@@ -794,8 +722,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>After all, the only matches that matter for solving this puzzle are the first one and the last one. For the first match, overlapping is not a real problem because it causes the <em>second</em> digit not to match (example: “eight” in “oneight”, here “one” is always matched or detected).</p>
 <p>Reversing the strings and their patterns could mirror this dynamic when matching the last digit.</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>regex_reversed <span class="ot">&lt;-</span> <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>vector_reversed <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
@@ -819,52 +745,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span> <span class="ot">=</span> <span class="st">"9"</span>,</span>
 <span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"0"</span></span>
 <span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <p>In this example, I should be able to match “eight” as the last string, despite it overlapping with “one”.</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>problematic_string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "zone2344oneight"</code></pre>
 </div>
 </div>
 <p>My strategy is to invert it and then look for “thgie” 😂💀</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>reversed_problematic_string <span class="ot">&lt;-</span> </span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  stringi<span class="sc">::</span><span class="fu">stri_reverse</span>(</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  problematic_string</span>
 <span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>reversed_problematic_string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "thgieno4432enoz"</code></pre>
 </div>
 </div>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>found_reversed_string <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  reversed_problematic_string,</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>found_reversed_string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "thgie"</code></pre>
 </div>
 </div>
 <p>After finding it, I can use the following code to get back the original number</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>vector_reversed[found_reversed_string]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>thgie 
   "8" </code></pre>
@@ -872,8 +785,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>It’s working. Now, let’s wrap this pipeline in a function to apply it to whole dataset:</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>regex_reversed <span class="ot">&lt;-</span> <span class="st">"enin|thgie|neves|xis|evif|ruof|eerht|owt|eno|[0123456789]"</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>all_digits_regex <span class="ot">&lt;-</span> <span class="st">"[0123456789]|one|two|three|four|five|six|seven|eight|nine"</span></span>
@@ -942,22 +853,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb56-66"><a href="#cb56-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-67"><a href="#cb56-67" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb56-68"><a href="#cb56-68" aria-hidden="true" tabindex="-1"></a><span class="fu">get_first_number</span>(problematic_string)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1"</code></pre>
 </div>
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_last_number</span>(problematic_string)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "8"</code></pre>
 </div>
 </div>
 <p>It’s working as intended, now let’s generalise it:</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Toggle the code</summary>
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">amended =</span> amended,</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">first_digit =</span> <span class="fu">get_first_number</span>(amended),</span>
@@ -966,7 +871,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
 <span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(combined) <span class="sc">%&gt;%</span></span>
 <span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 55701</code></pre>
 </div>
