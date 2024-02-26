@@ -5,9 +5,10 @@ freeze: auto
 toc: true
 toc-depth: 3
 
-code-fold: show
+code-fold: false
 code-summary: "Toggle the code"
 code-tools: true
+code-overflow: wrap
 
 execute:
   echo: true
