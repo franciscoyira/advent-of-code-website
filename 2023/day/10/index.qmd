@@ -3,7 +3,7 @@ title: "2023: Day 10"
 date: 2023-12-10
 categories:
   - R
-draft: true
+draft: false
 ---
 
 ## Setup
