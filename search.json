@@ -9,14 +9,14 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Advent of Code",
+    "title": "Advent of Code Solutions",
     "section": "",
     "text": "Hi there! Welcome to this mini-site where I’ll be sharing my solutions to the Advent of Code puzzles. Advent of Code is a series of increasingly difficult programming challenges, released daily each year throughout December in the run-up to Christmas.\nTo see my solutions and notes, just click on the corresponding year in the top navigation bar (though, as of now, I’ve only published solutions for 2023).\nThis website is created using the EllaKaye/advent-of-code-website-template template repository. In the README of the repo you can find documentation on how to use it and adapt it, in case you can to publish your solutions in a similar format (which you should totally do 😁)."
   },
   {
     "objectID": "index.html#on-llms-usage",
     "href": "index.html#on-llms-usage",
-    "title": "Advent of Code",
+    "title": "Advent of Code Solutions",
     "section": "On LLMs usage",
     "text": "On LLMs usage\nI’m adhering to the guidelines and suggestions made by the Advent of Code team regarding the use of LLMs like ChatGPT to solve the puzzles. That means I’m not using ChatGPT’s help to arrive at the solutions I’m posting on this website. However, once I’m done with a problem (that means, either solving it or giving up), I may use LLMs to seek feedback or explore alternative approaches."
   },
