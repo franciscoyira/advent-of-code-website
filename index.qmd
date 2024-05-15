@@ -1,7 +1,6 @@
 ---
-title: "Advent of Code"
-subtitle: "My solutions and notes"
-#description: "My solutions and notes for Advent of Code."
+title: "Advent of Code Solutions"
+description: "My solutions and notes for Advent of Code with R and Python, starting on 2023."
 code-tools: false
 ---
 
