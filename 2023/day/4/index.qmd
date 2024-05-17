@@ -1,5 +1,5 @@
 ---
-title: "2023: Day 4"
+title: "2023: Day 4 - Scratchcards"
 date: 2023-12-4
 categories:
   - R
