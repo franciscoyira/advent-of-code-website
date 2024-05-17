@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2023-12-07">
 
-<title>Advent of Code by Francisco Yirá - 2023: Day 7</title>
+<title>Advent of Code by Francisco Yirá - 2023: Day 7 - Camel Cards</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../../styles.css">
-<meta property="og:title" content="Advent of Code by Francisco Yirá - 2023: Day 7">
+<meta property="og:title" content="Advent of Code by Francisco Yirá - 2023: Day 7 - Camel Cards">
 <meta property="og:description" content="My solutions to Advent of Code">
 <meta property="og:site_name" content="Advent of Code by Francisco Yirá">
 </head>
@@ -199,7 +199,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">2023: Day 7</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">2023: Day 7 - Camel Cards</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
   <div class="quarto-categories">
     <div class="quarto-category">python</div>
   </div>
@@ -283,14 +283,14 @@ QQQJA 483</code></pre>
 <p>After doing that, we then multiply these ranks by their corresponding bids to calculate the total winnings.</p>
 <p>Total winnings = (765 * 1 + 220 * 2 + 28 * 3 + 684 * 4 + 483 * 5) = 6440.</p>
 <p>The prompt asks to obtain the number of total winnings the <a href="input" target="_blank">input data</a>.</p>
-<div id="f7540ade" class="cell" data-execution_count="1">
+<div id="d9b98edf" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="importing-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="importing-the-data">Importing the data</h3>
 <p>First, I’m loading all the puzzle input as a <code>numpy</code> array of strings/characters:</p>
-<div id="d25f7f08" class="cell" data-execution_count="2">
+<div id="5e8ca89f" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> np.loadtxt(<span class="st">'input'</span>, dtype <span class="op">=</span> <span class="st">'object'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span>[:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -302,7 +302,7 @@ QQQJA 483</code></pre>
 </div>
 </div>
 <p>The <code>input</code> array is kind of problematic since it combines cards and bids, which need to be processed differently. So, let’s split the data into two lists, one for the cards, another one for the bids.</p>
-<div id="7489b53e" class="cell" data-execution_count="3">
+<div id="3d891830" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cards <span class="op">=</span> <span class="bu">list</span>(<span class="bu">input</span>[:, <span class="dv">0</span>])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bids <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(<span class="bu">int</span>, <span class="bu">list</span>(<span class="bu">input</span>[:, <span class="dv">1</span>])))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -320,7 +320,7 @@ QQQJA 483</code></pre>
 <section id="function-for-assigning-points-based-on-hand-type" class="level3">
 <h3 class="anchored" data-anchor-id="function-for-assigning-points-based-on-hand-type">Function for Assigning Points Based on Hand Type</h3>
 <p>Let’s start solving for a particular case: identifying ‘AAAAA’ as a Five of a Kind:</p>
-<div id="f2fa344d" class="cell" data-execution_count="4">
+<div id="efcd0d18" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Helper function</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> n_distinct_cards(hand):</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">len</span>(<span class="bu">set</span>(<span class="bu">list</span>(hand)))</span>
@@ -333,7 +333,7 @@ QQQJA 483</code></pre>
 <pre><code>1</code></pre>
 </div>
 </div>
-<div id="8a6e48c0" class="cell" data-execution_count="5">
+<div id="1f2373d0" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency (count) of the most common card in the hand</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>max_n_cards <span class="op">=</span> <span class="bu">max</span>(Counter(<span class="bu">list</span>(example_card)).values())</span>
@@ -342,7 +342,7 @@ QQQJA 483</code></pre>
 <pre><code>5</code></pre>
 </div>
 </div>
-<div id="36cd4d0e" class="cell" data-execution_count="6">
+<div id="ba472696" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Logic for assigning points to the hand </span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (my_n_diff_cards <span class="op">==</span> <span class="dv">1</span>):</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">'Five of a kind'</span>)</span>
@@ -368,7 +368,7 @@ QQQJA 483</code></pre>
 </div>
 <p>It seems to work as expected.</p>
 <p>Let’s wrap the procedure into a function (and make it return the corresponding points instead of the name of the hand):</p>
-<div id="cc784ab9" class="cell" data-execution_count="7">
+<div id="44455967" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> points_by_type(hand):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  my_n_diff_cards <span class="op">=</span> n_distinct_cards(hand)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  max_n_cards <span class="op">=</span> <span class="bu">max</span>(Counter(<span class="bu">list</span>(hand)).values())</span>
@@ -399,7 +399,7 @@ QQQJA 483</code></pre>
 <span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Testing the function with some hands from the input:</p>
-<div id="79a442e3" class="cell" data-execution_count="8">
+<div id="7bb9a7d6" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cards[:<span class="dv">5</span>])</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">list</span>(<span class="bu">map</span>(points_by_type, cards[:<span class="dv">5</span>])))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -411,7 +411,7 @@ QQQJA 483</code></pre>
 <section id="function-for-assigning-points-based-on-each-card" class="level3">
 <h3 class="anchored" data-anchor-id="function-for-assigning-points-based-on-each-card">Function for Assigning Points Based on Each Card</h3>
 <p>I’ll sort the kinds by their strength and then determine their points based on their positions in the list.</p>
-<div id="fee4cbbe" class="cell" data-execution_count="9">
+<div id="174a9c2c" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>kinds_cards <span class="op">=</span> <span class="bu">list</span>(<span class="st">"AKQJT98765432"</span>[::<span class="op">-</span><span class="dv">1</span>])</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>my_card <span class="op">=</span> <span class="st">'A'</span></span>
@@ -422,7 +422,7 @@ QQQJA 483</code></pre>
 </div>
 </div>
 <p>Now let’s create a function that, given an entire hand, returns a score that allows sorting them based on the points of their individual cards.</p>
-<div id="a5402748" class="cell" data-execution_count="10">
+<div id="8a146e61" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> points_by_card(hand):</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  points_by_cards <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  my_cards <span class="op">=</span> <span class="bu">list</span>(hand)</span>
@@ -433,7 +433,7 @@ QQQJA 483</code></pre>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> points_by_cards</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Creating a <code>DataFrame</code> where hand is a row:</p>
-<div id="6e98b4f8" class="cell" data-execution_count="11">
+<div id="c321450a" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'hands'</span>: cards,</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">'bids'</span>: bids</span>
@@ -477,7 +477,7 @@ QQQJA 483</code></pre>
 </div>
 </div>
 <p>Calculating the points of each hand (both by hand type and based on individual cards):</p>
-<div id="ddd4400f" class="cell" data-execution_count="12">
+<div id="c8c64ac5" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> df.assign(</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  points_type <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(points_by_type, df.hands)),</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  points_cards <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(points_by_card, df.hands)))<span class="op">\</span></span>
@@ -529,7 +529,7 @@ QQQJA 483</code></pre>
 </div>
 </div>
 <p>Creating the <code>rank</code> column:</p>
-<div id="2088f1c7" class="cell" data-execution_count="13">
+<div id="fa789163" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df1.reset_index(drop <span class="op">=</span> <span class="va">True</span>, inplace <span class="op">=</span> <span class="va">True</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">'rank'</span>] <span class="op">=</span> df1.index <span class="op">+</span> <span class="dv">1</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>df1.head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -582,7 +582,7 @@ QQQJA 483</code></pre>
 </div>
 </div>
 <p>The only step left is to multiply the ranks by the bids and sum up the totals:</p>
-<div id="b29a08e4" class="cell" data-execution_count="14">
+<div id="ad7f6d90" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>(df1[<span class="st">"bids"</span>] <span class="op">*</span> df1[<span class="st">"rank"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>246163188</code></pre>
@@ -600,7 +600,7 @@ QQQJA 483</code></pre>
 <p>To balance this, J cards are now the weakest individual cards, weaker even than 2. The other cards stay in the same order: A, K, Q, T, 9, 8, 7, 6, 5, 4, 3, 2, J.</p>
 </blockquote>
 <p>Implementing this change in the <code>points_by_card</code> function is straightforward. I just need to re-arrange the list that maps the cards to their scores.</p>
-<div id="6c6587cc" class="cell" data-execution_count="15">
+<div id="a804c3bc" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>kinds_cards <span class="op">=</span> <span class="bu">list</span>(<span class="st">"AKQT98765432J"</span>[::<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>But I suspect incorporating this new logic into the <code>points_by_type</code> function will be more complicated. For each joker, we have to explore what is, potentially, the best type each hand could be if we could swap that joker for any other kind of card.</p>
@@ -637,7 +637,7 @@ QQQJA 483</code></pre>
 </ul>
 <p>We’ve confirmed that, depending on the number of jokers and the initial hand type, we can predict how the hand’s type will change under these new rules (good news!).</p>
 <p>Now let’s implement this logic as a function named <code>new_type</code>:</p>
-<div id="4132a123" class="cell" data-execution_count="16">
+<div id="5dd54cc8" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> new_type(points_type, n_jokers):</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> n_jokers <span class="op">==</span> <span class="dv">0</span> <span class="kw">or</span> points_type <span class="op">==</span> <span class="dv">7</span>:</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> points_type</span>
@@ -670,7 +670,7 @@ QQQJA 483</code></pre>
 <span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We also need a function that counts jokers:</p>
-<div id="1314e1fe" class="cell" data-execution_count="17">
+<div id="3af058d7" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example case</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>example_card <span class="op">=</span> <span class="st">'JAJAJ'</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>Counter(<span class="bu">list</span>(example_card))[<span class="st">'J'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -678,7 +678,7 @@ QQQJA 483</code></pre>
 <pre><code>3</code></pre>
 </div>
 </div>
-<div id="7f28e001" class="cell" data-execution_count="18">
+<div id="57a903b0" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> joker_counter(hand):</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Counter(<span class="bu">list</span>(hand))[<span class="st">'J'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -688,7 +688,7 @@ QQQJA 483</code></pre>
 <li>Combine that new column with the existing <code>points_type</code> to determine the <code>new_points_type</code>.</li>
 <li>Use the updated <code>points_by_card</code> function to calculate the <code>new_points_card</code>.</li>
 </ol>
-<div id="20f47739" class="cell" data-execution_count="19">
+<div id="8ca5b8d9" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> df1.assign(</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  n_jokers <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(joker_counter, df1.hands)))</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -760,7 +760,7 @@ QQQJA 483</code></pre>
 </div>
 </div>
 <p>Finally, just compute the new ranks and re-calculate the total points (<code>sum()</code> of <code>rank</code> times the <code>bids</code>)</p>
-<div id="9f79bc33" class="cell" data-execution_count="20">
+<div id="9669cbab" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df1.sort_values(by <span class="op">=</span> [<span class="st">'new_points_type'</span>, <span class="st">'new_points_cards'</span>])<span class="op">\</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  .reset_index(drop <span class="op">=</span> <span class="va">True</span>)</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1390,7 +1390,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb31" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "2023: Day 7"</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "2023: Day 7 - Camel Cards"</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2023-12-7</span></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span></span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - python</span></span>

@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2023-12-08">
 
-<title>Advent of Code by Francisco Yirá - 2023: Day 8</title>
+<title>Advent of Code by Francisco Yirá - 2023: Day 8 - Haunted Wasteland</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../../styles.css">
-<meta property="og:title" content="Advent of Code by Francisco Yirá - 2023: Day 8">
+<meta property="og:title" content="Advent of Code by Francisco Yirá - 2023: Day 8 - Haunted Wasteland">
 <meta property="og:description" content="My solutions to Advent of Code">
 <meta property="og:site_name" content="Advent of Code by Francisco Yirá">
 </head>
@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">2023: Day 8</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">2023: Day 8 - Haunted Wasteland</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
   <div class="quarto-categories">
     <div class="quarto-category">python</div>
   </div>
@@ -249,13 +249,13 @@ ZZZ = (ZZZ, ZZZ)</code></pre>
 </section>
 <section id="part-1" class="level2">
 <h2 class="anchored" data-anchor-id="part-1">Part 1</h2>
-<div id="d034c65c" class="cell" data-execution_count="1">
+<div id="571d4ee8" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>First I need to load the data in a suitable data structure:</p>
 <p>I’m going to load the instructions as an array:</p>
-<div id="16025f2b" class="cell" data-execution_count="2">
+<div id="b8ad1fc2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> <span class="bu">open</span>(<span class="st">'input'</span>, <span class="st">'r'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>instructions <span class="op">=</span> <span class="bu">input</span>.readline().splitlines()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>instructions <span class="op">=</span> np.array(<span class="bu">list</span>(instructions[<span class="dv">0</span>]), dtype<span class="op">=</span><span class="st">'object'</span>)</span>
@@ -286,7 +286,7 @@ ZZZ = (ZZZ, ZZZ)</code></pre>
 </div>
 <p>Now, I need to load the node information.</p>
 <p>Given that the node names appear to be unique, I could use a dictionary with the node names as keys. The value of each key could be another dictionary with ‘L’ and ‘R’ as keys, simplifying navigation through the nodes based on the instructions (I hope).</p>
-<div id="065518c7" class="cell" data-execution_count="3">
+<div id="f7377b1d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the node information in a numpy array</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>nodes <span class="op">=</span> np.loadtxt(<span class="st">'input'</span>, skiprows<span class="op">=</span><span class="dv">2</span>, dtype<span class="op">=</span><span class="st">'str'</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -311,7 +311,7 @@ ZZZ = (ZZZ, ZZZ)</code></pre>
 </div>
 <p>Converting the numpy array into a dictionary through iteration.</p>
 <p>I’ll create a function that receives a row of the array and creates a key-value pair with ‘L’ and ‘R’ keys:</p>
-<div id="7cf166a4" class="cell" data-execution_count="4">
+<div id="77e7a5cf" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_dict(node):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  my_dict <span class="op">=</span> {node[<span class="dv">0</span>]: {<span class="st">'L'</span>: node[<span class="dv">1</span>], <span class="st">'R'</span>: node[<span class="dv">2</span>]}}</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> my_dict</span>
@@ -328,7 +328,7 @@ ZZZ = (ZZZ, ZZZ)</code></pre>
 </div>
 </div>
 <p>Next step is (indefinitely) iterating through the <code>instructions</code> until reaching <code>"ZZZ"</code>, while keeping track of the number of steps required to do so.</p>
-<div id="e7a6d491" class="cell" data-execution_count="5">
+<div id="4f9d48d8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>steps <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>current_node <span class="op">=</span> <span class="st">'AAA'</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>length_instructions <span class="op">=</span> <span class="bu">len</span>(instructions)</span>
@@ -373,7 +373,7 @@ XXX = (XXX, XXX)</code></pre>
 </blockquote>
 <p>I THINK I can work this out making changes only to the logic and keeping the data structures of the input (<code>instructions</code> and <code>nodes_dict</code>) as they are right now.</p>
 <p>The initialisation of the current node requires modification, since now we have to start simultaneously from all the nodes that end in ‘A’.</p>
-<div id="1f7f2e4a" class="cell" data-execution_count="6">
+<div id="b2a832d2" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># current_node = 'AAA'</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>all_nodes <span class="op">=</span> <span class="bu">list</span>(nodes_dict.keys())</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -385,7 +385,7 @@ XXX = (XXX, XXX)</code></pre>
 <pre><code>['AAA', 'PPA', 'QQA', 'TDA', 'PDA', 'QXA']</code></pre>
 </div>
 </div>
-<div id="4a850ff4" class="cell" data-execution_count="7">
+<div id="37dc7d85" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>steps <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>current_nodes <span class="op">=</span> starting_nodes</span>
@@ -412,7 +412,7 @@ XXX = (XXX, XXX)</code></pre>
 </div>
 <p>Even though this code might technically reach the right answer given enough time, it takes way too long to be considered a viable solution.</p>
 <p>I wasn’t able to come up with a better solution on my own 🥲 so I took a <em>hint from Reddit</em> where they suggested identifying patterns on the number of steps required to reach a node ending in ‘Z’ from each of the starting nodes, and then using those patterns to identify a common number in the series.</p>
-<div id="e2bb07a2" class="cell" data-execution_count="8">
+<div id="6f84ae03" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialization values</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>steps <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>current_nodes <span class="op">=</span> starting_nodes</span>
@@ -429,7 +429,7 @@ XXX = (XXX, XXX)</code></pre>
 <pre><code>{'AAA': [], 'PPA': [], 'QQA': [], 'TDA': [], 'PDA': [], 'QXA': []}</code></pre>
 </div>
 </div>
-<div id="17d3fad9" class="cell" data-execution_count="9">
+<div id="2fa2f9c2" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> all_z <span class="kw">is</span> <span class="va">False</span> <span class="kw">and</span> steps <span class="op">&lt;</span> <span class="dv">1000000</span>:</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This code is necessary for appropriately reading the instructions</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  i_curr_ins <span class="op">=</span> steps <span class="op">%</span> length_instructions </span>
@@ -449,7 +449,7 @@ XXX = (XXX, XXX)</code></pre>
 <span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  steps <span class="op">+=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="79c6141b" class="cell" data-execution_count="10">
+<div id="5a074723" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, node <span class="kw">in</span> <span class="bu">enumerate</span>(steps_ending_z):</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">'Starting node:'</span>, node)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">'Steps to be in node where last letter was Z:</span><span class="ch">\n</span><span class="st">'</span>, steps_ending_z[node][:<span class="dv">10</span>])</span>
@@ -509,7 +509,7 @@ Steps between nodes ending in Z:
 </div>
 <p>We can see that for each starting node, there is a regular pattern of number of steps taken before reaching again a node ending in Z.</p>
 <p>Let’s take the MCM of these numbers (steps between nodes ending in Z):</p>
-<div id="8c468698" class="cell" data-execution_count="11">
+<div id="8b6552c9" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_steps_between(node, steps_ending_z):</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> np.unique(np.diff(steps_ending_z[node]))</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1141,7 +1141,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb22" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "2023: Day 8"</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "2023: Day 8 - Haunted Wasteland"</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2023-12-8</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span></span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - python</span></span>
