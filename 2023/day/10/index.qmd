@@ -1,5 +1,5 @@
 ---
-title: "2023: Day 10"
+title: "2023: Day 10 - Pipe Maze"
 date: 2023-12-10
 categories:
   - R

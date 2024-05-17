@@ -1,5 +1,5 @@
 ---
-title: "2023: Day 6"
+title: "2023: Day 6 - Wait For It"
 date: 2023-12-6
 categories:
   - python
